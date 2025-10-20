@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OPT.Hub – Attachments Viewer</title>
+  <style>
+    :root { --bg:#0b0f14; --panel:#121821; --muted:#8aa0b3; --txt:#e8f0f7; --acc:#5ec2ff; --ok:#49d49d; --err:#ff6b6b; }
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.4 system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    header{padding:18px 20px;border-bottom:1px solid #202938;background:var(--panel);position:sticky;top:0;z-index:10}
+    h1{margin:0;font-size:16px;letter-spacing:.3px}
+    .wrap{max-width:1100px;margin:18px auto;padding:0 16px}
+    .grid{display:grid;gap:10px;grid-template-columns:2.2fr 1.3fr 110px 110px auto 120px}
+    .grid input{width:100%}
+    input,button{background:#0e1520;color:var(--txt);border:1px solid #2a3444;border-radius:8px;padding:10px 12px}
+    button{cursor:pointer}
+    button.primary{background:var(--acc);color:#042132;border:0;font-weight:600}
+    button.ghost{background:transparent;border-color:#2a3444}
+    small.muted{color:var(--muted)}
+    .row{background:var(--panel);border:1px solid #202938;border-radius:12px;padding:14px 14px;margin:12px 0}
+    .row h3{margin:0 0 6px 0;font-size:15px}
+    .meta{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted)}
+    .atts{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+    .chip{display:inline-flex;align-items:center;gap:8px;background:#0e1520;border:1px solid #253043;color:var(--txt);padding:8px 10px;border-radius:999px}
+    .chip a{color:var(--acc);text-decoration:none}
+    .state{margin-left:8px;font-weight:600}
+    .ok{color:var(--ok)} .err{color:var(--err)}
+    details{margin-top:6px}
+    pre{white-space:pre-wrap;background:#0e1520;border:1px solid #253043;border-radius:8px;padding:10px;color:#b7c8d9;overflow:auto}
+    .toolbar{display:flex;gap:8px;align-items:center;margin-top:10px}
+    .sp{flex:1}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr; } .grid > *:nth-child(3),.grid > *:nth-child(4),.grid > *:nth-child(5),.grid > *:nth-child(6){grid-column:1/-1} }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>OPT.Hub – Attachments Viewer <small class="muted">/list API</small>
+      <span id="state" class="state"></span>
+    </h1>
+  </header>
+
+  <div class="wrap">
+    <div class="grid">
+      <input id="api" placeholder="API Base URL (z. B. https://abc123.execute-api.eu-north-1.amazonaws.com)">
+      <input id="apikey" placeholder="API Key (x-api-key) – falls erforderlich">
+      <input id="days" type="number" min="1" value="7" title="Tage rückwärts">
+      <input id="limit" type="number" min="1" value="25" title="Max. Einträge">
+      <input id="q" placeholder="Filter (Betreff/Absender/Datei)">
+      <button id="btn" class="primary">Laden</button>
+    </div>
+    <div class="toolbar">
+      <small class="muted">Werte werden lokal gespeichert.</small>
+      <span class="sp"></span>
+      <button id="reset" class="ghost">Filter zurücksetzen</button>
+    </div>
+
+    <div id="list"></div>
+  </div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const list = $('#list'), state = $('#state');
+  const inpApi = $('#api'), inpKey = $('#apikey'), inpDays = $('#days'), inpLimit = $('#limit'), inpQ = $('#q');
+
+  // Prefs laden
+  const pref = JSON.parse(localStorage.getItem('attachmentsUi')||'{}');
+  if (pref.api)   inpApi.value  = pref.api;
+  if (pref.apikey)inpKey.value = pref.apikey;
+  if (pref.days)  inpDays.value = pref.days;
+  if (pref.limit) inpLimit.value= pref.limit;
+
+  function save(){
+    localStorage.setItem('attachmentsUi', JSON.stringify({
+      api: inpApi.value.trim(),
+      apikey: inpKey.value.trim(),
+      days: +inpDays.value || 7,
+      limit: +inpLimit.value || 25
+    }));
+  }
+  function setState(t, cls=''){ state.textContent = `— ${t}`; state.className = `state ${cls}`; }
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function fmt(d){ try{ return new Date(d).toLocaleString(); }catch(e){ return d } }
+  function matches(it,q){ if(!q) return true; q=q.toLowerCase();
+    return [it.subject||'', it.from||'', (it.attachments||[]).map(a=>a.key||'').join(' ')].join(' ').toLowerCase().includes(q);
+  }
+
+  async function load(){
+    save(); list.innerHTML=''; setState('lädt …');
+
+    let base = inpApi.value.trim().replace(/\/+$/,'');
+    if (!base){ setState('API-URL fehlt','err'); return; }
+
+    const url = `${base}/list?days=${encodeURIComponent(inpDays.value||7)}&limit=${encodeURIComponent(inpLimit.value||25)}`;
+    const headers = {};
+    if (inpKey.value.trim()) headers['x-api-key'] = inpKey.value.trim();
+
+    try{
+      const res = await fetch(url, { mode:'cors', headers });
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+      const data = await res.json();
+      const items = (data.items||[]).filter(it=>matches(it, inpQ.value));
+
+      if (!items.length){ list.innerHTML = `<div class="row"><small class="muted">Keine Einträge.</small></div>`; setState('ok – 0 Einträge','ok'); return; }
+
+      const frag = document.createDocumentFragment();
+      items.forEach(it=>{
+        const row=document.createElement('div'); row.className='row';
+        const n=(it.attachments||[]).length;
+        row.innerHTML = `
+          <h3>${escapeHtml(it.subject||'(ohne Betreff)')} • ${n} Anhang${n===1?'':'e'}</h3>
+          <div class="meta">
+            <span><strong>Von:</strong> ${escapeHtml(it.from||'-')}</span>
+            <span><strong>An:</strong> ${escapeHtml(it.to||'-')}</span>
+            <span><strong>Datum:</strong> ${escapeHtml(fmt(it.date||'-'))}</span>
+            <span><strong>Meta:</strong> <code>${escapeHtml(it.meta_key||'-')}</code></span>
+          </div>
+        `;
+        const atts=document.createElement('div'); atts.className='atts';
+        (it.attachments||[]).forEach(a=>{
+          const chip=document.createElement('div'); chip.className='chip';
+          const file=(a.key||'').split('/').pop();
+          chip.innerHTML = `📎 ${escapeHtml(file)} &nbsp;<a href="${a.url}" target="_blank" rel="noopener">Download</a>`;
+          atts.appendChild(chip);
+        });
+        if(n) row.appendChild(atts);
+
+        const det=document.createElement('details');
+        det.innerHTML=`<summary>Rohdaten (JSON)</summary><pre>${escapeHtml(JSON.stringify(it,null,2))}</pre>`;
+        row.appendChild(det);
+
+        frag.appendChild(row);
+      });
+      list.appendChild(frag); setState(`ok – ${items.length} Einträge`,'ok');
+    }catch(e){
+      setState(`Fehler: ${e.message}`,'err');
+      list.innerHTML = `<div class="row"><strong class="err">Fehler:</strong> <span class="muted">${escapeHtml(e.message)}</span><br><small class="muted">Prüfe API-URL, CORS und (falls aktiviert) API-Key.</small></div>`;
+    }
+  }
+
+  $('#btn').addEventListener('click', load);
+  $('#reset').addEventListener('click', ()=>{ inpQ.value=''; load(); });
+  inpQ.addEventListener('keydown', e=>{ if(e.key==='Enter') load(); });
+
+  if (inpApi.value) load();
+})();
+</script>
+</body>
+</html>
