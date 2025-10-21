@@ -21,8 +21,9 @@
     .row h3{margin:0 0 6px 0;font-size:15px}
     .meta{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted)}
     .atts{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
-    .chip{display:inline-flex;align-items:center;gap:8px;background:#0e1520;border:1px solid #253043;color:var(--txt);padding:8px 10px;border-radius:999px}
+    .chip{display:inline-flex;align-items:center;gap:10px;background:#0e1520;border:1px solid #253043;color:var(--txt);padding:8px 10px;border-radius:999px}
     .chip a{color:var(--acc);text-decoration:none}
+    .chip small{color:var(--muted)}
     .state{margin-left:8px;font-weight:600}
     .ok{color:var(--ok)} .err{color:var(--err)}
     details{margin-top:6px}
@@ -42,7 +43,7 @@
   <div class="wrap">
     <div class="grid">
       <input id="api" placeholder="API Base URL (z. B. https://abc123.execute-api.eu-north-1.amazonaws.com)">
-      <input id="apikey" placeholder="API Key (x-api-key) – falls erforderlich">
+      <input id="apikey" placeholder="API Key (x-api-key)">
       <input id="days" type="number" min="1" value="7" title="Tage rückwärts">
       <input id="limit" type="number" min="1" value="25" title="Max. Einträge">
       <input id="q" placeholder="Filter (Betreff/Absender/Datei)">
@@ -79,9 +80,30 @@
     }));
   }
   function setState(t, cls=''){ state.textContent = `— ${t}`; state.className = `state ${cls}`; }
+
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
-  function fmt(d){ try{ return new Date(d).toLocaleString(); }catch(e){ return d } }
-  function matches(it,q){ if(!q) return true; q=q.toLowerCase();
+  function fmtDate(d){ try{ return new Date(d).toLocaleString(); }catch(e){ return d } }
+  function fmtSize(n){
+    n = Number(n)||0;
+    if (n < 1024) return n + ' B';
+    const u = ['KB','MB','GB','TB'];
+    let i = -1;
+    do { n = n/1024; i++; } while (n >= 1024 && i < u.length-1);
+    return n.toFixed(n < 10 ? 2 : n < 100 ? 1 : 0) + ' ' + u[i];
+  }
+  function iconFor(file, type=''){
+    const f = file.toLowerCase();
+    if (type.includes('pdf') || f.endsWith('.pdf')) return '📄';
+    if (type.includes('image/') || /\.(png|jpe?g|gif|webp|bmp)$/.test(f)) return '🖼️';
+    if (type.includes('spreadsheet') || /\.(xlsx|xls)$/.test(f)) return '📊';
+    if (type.includes('xml') || f.endsWith('.xml')) return '🧾';
+    if (type.includes('csv') || f.endsWith('.csv')) return '🧮';
+    if (type.includes('word') || /\.(docx|doc)$/.test(f)) return '📝';
+    return '📎';
+  }
+
+  function matches(it,q){
+    if(!q) return true; q=q.toLowerCase();
     return [it.subject||'', it.from||'', (it.attachments||[]).map(a=>a.key||'').join(' ')].join(' ').toLowerCase().includes(q);
   }
 
@@ -93,7 +115,8 @@
 
     const url = `${base}/list?days=${encodeURIComponent(inpDays.value||7)}&limit=${encodeURIComponent(inpLimit.value||25)}`;
     const headers = {};
-    if (inpKey.value.trim()) headers['x-api-key'] = inpKey.value.trim();
+    const key = inpKey.value.trim();
+    if (key) headers['x-api-key'] = key;
 
     try{
       const res = await fetch(url, { mode:'cors', headers });
@@ -101,7 +124,11 @@
       const data = await res.json();
       const items = (data.items||[]).filter(it=>matches(it, inpQ.value));
 
-      if (!items.length){ list.innerHTML = `<div class="row"><small class="muted">Keine Einträge.</small></div>`; setState('ok – 0 Einträge','ok'); return; }
+      if (!items.length){
+        list.innerHTML = `<div class="row"><small class="muted">Keine Einträge.</small></div>`;
+        setState('ok – 0 Einträge','ok');
+        return;
+      }
 
       const frag = document.createDocumentFragment();
       items.forEach(it=>{
@@ -112,15 +139,23 @@
           <div class="meta">
             <span><strong>Von:</strong> ${escapeHtml(it.from||'-')}</span>
             <span><strong>An:</strong> ${escapeHtml(it.to||'-')}</span>
-            <span><strong>Datum:</strong> ${escapeHtml(fmt(it.date||'-'))}</span>
+            <span><strong>Datum:</strong> ${escapeHtml(fmtDate(it.date||'-'))}</span>
             <span><strong>Meta:</strong> <code>${escapeHtml(it.meta_key||'-')}</code></span>
           </div>
         `;
+
         const atts=document.createElement('div'); atts.className='atts';
         (it.attachments||[]).forEach(a=>{
-          const chip=document.createElement('div'); chip.className='chip';
           const file=(a.key||'').split('/').pop();
-          chip.innerHTML = `📎 ${escapeHtml(file)} &nbsp;<a href="${a.url}" target="_blank" rel="noopener">Download</a>`;
+          const ico = iconFor(file, a.type||'');
+          const sz  = fmtSize(a.size||0);
+          const typ = a.type||'';
+          const chip=document.createElement('div'); chip.className='chip';
+          chip.innerHTML = `
+            <span>${ico} ${escapeHtml(file)}</span>
+            <small>${escapeHtml(typ||'unknown')} • ${escapeHtml(sz)}</small>
+            <a href="${a.url}" target="_blank" rel="noopener">Download</a>
+          `;
           atts.appendChild(chip);
         });
         if(n) row.appendChild(atts);
