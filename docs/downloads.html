@@ -237,6 +237,65 @@
       font-size: 13px;
     }
 
+    .agreement-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .agreement-card {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 220px;
+    }
+
+    .agreement-title {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .agreement-id {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .agreement-meta {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .agreement-counts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 13px;
+    }
+
+    .agreement-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 12px;
+    }
+
+
+
     @media (max-width: 960px) {
       .hero-grid {
         grid-template-columns: 1fr;
@@ -247,6 +306,11 @@
       }
 
       .cards {
+        grid-template-columns: 1fr;
+      }
+
+
+      .agreement-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -330,11 +394,100 @@
         </div>
 
         <div class="footer-note">
-          Die dynamische Agreement-Liste wird im nächsten Schritt über
-          <code>catalog.json</code> angebunden.
+        Die folgende Agreement-Liste wird dynamisch aus <code>catalog.json</code> geladen.
         </div>
+
+        <div id="catalog-status" class="status-card" style="margin-top: 24px;">
+        <div class="status-title">Catalog-Status</div>
+        <div style="color: var(--muted);">Lade Regelwerksübersicht ...</div>
+        </div>
+
+        <div id="agreement-list" class="agreement-grid"></div>
       </div>
     </section>
   </main>
+
+<script>
+  const CATALOG_URL = "https://oap-knowledge-optai.s3.amazonaws.com/rule-exports/latest/catalog.json";
+
+  async function loadCatalog() {
+    const statusBox = document.getElementById("catalog-status");
+    const list = document.getElementById("agreement-list");
+
+    try {
+      const response = await fetch(CATALOG_URL);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      statusBox.innerHTML = `
+        <div class="status-title">Catalog-Status</div>
+        <div class="status-ok">✅ Catalog erfolgreich geladen.</div>
+        <div style="margin-top: 8px; color: var(--muted);">
+          Auswahl: <code>${data.selection?.mode || "-"}</code>
+          ${data.selection?.value ? ` / <code>${data.selection.value}</code>` : ""}
+          ${data.selection?.languages?.length ? ` / Sprachen: <code>${data.selection.languages.join(", ")}</code>` : ""}
+        </div>
+        <div style="margin-top: 8px; color: var(--muted);">
+          Agreements im Lauf: <strong>${data.agreement_count || 0}</strong>
+        </div>
+      `;
+
+      list.innerHTML = "";
+
+      (data.agreements || []).forEach(agreement => {
+        const card = document.createElement("div");
+        card.className = "agreement-card";
+
+        card.innerHTML = `
+          <div class="agreement-id">${agreement.content_id}</div>
+          <h3 class="agreement-title">${agreement.display_title || agreement.content_id}</h3>
+
+          <div class="agreement-meta">
+            Gültig: ${agreement.valid_from || "-"} → ${agreement.valid_to || "-"}
+          </div>
+
+          <div class="agreement-meta">
+            Sprachen: ${(agreement.languages || []).join(", ") || "-"}
+          </div>
+
+          <div class="agreement-meta">
+            Länder: From ${agreement.country_from_count || 0} / To ${agreement.country_to_count || 0}
+          </div>
+
+          <div class="agreement-counts">
+            <span class="pill">Rule Sets: ${agreement.counts?.rule_sets ?? 0}</span>
+            <span class="pill">Rule Groups: ${agreement.counts?.rule_groups ?? 0}</span>
+            <span class="pill">Rules: ${agreement.counts?.rules ?? 0}</span>
+          </div>
+
+          <div class="agreement-actions">
+            <span class="pill">Manifest vorhanden</span>
+            <span class="pill">XML vorhanden</span>
+            <span class="pill">CSV vorhanden</span>
+          </div>
+        `;
+
+        list.appendChild(card);
+      });
+    } catch (error) {
+      statusBox.innerHTML = `
+        <div class="status-title">Catalog-Status</div>
+        <div style="color: #b91c1c; font-weight: 700;">❌ Catalog konnte nicht geladen werden.</div>
+        <div style="margin-top: 8px; color: var(--muted);">
+          Fehler: ${error.message}
+        </div>
+      `;
+    }
+  }
+
+  loadCatalog();
+</script>
+
+
+
 </body>
 </html>
