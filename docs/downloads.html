@@ -408,12 +408,15 @@
   </main>
 
 <script>
-  const CATALOG_URL = "https://uk2mcow2y9.execute-api.eu-north-1.amazonaws.com/list?mode=catalog";
-  const API_KEY = "OptHub-2025-TestKey";
+  const CATALOG_URL ="https://uk2mcow2y9.execute-api.eu-north-1.amazonaws.com/list?mode=catalog";
+  const API_KEY ="OptHub-2025-TestKey";
 
   async function loadCatalog() {
     const statusBox = document.getElementById("catalog-status");
     const list = document.getElementById("agreement-list");
+
+    console.log("API_KEY used:", API_KEY);
+    console.log("CATALOG_URL used:", CATALOG_URL);
 
     try {
       const response = await fetch(CATALOG_URL, {
