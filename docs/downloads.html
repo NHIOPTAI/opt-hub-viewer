@@ -294,7 +294,10 @@
       padding-top: 12px;
     }
 
-
+    .agreement-actions .btn {
+      padding: 10px 14px;
+      font-size: 14px;
+    }
 
     @media (max-width: 960px) {
       .hero-grid {
@@ -470,9 +473,9 @@
           </div>
 
           <div class="agreement-actions">
-            <span class="pill">Manifest vorhanden</span>
-            <span class="pill">XML vorhanden</span>
-            <span class="pill">CSV vorhanden</span>
+            ${agreement.downloads?.manifest ? `<a class="btn btn-secondary" href="${agreement.downloads.manifest}" target="_blank" rel="noopener noreferrer">Manifest</a>` : ""}
+            ${agreement.downloads?.xml ? `<a class="btn btn-secondary" href="${agreement.downloads.xml}" target="_blank" rel="noopener noreferrer">XML</a>` : ""}
+            ${agreement.downloads?.csv ? `<a class="btn btn-secondary" href="${agreement.downloads.csv}" target="_blank" rel="noopener noreferrer">CSV</a>` : ""}
           </div>
         `;
 
