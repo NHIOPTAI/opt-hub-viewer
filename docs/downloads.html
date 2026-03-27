@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPT.AI – Regelwerk Downloads</title>
+  <style>
+    :root {
+      --bg: #f5f3ef;
+      --surface: #efebe5;
+      --card: #f3efe9;
+      --text: #111111;
+      --muted: #555555;
+      --border: #ddd6ce;
+      --button-dark: #1f1f24;
+      --button-dark-hover: #111111;
+      --button-light: #f5f3ef;
+      --button-light-border: #222222;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .topbar {
+      padding: 24px 0;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .nav {
+      display: flex;
+      gap: 28px;
+      font-size: 15px;
+    }
+
+    .nav a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .hero {
+      padding: 40px 0 70px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.95fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 58px;
+      line-height: 1.08;
+      font-weight: 500;
+      margin: 0 0 24px;
+      max-width: 720px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 650px;
+      margin: 0 0 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 22px;
+      border-radius: 0;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--button-dark);
+      color: white;
+      border: 1px solid var(--button-dark);
+    }
+
+    .btn-primary:hover {
+      background: var(--button-dark-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--button-light-border);
+    }
+
+    .btn-secondary:hover {
+      background: #ebe7e1;
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, #d8b56c 0%, #b98f43 100%);
+      min-height: 360px;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 32px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.18), transparent 45%),
+        linear-gradient(180deg, rgba(0,0,0,0.06), transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-card-label {
+      position: relative;
+      font-size: 54px;
+      font-weight: 700;
+      color: #1d1d1d;
+      letter-spacing: 0.01em;
+    }
+
+    .section {
+      padding: 70px 0;
+      background: #faf8f5;
+      border-top: 1px solid var(--border);
+    }
+
+    .section h2 {
+      font-size: 34px;
+      font-weight: 500;
+      margin: 0 0 20px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 900px;
+      margin-bottom: 36px;
+    }
+
+    .status-card {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+
+    .status-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .status-ok {
+      color: #0f766e;
+      font-weight: 700;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+      min-height: 220px;
+    }
+
+    .info-card h3 {
+      font-size: 18px;
+      margin: 0 0 14px;
+      font-weight: 700;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    code {
+      background: #ece7df;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">opt</div>
+      <nav class="nav">
+        <a href="/index.html">Home</a>
+        <a href="/downloads.html">Downloads</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>OPT – Regelwerk-Downloads für Trade &amp; Compliance</h1>
+          <p>
+            Geschützter Downloadbereich für Präferenzregelwerke, Manifeste und
+            strukturierte Exportdateien aus OPT.AI.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#downloads" class="btn btn-primary">Downloads ansehen</a>
+            <a href="/index.html" class="btn btn-secondary">Zur Hauptseite</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-label">downloads</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="downloads">
+      <div class="container">
+        <h2>Geschützter Regelwerk-Bereich</h2>
+        <div class="section-intro">
+          Diese Seite ist über Cloudflare Zero Trust geschützt und bildet die
+          Grundlage für den späteren Kundenbereich mit Regelwerk-Downloads,
+          Manifests und API-nahen Exporten.
+        </div>
+
+        <div class="status-card">
+          <div class="status-title">Systemstatus</div>
+          <div class="status-ok">✅ Viewer-Seite und Zugriffsschutz funktionieren.</div>
+          <div style="margin-top: 8px; color: var(--muted);">
+            Nächster Schritt: Anbindung von <code>catalog.json</code> und
+            dynamische Anzeige der Agreements.
+          </div>
+        </div>
+
+        <div class="cards">
+          <div class="info-card">
+            <h3>XML-Regelwerke</h3>
+            <p>
+              Strukturierte Exportdateien für technische Weiterverarbeitung und
+              spätere ERP-/API-Szenarien.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h3>CSV-Exporte</h3>
+            <p>
+              Flach aufbereitete Regelwerksdaten für Kontrolle, Analyse und
+              Download im Kundenkontext.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h3>Manifest &amp; Catalog</h3>
+            <p>
+              Kompakte Metadaten je Agreement und zentrale Übersicht für spätere
+              Viewer-, Portal- und Downloadfunktionen.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Die dynamische Agreement-Liste wird im nächsten Schritt über
+          <code>catalog.json</code> angebunden.
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
