@@ -415,9 +415,6 @@
     const statusBox = document.getElementById("catalog-status");
     const list = document.getElementById("agreement-list");
 
-    console.log("API_KEY used:", API_KEY);
-    console.log("CATALOG_URL used:", CATALOG_URL);
-
     try {
       const response = await fetch(CATALOG_URL, {
         headers: {
