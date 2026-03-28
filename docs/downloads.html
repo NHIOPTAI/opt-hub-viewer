@@ -420,7 +420,10 @@
 
 <script>
   const API_URL = "https://uk2mcow2y9.execute-api.eu-north-1.amazonaws.com/list";
-  const COLLECTION_KEY = "EU";
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const COLLECTION_KEY = urlParams.get("collection") || "EU";
+
   const CATALOG_URL = `${API_URL}?mode=catalog&collection=${encodeURIComponent(COLLECTION_KEY)}`;
   const API_KEY ="OptHub-2025-TestKey";
 
