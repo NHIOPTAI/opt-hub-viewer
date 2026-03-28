@@ -408,6 +408,17 @@
         Die folgende Agreement-Liste wird dynamisch aus <code>catalog.json</code> geladen.
         </div>
 
+        <div id="collection-picker" class="status-card" style="margin-top: 24px;">
+          <div class="status-title">Collection-Auswahl</div>
+          <div style="color: var(--muted); margin-bottom: 12px;">
+            Lade verfügbare Collections ...
+          </div>
+          <select id="collection-select" style="padding: 10px 12px; min-width: 240px;">
+            <option value="">Lade...</option>
+          </select>
+        </div>
+
+
         <div id="catalog-status" class="status-card" style="margin-top: 24px;">
         <div class="status-title">Catalog-Status</div>
         <div style="color: var(--muted);">Lade Regelwerksübersicht ...</div>
@@ -420,12 +431,58 @@
 
 <script>
   const API_URL = "https://uk2mcow2y9.execute-api.eu-north-1.amazonaws.com/list";
-
+  const API_KEY ="OptHub-2025-TestKey";
   const urlParams = new URLSearchParams(window.location.search);
   const COLLECTION_KEY = urlParams.get("collection") || "EU";
 
-  const CATALOG_URL = `${API_URL}?mode=catalog&collection=${encodeURIComponent(COLLECTION_KEY)}`;
-  const API_KEY ="OptHub-2025-TestKey";
+  async function loadCollectionsIndex() {
+    const picker = document.getElementById("collection-picker");
+    const select = document.getElementById("collection-select");
+
+    try {
+      const response = await fetch(`${API_URL}?mode=index`, {
+        headers: {
+          "x-api-key": API_KEY
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      const collections = data.collections || [];
+
+      select.innerHTML = "";
+
+      collections.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.collection_key;
+        option.textContent = item.collection_title || item.collection_key;
+
+        if (item.collection_key === COLLECTION_KEY) {
+          option.selected = true;
+        }
+
+        select.appendChild(option);
+      });
+
+      select.addEventListener("change", () => {
+        const selected = select.value;
+        const nextUrl = `${window.location.pathname}?collection=${encodeURIComponent(selected)}`;
+        window.location.href = nextUrl;
+      });
+
+      picker.querySelector("div:nth-of-type(2)").textContent = "Verfügbare Collections:";
+    } catch (error) {
+      picker.innerHTML = `
+        <div class="status-title">Collection-Auswahl</div>
+        <div style="color: #b91c1c; font-weight: 700;">❌ Collections konnten nicht geladen werden.</div>
+        <div style="margin-top: 8px; color: var(--muted);">Fehler: ${error.message}</div>
+      `;
+    }
+  }
+
 
 
 
@@ -433,8 +490,10 @@
     const statusBox = document.getElementById("catalog-status");
     const list = document.getElementById("agreement-list");
 
+    const catalogUrl = `${API_URL}?mode=catalog&collection=${encodeURIComponent(COLLECTION_KEY)}`;
+
     try {
-      const response = await fetch(CATALOG_URL, {
+      const response = await fetch(catalogUrl, {
         headers: {
           "x-api-key": API_KEY
         }
@@ -534,6 +593,7 @@
     }
   }
 
+  loadCollectionsIndex();
   loadCatalog();
 </script>
 
