@@ -299,6 +299,46 @@
       font-size: 14px;
     }
 
+        .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .collection-tile {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 18px;
+      transition: 0.2s ease;
+    }
+
+    .collection-tile:hover {
+      background: #e9e3db;
+      border-color: #cdbda8;
+    }
+
+    .collection-tile.active {
+      background: #1f1f24;
+      color: white;
+      border-color: #1f1f24;
+    }
+
+    .collection-tile-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .collection-tile-key {
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+
     .collection-actions {
       display: flex;
       gap: 12px;
@@ -317,6 +357,10 @@
       }
 
       .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .collection-grid {
         grid-template-columns: 1fr;
       }
 
@@ -410,12 +454,10 @@
 
         <div id="collection-picker" class="status-card" style="margin-top: 24px;">
           <div class="status-title">Collection-Auswahl</div>
-          <div style="color: var(--muted); margin-bottom: 12px;">
+          <div id="collection-picker-text" style="color: var(--muted); margin-bottom: 12px;">
             Lade verfügbare Collections ...
           </div>
-          <select id="collection-select" style="padding: 10px 12px; min-width: 240px;">
-            <option value="">Lade...</option>
-          </select>
+          <div id="collection-cards" class="collection-grid"></div>
         </div>
 
 
@@ -436,15 +478,14 @@
   const COLLECTION_KEY = urlParams.get("collection") || "EU";
   const VIEWER_USER = "norberthirschpek@opt-hub.ai";
 
-  async function loadCollectionsIndex() {
-    const picker = document.getElementById("collection-picker");
-    const select = document.getElementById("collection-select");
+    async function loadCollectionsIndex() {
+    const pickerText = document.getElementById("collection-picker-text");
+    const cards = document.getElementById("collection-cards");
 
     try {
       const response = await fetch(`${API_URL}?mode=index`, {
         headers: {
-          "x-api-key": API_KEY,
-          "x-viewer-user": VIEWER_USER
+          "x-api-key": API_KEY
         }
       });
 
@@ -455,28 +496,26 @@
       const data = await response.json();
       const collections = data.collections || [];
 
-      select.innerHTML = "";
+      pickerText.textContent = "Verfügbare Collections:";
+      cards.innerHTML = "";
 
       collections.forEach(item => {
-        const option = document.createElement("option");
-        option.value = item.collection_key;
-        option.textContent = item.collection_title || item.collection_key;
-
+        const tile = document.createElement("a");
+        tile.className = "collection-tile";
         if (item.collection_key === COLLECTION_KEY) {
-          option.selected = true;
+          tile.classList.add("active");
         }
 
-        select.appendChild(option);
-      });
+        tile.href = `${window.location.pathname}?collection=${encodeURIComponent(item.collection_key)}`;
+        tile.innerHTML = `
+          <div class="collection-tile-title">${item.collection_title || item.collection_key}</div>
+          <div class="collection-tile-key">${item.collection_key}</div>
+        `;
 
-      select.addEventListener("change", () => {
-        const selected = select.value;
-        const nextUrl = `${window.location.pathname}?collection=${encodeURIComponent(selected)}`;
-        window.location.href = nextUrl;
+        cards.appendChild(tile);
       });
-
-      picker.querySelector("div:nth-of-type(2)").textContent = "Verfügbare Collections:";
     } catch (error) {
+      const picker = document.getElementById("collection-picker");
       picker.innerHTML = `
         <div class="status-title">Collection-Auswahl</div>
         <div style="color: #b91c1c; font-weight: 700;">❌ Collections konnten nicht geladen werden.</div>
