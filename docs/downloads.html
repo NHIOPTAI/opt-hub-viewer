@@ -404,7 +404,7 @@
         <div class="status-title">Catalog-Status</div>
         <div style="color: var(--muted);">Lade Regelwerksübersicht ...</div>
         </div>
-
+        <div id="collection-summary" class="status-card" style="margin-top: 24px; display: none;"></div>
         <div id="agreement-list" class="agreement-grid"></div>
       </div>
     </section>
@@ -431,22 +431,49 @@
 
       const data = await response.json();
 
+      const collection = data.collection || {};
+      const catalog = data.catalog || {};
+      const collectionDownloads = data.collection_downloads || {};
+
       statusBox.innerHTML = `
         <div class="status-title">Catalog-Status</div>
         <div class="status-ok">✅ Catalog erfolgreich geladen.</div>
         <div style="margin-top: 8px; color: var(--muted);">
-          Auswahl: <code>${data.selection?.mode || "-"}</code>
-          ${data.selection?.value ? ` / <code>${data.selection.value}</code>` : ""}
-          ${data.selection?.languages?.length ? ` / Sprachen: <code>${data.selection.languages.join(", ")}</code>` : ""}
+          Auswahl: <code>${catalog.selection?.mode || "-"}</code>
+          ${catalog.selection?.value ? ` / <code>${catalog.selection.value}</code>` : ""}
+          ${catalog.selection?.languages?.length ? ` / Sprachen: <code>${catalog.selection.languages.join(", ")}</code>` : ""}
         </div>
         <div style="margin-top: 8px; color: var(--muted);">
-          Agreements im Lauf: <strong>${data.agreement_count || 0}</strong>
+          Agreements im Lauf: <strong>${catalog.agreement_count || 0}</strong>
         </div>
       `;
 
+      const collectionSummary = document.getElementById("collection-summary");
+      collectionSummary.style.display = "block";
+
+      collectionSummary.innerHTML = `
+        <div class="status-title">Collection</div>
+        <div style="font-size: 24px; font-weight: 600; margin-top: 6px;">
+          ${collection.collection_title || collection.collection_key || "-"}
+        </div>
+        <div style="margin-top: 8px; color: var(--muted);">
+          Key: <code>${collection.collection_key || "-"}</code>
+        </div>
+        <div style="margin-top: 8px; color: var(--muted);">
+          XML aktiviert: <strong>${collection.artifacts?.xml_enabled ? "Ja" : "Nein"}</strong>
+          &nbsp; | &nbsp;
+          CSV aktiviert: <strong>${collection.artifacts?.csv_enabled ? "Ja" : "Nein"}</strong>
+        </div>
+        <div class="collection-actions">
+          ${collectionDownloads.xml ? `<a class="btn btn-primary" href="${collectionDownloads.xml}" target="_blank" rel="noopener noreferrer">XML Bundle</a>` : ""}
+          ${collectionDownloads.csv ? `<a class="btn btn-secondary" href="${collectionDownloads.csv}" target="_blank" rel="noopener noreferrer">CSV Bundle</a>` : ""}
+        </div>
+      `;
+
+
       list.innerHTML = "";
 
-      (data.agreements || []).forEach(agreement => {
+      (catalog.agreements || []).forEach(agreement => {
         const card = document.createElement("div");
         card.className = "agreement-card";
 
