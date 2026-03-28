@@ -299,6 +299,14 @@
       font-size: 14px;
     }
 
+    .collection-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+
     @media (max-width: 960px) {
       .hero-grid {
         grid-template-columns: 1fr;
@@ -411,8 +419,12 @@
   </main>
 
 <script>
-  const CATALOG_URL ="https://uk2mcow2y9.execute-api.eu-north-1.amazonaws.com/list?mode=catalog";
+  const API_URL = "https://uk2mcow2y9.execute-api.eu-north-1.amazonaws.com/list";
+  const COLLECTION_KEY = "EU";
+  const CATALOG_URL = `${API_URL}?mode=catalog&collection=${encodeURIComponent(COLLECTION_KEY)}`;
   const API_KEY ="OptHub-2025-TestKey";
+
+
 
   async function loadCatalog() {
     const statusBox = document.getElementById("catalog-status");
