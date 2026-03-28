@@ -434,6 +434,7 @@
   const API_KEY ="OptHub-2025-TestKey";
   const urlParams = new URLSearchParams(window.location.search);
   const COLLECTION_KEY = urlParams.get("collection") || "EU";
+  const VIEWER_USER = "norberthirschpek@opt-hub.ai";
 
   async function loadCollectionsIndex() {
     const picker = document.getElementById("collection-picker");
@@ -442,7 +443,8 @@
     try {
       const response = await fetch(`${API_URL}?mode=index`, {
         headers: {
-          "x-api-key": API_KEY
+          "x-api-key": API_KEY,
+          "x-viewer-user": VIEWER_USER
         }
       });
 
@@ -495,7 +497,8 @@
     try {
       const response = await fetch(catalogUrl, {
         headers: {
-          "x-api-key": API_KEY
+          "x-api-key": API_KEY,
+          "x-viewer-user": VIEWER_USER
         }
     });
 
