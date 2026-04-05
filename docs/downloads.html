@@ -473,21 +473,15 @@
 
 <script>
   const API_URL = "https://08ot07nmi0.execute-api.eu-north-1.amazonaws.com/proxy";
-
   const urlParams = new URLSearchParams(window.location.search);
-  let COLLECTION_KEY = urlParams.get("collection") || "EU";
-  const VIEWER_USER = "norberthirschpek@opt-hub.ai";
+  let COLLECTION_KEY = urlParams.get("collection") || "";
 
     async function loadCollectionsIndex() {
     const pickerText = document.getElementById("collection-picker-text");
     const cards = document.getElementById("collection-cards");
 
     try {
-      const response = await fetch(`${API_URL}?mode=index`, {
-        headers: {
-          "x-viewer-user": VIEWER_USER
-        }
-      });
+      const response = await fetch(`${API_URL}?mode=index`);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
@@ -495,6 +489,10 @@
 
       const data = await response.json();
       const collections = data.collections || [];
+
+      if (!COLLECTION_KEY && collections.length > 0) {
+        COLLECTION_KEY = collections[0].collection_key;
+      }
 
       pickerText.textContent = "Verfügbare Collections:";
       cards.innerHTML = "";
@@ -531,14 +529,21 @@
     const statusBox = document.getElementById("catalog-status");
     const list = document.getElementById("agreement-list");
 
+    
+
+    if (!COLLECTION_KEY) {
+      const statusBox = document.getElementById("catalog-status");
+      statusBox.innerHTML = `
+        <div class="status-title">Catalog-Status</div>
+        <div style="color: #b91c1c; font-weight: 700;">❌ Keine freigegebene Collection gefunden.</div>
+      `;
+      return;
+    }
+
     const catalogUrl = `${API_URL}?mode=catalog&collection=${encodeURIComponent(COLLECTION_KEY)}`;
 
     try {
-      const response = await fetch(catalogUrl, {
-        headers: {
-          "x-viewer-user": VIEWER_USER
-        }
-    });
+      const response = await fetch(catalogUrl);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
