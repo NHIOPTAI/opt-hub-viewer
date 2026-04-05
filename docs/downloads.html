@@ -490,6 +490,16 @@
       const data = await response.json();
       const collections = data.collections || [];
 
+      if (collections.length === 0) {
+        pickerText.textContent = "Keine freigegebenen Collections gefunden.";
+        cards.innerHTML = "";
+        return;
+      }
+
+      if (!COLLECTION_KEY) {
+        COLLECTION_KEY = collections[0].collection_key;
+      }
+
       if (!COLLECTION_KEY && collections.length > 0) {
         COLLECTION_KEY = collections[0].collection_key;
       }
