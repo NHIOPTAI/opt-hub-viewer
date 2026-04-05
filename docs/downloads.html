@@ -638,8 +638,12 @@
     }
   }
 
-  loadCollectionsIndex();
-  loadCatalog();
+  async function initPage() {
+    await loadCollectionsIndex();
+    await loadCatalog();
+  }
+
+  initPage();
 </script>
 
 
