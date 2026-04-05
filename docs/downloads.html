@@ -475,7 +475,7 @@
   const API_URL = "https://08ot07nmi0.execute-api.eu-north-1.amazonaws.com/proxy";
 
   const urlParams = new URLSearchParams(window.location.search);
-  const COLLECTION_KEY = urlParams.get("collection") || "EU";
+  let COLLECTION_KEY = urlParams.get("collection") || "EU";
   const VIEWER_USER = "norberthirschpek@opt-hub.ai";
 
     async function loadCollectionsIndex() {
