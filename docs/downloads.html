@@ -481,7 +481,9 @@
     const cards = document.getElementById("collection-cards");
 
     try {
-      const response = await fetch(`${API_URL}?mode=index`);
+      const response = await fetch(`${API_URL}?mode=index`, {
+        credentials: "include"
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
@@ -557,7 +559,9 @@
     const catalogUrl = `${API_URL}?mode=catalog&collection=${encodeURIComponent(COLLECTION_KEY)}`;
 
     try {
-      const response = await fetch(catalogUrl);
+      const response = await fetch(catalogUrl, {
+        credentials: "include"
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
