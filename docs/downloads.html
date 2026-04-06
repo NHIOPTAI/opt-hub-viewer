@@ -485,11 +485,14 @@
         credentials: "include"
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+
+      if (!response.ok || data.ok === false) {
+        const errorCode = data.error_code || "OPT-SYS-001";
+        const message = data.message || "Der Dienst ist derzeit nicht verfügbar.";
+        throw new Error(`${errorCode} | ${message}`);
       }
 
-      const data = await response.json();
       const collections = data.collections || [];
 
       console.log("INDEX DATA:", data);
@@ -534,7 +537,12 @@
       picker.innerHTML = `
         <div class="status-title">Collection-Auswahl</div>
         <div style="color: #b91c1c; font-weight: 700;">❌ Collections konnten nicht geladen werden.</div>
-        <div style="margin-top: 8px; color: var(--muted);">Fehler: ${error.message}</div>
+        <div style="margin-top: 8px; color: var(--muted);">
+          Fehler: ${error.message}
+        </div>
+        <div style="margin-top: 8px; color: var(--muted);">
+          Bitte senden Sie diesen Fehlercode an den Support.
+        </div>
       `;
     }
   }
@@ -563,11 +571,13 @@
         credentials: "include"
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
       const data = await response.json();
+
+      if (!response.ok || data.ok === false) {
+        const errorCode = data.error_code || "OPT-SYS-001";
+        const message = data.message || "Die Inhaltsübersicht konnte nicht geladen werden.";
+        throw new Error(`${errorCode} | ${message}`);
+      }
 
       const collection = data.collection || {};
       const catalog = data.catalog || {};
@@ -652,6 +662,9 @@
         <div style="color: #b91c1c; font-weight: 700;">❌ Catalog konnte nicht geladen werden.</div>
         <div style="margin-top: 8px; color: var(--muted);">
           Fehler: ${error.message}
+        </div>
+        <div style="margin-top: 8px; color: var(--muted);">
+          Bitte senden Sie diesen Fehlercode an den Support.
         </div>
       `;
     }
