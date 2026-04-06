@@ -299,7 +299,7 @@
       font-size: 14px;
     }
 
-        .collection-grid {
+    .collection-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
@@ -388,8 +388,9 @@
         <div>
           <h1>OPT – Regelwerk-Downloads für Trade &amp; Compliance</h1>
           <p>
-            Geschützter Downloadbereich für Präferenzregelwerke, Manifeste und
-            strukturierte Exportdateien aus OPT.AI.
+            Geschützter Downloadbereich für Ihre Präferenzregelwerke und relevanten
+            Handelsabkommen. Hier finden Sie alle für Ihr Unternehmen freigegebenen
+            Inhalte übersichtlich und jederzeit abrufbar.
           </p>
 
           <div class="hero-actions">
@@ -399,14 +400,17 @@
         </div>
 
         <div class="hero-card">
-          <div class="hero-card-label">downloads</div>
+          <div class="hero-card-label">
+            downloads<br>
+            <span style="font-size: 20px; font-weight: 400;">Rule Content</span>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section" id="downloads">
       <div class="container">
-        <h2>Geschützter Regelwerk-Bereich</h2>
+        <h2>Ihr Bereich für Rule Content &amp; Regelwerke</h2>
         <div class="section-intro">
           Diese Seite ist über Cloudflare Zero Trust geschützt und bildet die
           Grundlage für den späteren Kundenbereich mit Regelwerk-Downloads,
@@ -414,11 +418,10 @@
         </div>
 
         <div class="status-card">
-          <div class="status-title">Systemstatus</div>
-          <div class="status-ok">✅ Viewer-Seite und Zugriffsschutz funktionieren.</div>
+          <div class="status-title">Zugriffsstatus</div>
+          <div class="status-ok">✅ Zugriff erfolgreich bestätigt.</div>
           <div style="margin-top: 8px; color: var(--muted);">
-            Nächster Schritt: Anbindung von <code>catalog.json</code> und
-            dynamische Anzeige der Agreements.
+            Ihre freigegebenen Inhalte werden geladen und für Sie bereitgestellt.
           </div>
         </div>
 
@@ -426,44 +429,45 @@
           <div class="info-card">
             <h3>XML-Regelwerke</h3>
             <p>
-              Strukturierte Exportdateien für technische Weiterverarbeitung und
-              spätere ERP-/API-Szenarien.
+              Strukturierte Regelwerksdaten zur Weiterverarbeitung in Ihren Systemen
+              oder zur technischen Nutzung im Unternehmen.
             </p>
           </div>
 
           <div class="info-card">
             <h3>CSV-Exporte</h3>
             <p>
-              Flach aufbereitete Regelwerksdaten für Kontrolle, Analyse und
-              Download im Kundenkontext.
+              Übersichtliche Regelwerksdaten für Analyse, Prüfung und interne
+              Auswertungen in Ihrem Unternehmen.
             </p>
           </div>
 
           <div class="info-card">
-            <h3>Manifest &amp; Catalog</h3>
+            <h3>Übersicht &amp; Inhalte</h3>
             <p>
-              Kompakte Metadaten je Agreement und zentrale Übersicht für spätere
-              Viewer-, Portal- und Downloadfunktionen.
+              Zentrale Übersicht Ihrer freigegebenen Abkommen und Inhalte zur
+              einfachen Navigation im Downloadbereich.
             </p>
           </div>
         </div>
 
         <div class="footer-note">
-        Die folgende Agreement-Liste wird dynamisch aus <code>catalog.json</code> geladen.
+          Die folgende Übersicht zeigt alle für Ihr Unternehmen freigegebenen 
+          Abkommen und Inhalte.
         </div>
 
         <div id="collection-picker" class="status-card" style="margin-top: 24px;">
-          <div class="status-title">Collection-Auswahl</div>
+          <div class="status-title">Content-Auswahl</div>
           <div id="collection-picker-text" style="color: var(--muted); margin-bottom: 12px;">
-            Lade verfügbare Collections ...
+            Lade verfügbare Contents ...
           </div>
           <div id="collection-cards" class="collection-grid"></div>
         </div>
 
 
         <div id="catalog-status" class="status-card" style="margin-top: 24px;">
-        <div class="status-title">Catalog-Status</div>
-        <div style="color: var(--muted);">Lade Regelwerksübersicht ...</div>
+        <div class="status-title">Inhaltsstatus</div>
+        <div style="color: var(--muted);">Lade Ihre freigegebenen Inhalte ...</div>
         </div>
         <div id="collection-summary" class="status-card" style="margin-top: 24px; display: none;"></div>
         <div id="agreement-list" class="agreement-grid"></div>
@@ -499,7 +503,7 @@
       console.log("COLLECTIONS:", collections);
 
       if (collections.length === 0) {
-        pickerText.textContent = "Keine freigegebenen Collections gefunden.";
+        pickerText.textContent = "Für Ihr Konto sind derzeit keine Contents freigegebenen.";
         cards.innerHTML = "";
         return;
       }
@@ -514,7 +518,7 @@
         COLLECTION_KEY = collections[0].collection_key;
       }
 
-      pickerText.textContent = "Verfügbare Collections:";
+      pickerText.textContent = "Bitte wählen Sie einen Content aus:";
       cards.innerHTML = "";
 
       collections.forEach(item => {
@@ -584,15 +588,10 @@
       const collectionDownloads = data.collection_downloads || {};
 
       statusBox.innerHTML = `
-        <div class="status-title">Catalog-Status</div>
-        <div class="status-ok">✅ Catalog erfolgreich geladen.</div>
+        <div class="status-title">Inhaltsstatus</div>
+        <div class="status-ok">✅ Ihre Inhalte wurden erfolgreich geladen.</div>
         <div style="margin-top: 8px; color: var(--muted);">
-          Auswahl: <code>${catalog.selection?.mode || "-"}</code>
-          ${catalog.selection?.value ? ` / <code>${catalog.selection.value}</code>` : ""}
-          ${catalog.selection?.languages?.length ? ` / Sprachen: <code>${catalog.selection.languages.join(", ")}</code>` : ""}
-        </div>
-        <div style="margin-top: 8px; color: var(--muted);">
-          Agreements im Lauf: <strong>${catalog.agreement_count || 0}</strong>
+          Verfügbare Abkommen: <strong>${catalog.agreement_count || 0}</strong>
         </div>
       `;
 
@@ -600,17 +599,20 @@
       collectionSummary.style.display = "block";
 
       collectionSummary.innerHTML = `
-        <div class="status-title">Collection</div>
+        <div class="status-title">Content-Bereich</div>
         <div style="font-size: 24px; font-weight: 600; margin-top: 6px;">
           ${collection.collection_title || collection.collection_key || "-"}
         </div>
         <div style="margin-top: 8px; color: var(--muted);">
-          Key: <code>${collection.collection_key || "-"}</code>
+          Bereich: <code>${collection.collection_key || "-"}</code>
         </div>
         <div style="margin-top: 8px; color: var(--muted);">
-          XML aktiviert: <strong>${collection.artifacts?.xml_enabled ? "Ja" : "Nein"}</strong>
-          &nbsp; | &nbsp;
-          CSV aktiviert: <strong>${collection.artifacts?.csv_enabled ? "Ja" : "Nein"}</strong>
+          Verfügbare Formate:
+          <strong>
+            ${collection.artifacts?.xml_enabled && collection.artifacts?.csv_enabled ? "XML / CSV" :
+              collection.artifacts?.xml_enabled ? "XML" :
+              collection.artifacts?.csv_enabled ? "CSV" : "-"}
+          </strong>
         </div>
         <div class="collection-actions">
           ${collectionDownloads.xml ? `<a class="btn btn-primary" href="${collectionDownloads.xml}" target="_blank" rel="noopener noreferrer">XML Bundle</a>` : ""}
