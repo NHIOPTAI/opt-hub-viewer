@@ -495,14 +495,6 @@
 
       const data = await response.json();
 
-      if (!response.ok || data.ok === false) {
-        const errorCode = data.error_code || "OPT-SYS-001";
-        const message = data.message || "Der Dienst ist derzeit nicht verfügbar.";
-        throw new Error(`${errorCode} | ${message}`);
-      }
-
-      const collections = data.collections || [];
-
       const userInfoBox = document.getElementById("user-info");
       const userInfoText = document.getElementById("user-info-text");
       const userEmail = data.user_email || "";
@@ -511,6 +503,14 @@
         userInfoBox.style.display = "block";
         userInfoText.innerHTML = `Sie sind aktuell angemeldet als: <strong>${userEmail}</strong>`;
       }
+
+      if (!response.ok || data.ok === false) {
+        const errorCode = data.error_code || "OPT-SYS-001";
+        const message = data.message || "Der Dienst ist derzeit nicht verfügbar.";
+        throw new Error(`${errorCode} | ${message}`);
+      }
+
+      const collections = data.collections || [];
 
       console.log("INDEX DATA:", data);
       console.log("COLLECTIONS:", collections);
@@ -574,6 +574,16 @@
         cards.appendChild(tile);
       });
     } catch (error) {
+      
+      const userInfoBox = document.getElementById("user-info");
+      const userInfoText = document.getElementById("user-info-text");
+
+      if (userInfoText && !userInfoText.innerHTML.trim()) {
+        userInfoBox.style.display = "block";
+        userInfoText.innerHTML = `Benutzerkonto wurde erkannt, es sind jedoch derzeit keine freigegebenen Inhalte verfügbar.`;
+      }
+      
+      
       const picker = document.getElementById("collection-picker");
       picker.innerHTML = `
         <div class="status-title">Collection-Auswahl</div>
