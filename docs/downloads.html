@@ -380,6 +380,13 @@
         <a href="/downloads.html">Downloads</a>
       </nav>
     </div>
+
+    <div id="user-info" class="status-card" style="margin-top: 24px; display: none;">
+      <div class="status-title">Benutzerkonto</div>
+      <div id="user-info-text" style="color: var(--muted);">
+        Benutzerinformationen werden geladen ...
+      </div>
+    </div>
   </header>
 
   <main>
@@ -496,12 +503,45 @@
 
       const collections = data.collections || [];
 
+      const userInfoBox = document.getElementById("user-info");
+      const userInfoText = document.getElementById("user-info-text");
+      const userEmail = data.user_email || "";
+
+      if (userEmail) {
+        userInfoBox.style.display = "block";
+        userInfoText.innerHTML = `Angemeldet als: <strong>${userEmail}</strong>`;
+      }
+
       console.log("INDEX DATA:", data);
       console.log("COLLECTIONS:", collections);
 
       if (collections.length === 0) {
-        pickerText.textContent = "Für Ihr Konto sind derzeit keine Contents freigegebenen.";
-        cards.innerHTML = "";
+        pickerText.textContent = "Für Ihr Konto sind aktuell keine Contents freigegeben.";
+        cards.innerHTML = `
+          <div class="status-card" style="margin-top: 0;">
+            <div class="status-title">Keine Inhalte verfügbar</div>
+            <div style="color: var(--muted);">
+              Für Ihr Konto sind derzeit keine Regelwerke oder Inhalte freigegeben.
+              Bitte kontaktieren Sie Ihren Ansprechpartner oder den Support.
+            </div>
+          </div>
+        `;
+
+        const statusBox = document.getElementById("catalog-status");
+        statusBox.innerHTML = `
+          <div class="status-title">Inhaltsstatus</div>
+          <div style="color: var(--muted);">
+            Aktuell sind keine Inhalte zur Anzeige verfügbar.
+          </div>
+        </div>
+        `;
+
+        const collectionSummary = document.getElementById("collection-summary");
+        collectionSummary.style.display = "none";
+
+        const list = document.getElementById("agreement-list");
+        list.innerHTML = "";
+
         return;
       }
 
@@ -537,7 +577,7 @@
       const picker = document.getElementById("collection-picker");
       picker.innerHTML = `
         <div class="status-title">Collection-Auswahl</div>
-        <div style="color: #b91c1c; font-weight: 700;">❌ Collections konnten nicht geladen werden.</div>
+        <div style="color: #b91c1c; font-weight: 700;">⚠️ Collections konnten nicht geladen werden.</div>
         <div style="margin-top: 8px; color: var(--muted);">
           Fehler: ${error.message}
         </div>
@@ -558,10 +598,19 @@
     
 
     if (!COLLECTION_KEY) {
+      const statusBox = document.getElementById("catalog-status");
+      const list = document.getElementById("agreement-list");
+      const collectionSummary = document.getElementById("collection-summary");
+
       statusBox.innerHTML = `
-        <div class="status-title">Catalog-Status</div>
-        <div style="color: #b91c1c; font-weight: 700;">❌ Keine freigegebene Collection gefunden.</div>
+        <div class="status-title">Inhaltsstatus</div>
+        <div style="color: var(--muted);">
+          Aktuell sind keine Inhalte zur Anzeige verfügbar.
+        </div>
       `;
+
+      collectionSummary.style.display = "none";
+      list.innerHTML = "";
       return;
     }
 
@@ -661,7 +710,7 @@
     } catch (error) {
       statusBox.innerHTML = `
         <div class="status-title">Catalog-Status</div>
-        <div style="color: #b91c1c; font-weight: 700;">❌ Catalog konnte nicht geladen werden.</div>
+        <div style="color: #b91c1c; font-weight: 700;">⚠️ Catalog konnte nicht geladen werden.</div>
         <div style="margin-top: 8px; color: var(--muted);">
           Fehler: ${error.message}
         </div>
