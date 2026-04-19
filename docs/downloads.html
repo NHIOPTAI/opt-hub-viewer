@@ -484,16 +484,64 @@
   const urlParams = new URLSearchParams(window.location.search);
   let COLLECTION_KEY = urlParams.get("collection") || "";
 
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function fetchJsonWithRetry(url, options = {}, config = {}) {
+    const retries = config.retries ?? 3;
+    const delays = config.delays ?? [1200, 2000, 3000];
+
+    let lastError;
+
+    for (let attempt = 0; attempt < retries; attempt++) {
+      try {
+        const response = await fetch(url, options);
+
+        let data = null;
+        try {
+          data = await response.json();
+        } catch (parseError) {
+          throw new Error("OPT-SYS-JSON | Antwort konnte nicht als JSON gelesen werden.");
+        }
+
+        if (!response.ok || data?.ok === false) {
+          const errorCode = data?.error_code || `HTTP-${response.status}`;
+          const message = data?.message || "Der Dienst ist derzeit nicht verfügbar.";
+          throw new Error(`${errorCode} | ${message}`);
+        }
+
+        return { response, data };
+      } catch (error) {
+        lastError = error;
+
+        if (attempt < retries - 1) {
+          const waitMs = delays[attempt] ?? delays[delays.length - 1] ?? 1500;
+          console.warn(`Fetch fehlgeschlagen, neuer Versuch in ${waitMs} ms`, {
+            url,
+            attempt: attempt + 1,
+            error: error.message
+          });
+          await sleep(waitMs);
+        }
+      }
+    }
+
+    throw lastError;
+  }
+
   async function loadCollectionsIndex() {
     const pickerText = document.getElementById("collection-picker-text");
     const cards = document.getElementById("collection-cards");
 
     try {
-      const response = await fetch(`${API_URL}?mode=index`, {
+      const { response, data } = await fetchJsonWithRetry(`${API_URL}?mode=index`, {
         credentials: "include"
+      }, {
+        retries: 3,
+        delays: [1200, 2000, 3000]
       });
-
-      const data = await response.json();
 
       const userInfoBox = document.getElementById("user-info");
       const userInfoText = document.getElementById("user-info-text");
@@ -573,6 +621,9 @@
 
         cards.appendChild(tile);
       });
+
+      return true;
+
     } catch (error) {
       
       const userInfoBox = document.getElementById("user-info");
@@ -595,6 +646,8 @@
           Bitte senden Sie diesen Fehlercode an den Support.
         </div>
       `;
+
+      return false;
     }
   }
 
@@ -627,11 +680,12 @@
     const catalogUrl = `${API_URL}?mode=catalog&collection=${encodeURIComponent(COLLECTION_KEY)}`;
 
     try {
-      const response = await fetch(catalogUrl, {
+      const { response, data } = await fetchJsonWithRetry(catalogUrl, {
         credentials: "include"
+      }, {
+        retries: 3,
+        delays: [1200, 2000, 3000]
       });
-
-      const data = await response.json();
 
       if (!response.ok || data.ok === false) {
         const errorCode = data.error_code || "OPT-SYS-001";
@@ -732,11 +786,20 @@
   }
 
   async function initPage() {
-    await loadCollectionsIndex();
-    await loadCatalog();
+    try {
+      await sleep(1200);
+      const indexLoaded = await loadCollectionsIndex();
+
+      if (indexLoaded && COLLECTION_KEY) {
+        await loadCatalog();
+      }
+    } catch (error) {
+      console.error("Initialisierung fehlgeschlagen:", error);
+    }
   }
 
-  initPage();
+  window.addEventListener("load", initPage);
+
 </script>
 
 
