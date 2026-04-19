@@ -491,13 +491,22 @@
 
   async function fetchJsonWithRetry(url, options = {}, config = {}) {
     const retries = config.retries ?? 3;
-    const delays = config.delays ?? [1200, 2000, 3000];
+    const delays = config.delays ?? [2000, 3000, 4500];
 
     let lastError;
 
     for (let attempt = 0; attempt < retries; attempt++) {
       try {
-        const response = await fetch(url, options);
+        const response = await fetch(url, {
+          mode: "cors",
+          cache: "no-store",
+          credentials: "include",
+          ...options,
+          headers: {
+            "Accept": "application/json",
+            ...(options.headers || {})
+          }
+        });
 
         let data = null;
         try {
@@ -530,6 +539,24 @@
 
     throw lastError;
   }
+
+
+  async function warmupSession() {
+    try {
+      await fetch(`${API_URL}?mode=index`, {
+        mode: "cors",
+        cache: "no-store",
+        credentials: "include",
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+    } catch (error) {
+      console.warn("Warmup fehlgeschlagen:", error);
+    }
+  }
+
+
 
   async function loadCollectionsIndex() {
     const pickerText = document.getElementById("collection-picker-text");
@@ -787,7 +814,9 @@
 
   async function initPage() {
     try {
-      await sleep(1200);
+      await sleep(2200);
+      await warmupSession();
+
       const indexLoaded = await loadCollectionsIndex();
 
       if (indexLoaded && COLLECTION_KEY) {
