@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPT.AI – Rules API Demo</title>
+  <style>
+    :root {
+      --bg: #f5f3ef;
+      --surface: #efebe5;
+      --card: #f3efe9;
+      --text: #111111;
+      --muted: #555555;
+      --border: #ddd6ce;
+      --button-dark: #1f1f24;
+      --button-dark-hover: #111111;
+      --button-light: #f5f3ef;
+      --button-light-border: #222222;
+      --ex-bg: #fbeed6;
+      --ex-border: #c98a2c;
+      --ex-text: #7a4a05;
+      --err: #b91c1c;
+      --ok: #0f766e;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body { line-height: 1.5; }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .topbar { padding: 24px 0; }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand { font-size: 20px; font-weight: 700; letter-spacing: 0.02em; }
+
+    .nav { display: flex; gap: 28px; font-size: 15px; }
+    .nav a { color: var(--text); text-decoration: none; }
+    .nav a.current { font-weight: 700; border-bottom: 2px solid var(--text); }
+
+    .hero { padding: 40px 0 30px; }
+
+    .hero h1 {
+      font-size: 44px;
+      line-height: 1.1;
+      font-weight: 500;
+      margin: 0 0 18px;
+      max-width: 780px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0 0 8px;
+    }
+
+    .scope-note {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 8px 14px;
+      background: var(--ex-bg);
+      border: 1px solid var(--ex-border);
+      color: var(--ex-text);
+      font-size: 14px;
+    }
+
+    .section { padding: 40px 0 70px; background: #faf8f5; border-top: 1px solid var(--border); }
+
+    .section h2 { font-size: 26px; font-weight: 500; margin: 0 0 8px; }
+    .section h3 { font-size: 19px; font-weight: 700; margin: 0 0 10px; }
+
+    .section-intro { color: var(--muted); font-size: 16px; max-width: 900px; margin-bottom: 24px; }
+
+    .status-card {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .status-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .status-ok { color: var(--ok); font-weight: 700; }
+    .status-err { color: var(--err); font-weight: 700; }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 0;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary { background: var(--button-dark); color: white; border: 1px solid var(--button-dark); }
+    .btn-primary:hover { background: var(--button-dark-hover); }
+    .btn-primary:disabled { opacity: 0.5; cursor: default; }
+
+    .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--button-light-border); }
+    .btn-secondary:hover { background: #ebe7e1; }
+
+    .btn-small { padding: 8px 12px; font-size: 13px; }
+
+    code {
+      background: #ece7df;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .form-card { background: white; border: 1px solid var(--border); padding: 26px; margin-bottom: 24px; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 16px;
+      align-items: end;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .field input, .field select {
+      width: 100%;
+      padding: 10px 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 14px;
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    .field input:invalid { border-color: var(--err); }
+
+    .field-hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    .form-actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .fixture-bar {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .fixture-bar-label { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+
+    .fixture-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .fixture-banner {
+      background: var(--ex-bg);
+      border: 1px solid var(--ex-border);
+      color: var(--ex-text);
+      padding: 12px 16px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .summary-card {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .summary-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 10px; }
+
+    .summary-route { font-size: 26px; font-weight: 600; margin-bottom: 12px; }
+
+    .summary-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 13px;
+    }
+
+    .pill-ex { background: var(--ex-bg); border-color: var(--ex-border); color: var(--ex-text); font-weight: 700; }
+    .pill-logic { background: #e7e2d8; font-weight: 700; }
+
+    .warenbez-card { background: white; border: 1px solid var(--border); padding: 22px; margin-bottom: 22px; }
+    .warenbez-text { white-space: pre-line; font-size: 15px; }
+
+    .ruleset-count { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+
+    .ruleset-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--button-dark);
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .ruleset-card.is-ex { border-left-color: var(--ex-border); }
+
+    .ruleset-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+    .ruleset-header h3 { margin: 0; }
+    .ruleset-validity { font-size: 13px; color: var(--muted); }
+
+    .rulegroup-block { border-top: 1px solid var(--border); padding-top: 14px; margin-top: 14px; }
+    .rulegroup-block:first-of-type { border-top: none; padding-top: 0; margin-top: 14px; }
+    .rulegroup-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; display: flex; gap: 8px; align-items: center; }
+    .rulegroup-descr { font-size: 14px; white-space: pre-line; margin-bottom: 10px; }
+
+    .rule-fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .rule-field-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .rule-field-value { font-weight: 600; word-break: break-word; }
+    .rule-field-value.empty { color: var(--muted); font-weight: 400; }
+
+    details.tech-details, details.raw-json {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 18px 22px;
+      margin-bottom: 18px;
+    }
+
+    details summary { cursor: pointer; font-weight: 700; font-size: 15px; }
+
+    .tech-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13px; }
+    .tech-table th, .tech-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+    .tech-table th { color: var(--muted); font-weight: 700; width: 30%; }
+    .tech-block-title { font-size: 13px; font-weight: 700; margin-top: 18px; margin-bottom: 4px; }
+    .tech-block-title:first-child { margin-top: 0; }
+
+    pre.raw-json-pre {
+      background: #f3efe9;
+      border: 1px solid var(--border);
+      padding: 14px;
+      overflow: auto;
+      max-height: 500px;
+      font-size: 12px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .error-card { background: white; border: 1px solid var(--err); padding: 22px; margin-bottom: 22px; }
+    .error-card .status-title { color: var(--err); }
+    .error-detail { margin-top: 10px; font-size: 13px; color: var(--muted); }
+
+    .footer-note { margin-top: 10px; color: var(--muted); font-size: 13px; }
+
+    @media (max-width: 960px) {
+      .hero h1 { font-size: 32px; }
+      .form-grid { grid-template-columns: 1fr 1fr; }
+      .rule-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 620px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">opt</div>
+      <nav class="nav">
+        <a href="https://opt-hub.ai">Home</a>
+        <a href="/downloads.html">Downloads</a>
+        <a href="/rules-demo.html" class="current">Rules Demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>OPT.AI Rules API – Demo &amp; Testoberfläche</h1>
+        <p>
+          Fachliche Demonstration und technisches Testwerkzeug für die OPT.AI Rules API:
+          Herkunfts- und Zielland sowie Warennummer eingeben, die API entscheidet selbst,
+          welches Abkommen zutrifft, und liefert die passenden Ursprungsregeln.
+        </p>
+        <div class="scope-note">
+          Dies ist eine Demo-/Testoberfläche, <strong>keine Präferenzkalkulation</strong>.
+          Bei mehreren möglichen Ursprungsregeln (RuleSets) trifft diese Seite keine
+          fachliche Auswahl – sie zeigt transparent, was die API liefert.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Regel abfragen</h2>
+        <div class="section-intro">
+          Abgangsland, Zielland und Warennummer angeben. Das Abkommen wird von der API
+          automatisch ermittelt und erst im Ergebnis angezeigt.
+        </div>
+
+        <div class="status-card" id="session-status">
+          <div class="status-title">Sitzungsstatus</div>
+          <div style="color: var(--muted);">
+            Diese Seite nutzt Ihre bestehende Anmeldung (Cloudflare Access) für
+            <code>rules.opt-hub.ai</code> – wie auf der <a href="/downloads.html">Downloads-Seite</a>.
+            Der Status wird bei der ersten Abfrage geprüft.
+          </div>
+        </div>
+
+        <div class="form-card">
+          <form id="rules-form">
+            <div class="form-grid">
+              <div class="field">
+                <label for="country_from">Abgangsland</label>
+                <input type="text" id="country_from" name="country_from" maxlength="2"
+                       placeholder="z. B. DE" autocomplete="off" required />
+                <div class="field-hint">ISO-3166-1 alpha-2</div>
+              </div>
+              <div class="field">
+                <label for="country_to">Zielland</label>
+                <input type="text" id="country_to" name="country_to" maxlength="2"
+                       placeholder="z. B. CH" autocomplete="off" required />
+                <div class="field-hint">ISO-3166-1 alpha-2</div>
+              </div>
+              <div class="field">
+                <label for="hs_code">Warennummer (HS)</label>
+                <input type="text" id="hs_code" name="hs_code" maxlength="8" inputmode="numeric"
+                       placeholder="z. B. 5602" autocomplete="off" required />
+                <div class="field-hint">nur Ziffern, 2–8 Stellen</div>
+              </div>
+              <div class="field">
+                <label for="as_of_date">Stichtag</label>
+                <input type="date" id="as_of_date" name="as_of_date" />
+                <div class="field-hint">leer = heute</div>
+              </div>
+              <div class="field">
+                <label for="language">Sprache</label>
+                <select id="language" name="language">
+                  <option value="DE" selected>DE</option>
+                  <option value="EN">EN</option>
+                  <option value="FR">FR</option>
+                </select>
+                <div class="field-hint">Abdeckung ist abkommensabhängig</div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="submit-btn">Regel abfragen</button>
+              <span id="form-error" style="color: var(--err); font-size: 13px;"></span>
+            </div>
+          </form>
+
+          <div class="fixture-bar">
+            <div class="fixture-bar-label">
+              Beispiele mit echten, zuvor abgerufenen Produktionsdaten laden (offline, ohne Live-Aufruf):
+            </div>
+            <div class="fixture-buttons">
+              <button type="button" class="btn btn-secondary btn-small" data-fixture="single_8407">Einzelnes RuleSet (HS 8407)</button>
+              <button type="button" class="btn btn-secondary btn-small" data-fixture="multi_5602">Mehrere RuleSets (HS 5602)</button>
+              <button type="button" class="btn btn-secondary btn-small" data-fixture="multi_ex_1512">EX-Fall, mehrere RuleSets (HS 1512)</button>
+              <button type="button" class="btn btn-secondary btn-small" data-fixture="error_400">Fehlerfall: ungültige Eingabe (400)</button>
+              <button type="button" class="btn btn-secondary btn-small" data-fixture="error_404">Fehlerfall: kein Treffer (404)</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="result-area"></div>
+
+        <div class="footer-note">
+          Endpunkt: <code>POST https://rules.opt-hub.ai/v1/rules</code> ·
+          API-Version <code>v1</code> · Response-Version <code>v1.2</code>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<script>
+  const API_URL = "https://rules.opt-hub.ai/v1/rules";
+
+  // ---------------------------------------------------------------
+  // Fixtures: real production responses captured locally via
+  // services/rules-api/run_local_test.py against live Supabase data
+  // on 2026-08-22 (DE -> CH, content EU_RUE01). Used only for the
+  // "Beispiele laden" buttons below, so the page is testable and
+  // presentable even before rules.opt-hub.ai is reachable directly
+  // from the browser (see docs/analysis/RULES_API_DEMO_FRONTEND_
+  // ARCHITECTURE_AUDIT_V1.md, section N, in the opt-ai repository).
+  // Every fixture is rendered through the exact same renderResult/
+  // renderError functions as a live response and is always clearly
+  // labeled as a fixture in the UI.
+  // ---------------------------------------------------------------
+  const FIXTURES = {
+    single_8407: { kind: "result", label: "HS 8407 – DE → CH, EU_RUE01, 1 RuleSet", data: {"Request": {"country_from": "DE", "country_to": "CH", "hs_code": "8407", "language": "DE", "languages": ["DE"], "as_of_date": "2026-08-22"}, "Agreement": {"ContentId": "EU_RUE01", "StartCid": "01.01.2025", "EndCid": "31.12.9999", "ContentDescr": [{"language": "DE", "DescAg": "EU - Regionale Konvention Pan-Europa-Mittelmeer (PEM)"}], "CountryFrom": [{"ExpCo_isoa2": "AT", "ExpCo_descr": "Austria"}, {"ExpCo_isoa2": "BE", "ExpCo_descr": "Belgium"}, {"ExpCo_isoa2": "BG", "ExpCo_descr": "Bulgaria"}, {"ExpCo_isoa2": "CY", "ExpCo_descr": "Cyprus"}, {"ExpCo_isoa2": "CZ", "ExpCo_descr": "Czech Republic"}, {"ExpCo_isoa2": "DE", "ExpCo_descr": "Germany"}, {"ExpCo_isoa2": "DK", "ExpCo_descr": "Denmark"}, {"ExpCo_isoa2": "EE", "ExpCo_descr": "Estonia"}, {"ExpCo_isoa2": "ES", "ExpCo_descr": "Spain"}, {"ExpCo_isoa2": "FI", "ExpCo_descr": "Finland"}, {"ExpCo_isoa2": "FR", "ExpCo_descr": "France"}, {"ExpCo_isoa2": "GR", "ExpCo_descr": "Greece"}, {"ExpCo_isoa2": "HR", "ExpCo_descr": "Croatia"}, {"ExpCo_isoa2": "HU", "ExpCo_descr": "Hungary"}, {"ExpCo_isoa2": "IE", "ExpCo_descr": "Ireland"}, {"ExpCo_isoa2": "IT", "ExpCo_descr": "Italy"}, {"ExpCo_isoa2": "LT", "ExpCo_descr": "Lithuania"}, {"ExpCo_isoa2": "LU", "ExpCo_descr": "Luxembourg"}, {"ExpCo_isoa2": "LV", "ExpCo_descr": "Latvia"}, {"ExpCo_isoa2": "MT", "ExpCo_descr": "Malta"}, {"ExpCo_isoa2": "NL", "ExpCo_descr": "Netherlands"}, {"ExpCo_isoa2": "PL", "ExpCo_descr": "Poland"}, {"ExpCo_isoa2": "PT", "ExpCo_descr": "Portugal"}, {"ExpCo_isoa2": "RO", "ExpCo_descr": "Romania"}, {"ExpCo_isoa2": "SE", "ExpCo_descr": "Sweden"}, {"ExpCo_isoa2": "SI", "ExpCo_descr": "Slovenia"}, {"ExpCo_isoa2": "SK", "ExpCo_descr": "Slovakia"}], "CountryTo": [{"DestCo_isoa2": "AL", "DestCo_descr": "Albania"}, {"DestCo_isoa2": "BA", "DestCo_descr": "Bosnia and Herzegovina"}, {"DestCo_isoa2": "CH", "DestCo_descr": "Switzerland"}, {"DestCo_isoa2": "EG", "DestCo_descr": "Egypt"}, {"DestCo_isoa2": "FO", "DestCo_descr": "Faroe Islands"}, {"DestCo_isoa2": "GE", "DestCo_descr": "Georgia"}, {"DestCo_isoa2": "IL", "DestCo_descr": "Israel"}, {"DestCo_isoa2": "IS", "DestCo_descr": "Iceland"}, {"DestCo_isoa2": "JO", "DestCo_descr": "Jordan"}, {"DestCo_isoa2": "LI", "DestCo_descr": "Liechtenstein"}, {"DestCo_isoa2": "MA", "DestCo_descr": "Morocco"}, {"DestCo_isoa2": "MD", "DestCo_descr": "Moldova"}, {"DestCo_isoa2": "ME", "DestCo_descr": "Montenegro"}, {"DestCo_isoa2": "MK", "DestCo_descr": "North Macedonia"}, {"DestCo_isoa2": "NO", "DestCo_descr": "Norway"}, {"DestCo_isoa2": "PS", "DestCo_descr": "Palestine"}, {"DestCo_isoa2": "RS", "DestCo_descr": "Serbia"}, {"DestCo_isoa2": "TN", "DestCo_descr": "Tunesia"}, {"DestCo_isoa2": "UA", "DestCo_descr": "Ukraine"}, {"DestCo_isoa2": "XK", "DestCo_descr": "Kosovo"}, {"DestCo_isoa2": "XS", "DestCo_descr": "Serbia"}], "Tolerances": [{"Tolfrom": "50", "Tolto": "63", "Tolval": "15", "Tolieflag": "EXCL", "Tolwflag": "0", "Orcrittol": ""}], "RuleSets": [{"Hspos": "8407", "StartRset": "01.01.2025", "EndRset": "31.12.9999", "Hsposindx": "1", "ExFlag": "0", "RuleSetDescr": [{"language": "DE", "DescRset": "Hub- und Rotationskolbenverbrennungsmotoren mit Fremdzündung\nKERNREAKTOREN, KESSEL, MASCHINEN, APPARATE UND MECHANISCHE GERÄTE; TEILE DAVON :"}], "RuleGroups": [{"RGroup": "1", "RGroupLog": "AND", "SubGroupNo": "", "StartRgroup": "01.01.2025", "EndRgroup": "31.12.9999", "RuleGroupDescr": [{"language": "DE", "DescRg": "Herstellen, bei dem der Wert aller verwendeten Vormaterialien 50 v. H. des Ab-Werk-Preises des Erzeugnisses nicht überschreitet"}], "Rules": [{"RuleNo": "1", "RLogic": "AND", "RDefinition": "HSRANGE", "HsRange": "*", "Roperator": "LE", "Rpercent": "50", "Rtarget": "VOU", "Rproof": "TOP", "ProofAlt": "", "WeightR": "0", "Rorcrit": ""}]}]}]}, "DecisionSummary": {"rule_set_count": 1, "rule_group_count": 1, "rule_count": 1}, "Meta": {"api_version": "v1", "response_version": "v1.2", "generated_at": "2026-08-22T16:13:22.363454+00:00"}, "Trace": {"allowed_contents": ["CH_EXAMPLE01", "EU_AD01", "EU_AND01", "EU_CA01", "EU_CAM01", "EU_CAR01", "EU_CAS01", "EU_CI01", "EU_CL01", "EU_EAC01", "EU_GB01", "EU_GH01", "EU_JP01", "EU_KR01", "EU_MCS01", "EU_MX01", "EU_NZ01", "EU_OCT01", "EU_RUE01", "EU_SG01", "EU_TR01", "EU_VN01"], "content_candidates": ["EU_RUE01"], "content_selection": {"selected_content_id": "EU_RUE01", "selection_reason": "Selected best deterministic content candidate for the matched country pair and HS scope."}, "hs_attempts": ["8407", "84"], "hs_resolution": {"matched_hs": "8407", "hs_match_level": 4, "fallback_used": false}, "rule_set_resolution": {"matched_rule_set_count": 1, "matched_rule_set_ids": ["EU_RUE01_HS8407-S1"]}, "rule_group_resolution": {"matched_rule_group_count": 1}, "rule_resolution": {"matched_rule_count": 1}, "text_resolution": {"requested_languages": ["DE"]}}} },
+    multi_5602: { kind: "result", label: "HS 5602 – DE → CH, EU_RUE01, 2 RuleSets", data: {"Request": {"country_from": "DE", "country_to": "CH", "hs_code": "5602", "language": "DE", "languages": ["DE"], "as_of_date": "2026-08-22"}, "Agreement": {"ContentId": "EU_RUE01", "StartCid": "01.01.2025", "EndCid": "31.12.9999", "ContentDescr": [{"language": "DE", "DescAg": "EU - Regionale Konvention Pan-Europa-Mittelmeer (PEM)"}], "CountryFrom": [{"ExpCo_isoa2": "AT", "ExpCo_descr": "Austria"}, {"ExpCo_isoa2": "BE", "ExpCo_descr": "Belgium"}, {"ExpCo_isoa2": "BG", "ExpCo_descr": "Bulgaria"}, {"ExpCo_isoa2": "CY", "ExpCo_descr": "Cyprus"}, {"ExpCo_isoa2": "CZ", "ExpCo_descr": "Czech Republic"}, {"ExpCo_isoa2": "DE", "ExpCo_descr": "Germany"}, {"ExpCo_isoa2": "DK", "ExpCo_descr": "Denmark"}, {"ExpCo_isoa2": "EE", "ExpCo_descr": "Estonia"}, {"ExpCo_isoa2": "ES", "ExpCo_descr": "Spain"}, {"ExpCo_isoa2": "FI", "ExpCo_descr": "Finland"}, {"ExpCo_isoa2": "FR", "ExpCo_descr": "France"}, {"ExpCo_isoa2": "GR", "ExpCo_descr": "Greece"}, {"ExpCo_isoa2": "HR", "ExpCo_descr": "Croatia"}, {"ExpCo_isoa2": "HU", "ExpCo_descr": "Hungary"}, {"ExpCo_isoa2": "IE", "ExpCo_descr": "Ireland"}, {"ExpCo_isoa2": "IT", "ExpCo_descr": "Italy"}, {"ExpCo_isoa2": "LT", "ExpCo_descr": "Lithuania"}, {"ExpCo_isoa2": "LU", "ExpCo_descr": "Luxembourg"}, {"ExpCo_isoa2": "LV", "ExpCo_descr": "Latvia"}, {"ExpCo_isoa2": "MT", "ExpCo_descr": "Malta"}, {"ExpCo_isoa2": "NL", "ExpCo_descr": "Netherlands"}, {"ExpCo_isoa2": "PL", "ExpCo_descr": "Poland"}, {"ExpCo_isoa2": "PT", "ExpCo_descr": "Portugal"}, {"ExpCo_isoa2": "RO", "ExpCo_descr": "Romania"}, {"ExpCo_isoa2": "SE", "ExpCo_descr": "Sweden"}, {"ExpCo_isoa2": "SI", "ExpCo_descr": "Slovenia"}, {"ExpCo_isoa2": "SK", "ExpCo_descr": "Slovakia"}], "CountryTo": [{"DestCo_isoa2": "AL", "DestCo_descr": "Albania"}, {"DestCo_isoa2": "BA", "DestCo_descr": "Bosnia and Herzegovina"}, {"DestCo_isoa2": "CH", "DestCo_descr": "Switzerland"}, {"DestCo_isoa2": "EG", "DestCo_descr": "Egypt"}, {"DestCo_isoa2": "FO", "DestCo_descr": "Faroe Islands"}, {"DestCo_isoa2": "GE", "DestCo_descr": "Georgia"}, {"DestCo_isoa2": "IL", "DestCo_descr": "Israel"}, {"DestCo_isoa2": "IS", "DestCo_descr": "Iceland"}, {"DestCo_isoa2": "JO", "DestCo_descr": "Jordan"}, {"DestCo_isoa2": "LI", "DestCo_descr": "Liechtenstein"}, {"DestCo_isoa2": "MA", "DestCo_descr": "Morocco"}, {"DestCo_isoa2": "MD", "DestCo_descr": "Moldova"}, {"DestCo_isoa2": "ME", "DestCo_descr": "Montenegro"}, {"DestCo_isoa2": "MK", "DestCo_descr": "North Macedonia"}, {"DestCo_isoa2": "NO", "DestCo_descr": "Norway"}, {"DestCo_isoa2": "PS", "DestCo_descr": "Palestine"}, {"DestCo_isoa2": "RS", "DestCo_descr": "Serbia"}, {"DestCo_isoa2": "TN", "DestCo_descr": "Tunesia"}, {"DestCo_isoa2": "UA", "DestCo_descr": "Ukraine"}, {"DestCo_isoa2": "XK", "DestCo_descr": "Kosovo"}, {"DestCo_isoa2": "XS", "DestCo_descr": "Serbia"}], "Tolerances": [{"Tolfrom": "50", "Tolto": "63", "Tolval": "15", "Tolieflag": "EXCL", "Tolwflag": "0", "Orcrittol": ""}], "RuleSets": [{"Hspos": "5602", "StartRset": "01.01.2025", "EndRset": "31.12.9999", "Hsposindx": "1", "ExFlag": "0", "RuleSetDescr": [{"language": "DE", "DescRset": "Filze, auch getränkt, bestrichen, überzogen oder mit Lagen versehen :\nWATTE, FILZE UND VLIESSTOFFE; SPEZIALGARNE; BINDFÄDEN, SEILE UND TAUE; SEILERWAREN :"}], "RuleGroups": [{"RGroup": "1", "RGroupLog": "AND", "SubGroupNo": "", "StartRgroup": "01.01.2025", "EndRgroup": "31.12.9999", "RuleGroupDescr": [{"language": "DE", "DescRg": "Extrudieren von Chemiefasern, mit Gewebebildung Jedoch dürfen \n - Monofile aus Polypropylen der Position 5402, \n - Spinnfasern aus Polypropylen der Position 5503 oder 5506 oder \n - Spinnkabel aus Filamenten aus Polypropylen der Position 5501, bei denen jeweils eine Faser oder ein Filament einen Titer von weniger als 9 dtex aufweist, verwendet werden, wenn ihr Gesamtwert 40 v. H. des Ab-Werk-Preises des Erzeugnisses nicht überschreitet  oder  Bei Filz aus natürlichen Fasern ausschließlich Bilden vliesartiger Gewebe"}], "Rules": [{"RuleNo": "1", "RLogic": "AND", "RDefinition": "DESCRIPTION", "HsRange": "", "Roperator": "", "Rpercent": "", "Rtarget": "VOU", "Rproof": "TOP", "ProofAlt": "", "WeightR": "0", "Rorcrit": ""}]}]}, {"Hspos": "5602", "StartRset": "01.01.2025", "EndRset": "31.12.9999", "Hsposindx": "2", "ExFlag": "0", "RuleSetDescr": [{"language": "DE", "DescRset": "Filze, auch getränkt, bestrichen, überzogen oder mit Lagen versehen :\nWATTE, FILZE UND VLIESSTOFFE; SPEZIALGARNE; BINDFÄDEN, SEILE UND TAUE; SEILERWAREN :"}], "RuleGroups": [{"RGroup": "1", "RGroupLog": "AND", "SubGroupNo": "", "StartRgroup": "01.01.2025", "EndRgroup": "31.12.9999", "RuleGroupDescr": [{"language": "DE", "DescRg": "Extrudieren von Chemiefasern, mit Gewebebildung oder Bei anderen Filzen aus natürlichen Fasern ausschließlich Bilden vliesartiger Gewebe"}], "Rules": [{"RuleNo": "1", "RLogic": "AND", "RDefinition": "DESCRIPTION", "HsRange": "", "Roperator": "", "Rpercent": "", "Rtarget": "VOU", "Rproof": "TOP", "ProofAlt": "", "WeightR": "0", "Rorcrit": ""}]}]}]}, "DecisionSummary": {"rule_set_count": 2, "rule_group_count": 2, "rule_count": 2}, "Meta": {"api_version": "v1", "response_version": "v1.2", "generated_at": "2026-08-22T16:13:26.608848+00:00"}, "Trace": {"allowed_contents": ["CH_EXAMPLE01", "EU_AD01", "EU_AND01", "EU_CA01", "EU_CAM01", "EU_CAR01", "EU_CAS01", "EU_CI01", "EU_CL01", "EU_EAC01", "EU_GB01", "EU_GH01", "EU_JP01", "EU_KR01", "EU_MCS01", "EU_MX01", "EU_NZ01", "EU_OCT01", "EU_RUE01", "EU_SG01", "EU_TR01", "EU_VN01"], "content_candidates": ["EU_RUE01"], "content_selection": {"selected_content_id": "EU_RUE01", "selection_reason": "Selected best deterministic content candidate for the matched country pair and HS scope."}, "hs_attempts": ["5602", "56"], "hs_resolution": {"matched_hs": "5602", "hs_match_level": 4, "fallback_used": false}, "rule_set_resolution": {"matched_rule_set_count": 2, "matched_rule_set_ids": ["EU_RUE01_HS5602-S1", "EU_RUE01_HS5602-S2"]}, "rule_group_resolution": {"matched_rule_group_count": 2}, "rule_resolution": {"matched_rule_count": 2}, "text_resolution": {"requested_languages": ["DE"]}}} },
+    multi_ex_1512: { kind: "result", label: "HS 1512 – DE → CH, EU_RUE01, 2 RuleSets, EX-Fall", data: {"Request": {"country_from": "DE", "country_to": "CH", "hs_code": "1512", "language": "DE", "languages": ["DE"], "as_of_date": "2026-08-22"}, "Agreement": {"ContentId": "EU_RUE01", "StartCid": "01.01.2025", "EndCid": "31.12.9999", "ContentDescr": [{"language": "DE", "DescAg": "EU - Regionale Konvention Pan-Europa-Mittelmeer (PEM)"}], "CountryFrom": [{"ExpCo_isoa2": "AT", "ExpCo_descr": "Austria"}, {"ExpCo_isoa2": "BE", "ExpCo_descr": "Belgium"}, {"ExpCo_isoa2": "BG", "ExpCo_descr": "Bulgaria"}, {"ExpCo_isoa2": "CY", "ExpCo_descr": "Cyprus"}, {"ExpCo_isoa2": "CZ", "ExpCo_descr": "Czech Republic"}, {"ExpCo_isoa2": "DE", "ExpCo_descr": "Germany"}, {"ExpCo_isoa2": "DK", "ExpCo_descr": "Denmark"}, {"ExpCo_isoa2": "EE", "ExpCo_descr": "Estonia"}, {"ExpCo_isoa2": "ES", "ExpCo_descr": "Spain"}, {"ExpCo_isoa2": "FI", "ExpCo_descr": "Finland"}, {"ExpCo_isoa2": "FR", "ExpCo_descr": "France"}, {"ExpCo_isoa2": "GR", "ExpCo_descr": "Greece"}, {"ExpCo_isoa2": "HR", "ExpCo_descr": "Croatia"}, {"ExpCo_isoa2": "HU", "ExpCo_descr": "Hungary"}, {"ExpCo_isoa2": "IE", "ExpCo_descr": "Ireland"}, {"ExpCo_isoa2": "IT", "ExpCo_descr": "Italy"}, {"ExpCo_isoa2": "LT", "ExpCo_descr": "Lithuania"}, {"ExpCo_isoa2": "LU", "ExpCo_descr": "Luxembourg"}, {"ExpCo_isoa2": "LV", "ExpCo_descr": "Latvia"}, {"ExpCo_isoa2": "MT", "ExpCo_descr": "Malta"}, {"ExpCo_isoa2": "NL", "ExpCo_descr": "Netherlands"}, {"ExpCo_isoa2": "PL", "ExpCo_descr": "Poland"}, {"ExpCo_isoa2": "PT", "ExpCo_descr": "Portugal"}, {"ExpCo_isoa2": "RO", "ExpCo_descr": "Romania"}, {"ExpCo_isoa2": "SE", "ExpCo_descr": "Sweden"}, {"ExpCo_isoa2": "SI", "ExpCo_descr": "Slovenia"}, {"ExpCo_isoa2": "SK", "ExpCo_descr": "Slovakia"}], "CountryTo": [{"DestCo_isoa2": "AL", "DestCo_descr": "Albania"}, {"DestCo_isoa2": "BA", "DestCo_descr": "Bosnia and Herzegovina"}, {"DestCo_isoa2": "CH", "DestCo_descr": "Switzerland"}, {"DestCo_isoa2": "EG", "DestCo_descr": "Egypt"}, {"DestCo_isoa2": "FO", "DestCo_descr": "Faroe Islands"}, {"DestCo_isoa2": "GE", "DestCo_descr": "Georgia"}, {"DestCo_isoa2": "IL", "DestCo_descr": "Israel"}, {"DestCo_isoa2": "IS", "DestCo_descr": "Iceland"}, {"DestCo_isoa2": "JO", "DestCo_descr": "Jordan"}, {"DestCo_isoa2": "LI", "DestCo_descr": "Liechtenstein"}, {"DestCo_isoa2": "MA", "DestCo_descr": "Morocco"}, {"DestCo_isoa2": "MD", "DestCo_descr": "Moldova"}, {"DestCo_isoa2": "ME", "DestCo_descr": "Montenegro"}, {"DestCo_isoa2": "MK", "DestCo_descr": "North Macedonia"}, {"DestCo_isoa2": "NO", "DestCo_descr": "Norway"}, {"DestCo_isoa2": "PS", "DestCo_descr": "Palestine"}, {"DestCo_isoa2": "RS", "DestCo_descr": "Serbia"}, {"DestCo_isoa2": "TN", "DestCo_descr": "Tunesia"}, {"DestCo_isoa2": "UA", "DestCo_descr": "Ukraine"}, {"DestCo_isoa2": "XK", "DestCo_descr": "Kosovo"}, {"DestCo_isoa2": "XS", "DestCo_descr": "Serbia"}], "Tolerances": [{"Tolfrom": "50", "Tolto": "63", "Tolval": "15", "Tolieflag": "EXCL", "Tolwflag": "0", "Orcrittol": ""}], "RuleSets": [{"Hspos": "1512", "StartRset": "01.01.2025", "EndRset": "31.12.9999", "Hsposindx": "1", "ExFlag": "1", "RuleSetDescr": [{"language": "DE", "DescRset": "Sonnenblumenöl, Safloröl und Baumwollsamenöl sowie deren Fraktionen, auch raffiniert, jedoch nicht chemisch modifiziert:\nTIERISCHE UND PFLANZLICHE FETTE UND ÖLE;  ERZEUGNISSE IHRER SPALTUNG; GENIESSBARE VERARBEITETE FETTE; WACHSE TIERISCHEN UND PFLANZLICHEN URSPRUNGS :"}], "RuleGroups": [{"RGroup": "1", "RGroupLog": "AND", "SubGroupNo": "", "StartRgroup": "01.01.2025", "EndRgroup": "31.12.9999", "RuleGroupDescr": [{"language": "DE", "DescRg": "Herstellen aus Vormaterialien jeder Position, ausgenommen aus Vormaterialien derselben Position wie das Erzeugnis,"}], "Rules": [{"RuleNo": "1", "RLogic": "AND", "RDefinition": "HSRANGE", "HsRange": "1512", "Roperator": "EQ", "Rpercent": "0", "Rtarget": "VOU", "Rproof": "TOP", "ProofAlt": "", "WeightR": "0", "Rorcrit": ""}]}]}, {"Hspos": "1512", "StartRset": "01.01.2025", "EndRset": "31.12.9999", "Hsposindx": "2", "ExFlag": "1", "RuleSetDescr": [{"language": "DE", "DescRset": "Sonnenblumenöl, Safloröl und Baumwollsamenöl sowie deren Fraktionen, auch raffiniert, jedoch nicht chemisch modifiziert:\nTIERISCHE UND PFLANZLICHE FETTE UND ÖLE;  ERZEUGNISSE IHRER SPALTUNG; GENIESSBARE VERARBEITETE FETTE; WACHSE TIERISCHEN UND PFLANZLICHEN URSPRUNGS :"}], "RuleGroups": [{"RGroup": "1", "RGroupLog": "AND", "SubGroupNo": "", "StartRgroup": "01.01.2025", "EndRgroup": "31.12.9999", "RuleGroupDescr": [{"language": "DE", "DescRg": "Herstellen, bei dem alle verwendeten pflanzlichen Vormaterialien vollständig gewonnen oder hergestellt sind"}], "Rules": [{"RuleNo": "1", "RLogic": "AND", "RDefinition": "DESCRIPTION", "HsRange": "", "Roperator": "", "Rpercent": "", "Rtarget": "VOU", "Rproof": "TOP", "ProofAlt": "", "WeightR": "0", "Rorcrit": ""}]}]}]}, "DecisionSummary": {"rule_set_count": 2, "rule_group_count": 2, "rule_count": 2}, "Meta": {"api_version": "v1", "response_version": "v1.2", "generated_at": "2026-08-22T16:13:30.176454+00:00"}, "Trace": {"allowed_contents": ["CH_EXAMPLE01", "EU_AD01", "EU_AND01", "EU_CA01", "EU_CAM01", "EU_CAR01", "EU_CAS01", "EU_CI01", "EU_CL01", "EU_EAC01", "EU_GB01", "EU_GH01", "EU_JP01", "EU_KR01", "EU_MCS01", "EU_MX01", "EU_NZ01", "EU_OCT01", "EU_RUE01", "EU_SG01", "EU_TR01", "EU_VN01"], "content_candidates": ["EU_RUE01"], "content_selection": {"selected_content_id": "EU_RUE01", "selection_reason": "Selected best deterministic content candidate for the matched country pair and HS scope."}, "hs_attempts": ["1512", "15"], "hs_resolution": {"matched_hs": "1512", "hs_match_level": 4, "fallback_used": false}, "rule_set_resolution": {"matched_rule_set_count": 2, "matched_rule_set_ids": ["EU_RUE01_HS1512-S1", "EU_RUE01_HS1512-S2"]}, "rule_group_resolution": {"matched_rule_group_count": 2}, "rule_resolution": {"matched_rule_count": 2}, "text_resolution": {"requested_languages": ["DE"]}}} },
+    error_400: { kind: "error", label: "Fehlender hs_code", statusCode: 400, data: {"error": {"code": "OPT-REQ-001", "message": "Missing required fields", "details": {"missing_fields": ["hs_code"]}}} },
+    error_404: { kind: "error", label: "US → CH, HS 5602 – keine Regel für dieses Länderpaar", statusCode: 404, data: {"error": {"code": "OPT-RULE-001", "message": "No matching rule found", "details": {"country_from": "US", "country_to": "CH", "hs_attempts": ["5602", "56"], "allowed_contents": ["CH_EXAMPLE01", "EU_AD01", "EU_AND01", "EU_CA01", "EU_CAM01", "EU_CAR01", "EU_CAS01", "EU_CI01", "EU_CL01", "EU_EAC01", "EU_GB01", "EU_GH01", "EU_JP01", "EU_KR01", "EU_MCS01", "EU_MX01", "EU_NZ01", "EU_OCT01", "EU_RUE01", "EU_SG01", "EU_TR01", "EU_VN01"]}}} }
+  };
+
+  const ERROR_MESSAGES = {
+    "OPT-REQ-001": "Die Eingabe ist unvollständig oder ungültig.",
+    "OPT-AUTH-001": "Keine gültige Anmeldung erkannt. Bitte über Cloudflare Access anmelden und erneut versuchen.",
+    "OPT-RULE-001": "Für diese Kombination aus Ländern, Warennummer und Stichtag wurde keine passende Regel gefunden.",
+    "OPT-SYS-001": "Im Rules-Service ist ein interner Fehler aufgetreten."
+  };
+
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  function ruleFieldRow(label, value) {
+    const empty = value === null || value === undefined || value === "";
+    return `<div>
+      <div class="rule-field-label">${escapeHtml(label)}</div>
+      <div class="rule-field-value${empty ? " empty" : ""}">${empty ? "—" : escapeHtml(value)}</div>
+    </div>`;
+  }
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  async function fetchWithRetry(url, options, retries = 2, delays = [1200, 2000]) {
+    let lastErr;
+    for (let attempt = 0; attempt < retries + 1; attempt++) {
+      try {
+        const response = await fetch(url, {
+          mode: "cors",
+          cache: "no-store",
+          credentials: "include",
+          ...options,
+          headers: { "Accept": "application/json", "Content-Type": "application/json", ...(options.headers || {}) }
+        });
+
+        let body = null;
+        try { body = await response.json(); } catch (e) {
+          throw { network: true, message: "Antwort konnte nicht als JSON gelesen werden." };
+        }
+
+        // Only retry on transient server errors, never on a deterministic
+        // 4xx answer (that is a real, final decision from the API).
+        if (response.status >= 500 && attempt < retries) {
+          lastErr = { network: false, statusCode: response.status, body };
+          await sleep(delays[attempt] ?? delays[delays.length - 1] ?? 1500);
+          continue;
+        }
+
+        return { statusCode: response.status, body };
+      } catch (err) {
+        lastErr = { network: true, message: err && err.message ? err.message : String(err) };
+        if (attempt < retries) {
+          await sleep(delays[attempt] ?? delays[delays.length - 1] ?? 1500);
+          continue;
+        }
+      }
+    }
+    throw lastErr;
+  }
+
+  function setSessionStatus(ok, text) {
+    const box = document.getElementById("session-status");
+    box.innerHTML = `
+      <div class="status-title">Sitzungsstatus</div>
+      <div class="${ok ? "status-ok" : "status-err"}">${ok ? "✅" : "⚠️"} ${escapeHtml(text)}</div>
+    `;
+  }
+
+  function renderRuleFields(rule) {
+    return `<div class="rule-fields">
+      ${ruleFieldRow("RuleNo", rule.RuleNo)}
+      ${ruleFieldRow("RLogic", rule.RLogic)}
+      ${ruleFieldRow("RDefinition", rule.RDefinition)}
+      ${ruleFieldRow("HsRange", rule.HsRange)}
+      ${ruleFieldRow("Roperator", rule.Roperator)}
+      ${ruleFieldRow("Rpercent", rule.Rpercent)}
+      ${ruleFieldRow("Rtarget", rule.Rtarget)}
+      ${ruleFieldRow("Rproof", rule.Rproof)}
+      ${ruleFieldRow("ProofAlt", rule.ProofAlt)}
+      ${ruleFieldRow("WeightR", rule.WeightR)}
+      ${ruleFieldRow("Rorcrit", rule.Rorcrit)}
+    </div>`;
+  }
+
+  function renderRuleGroup(rg) {
+    const descr = (rg.RuleGroupDescr || []).map(d => d.DescRg).filter(Boolean).join("\n\n");
+    const rules = (rg.Rules || []).map(renderRuleFields).join("");
+    return `<div class="rulegroup-block">
+      <div class="rulegroup-title">
+        RuleGroup ${escapeHtml(rg.RGroup)}
+        <span class="pill pill-logic">${escapeHtml(rg.RGroupLog || "—")}</span>
+        ${rg.SubGroupNo ? `<span class="pill">SubGroupNo ${escapeHtml(rg.SubGroupNo)}</span>` : ""}
+      </div>
+      ${descr ? `<div class="rulegroup-descr">${escapeHtml(descr)}</div>` : ""}
+      ${rules}
+    </div>`;
+  }
+
+  function renderRuleSetCard(rs, index, total) {
+    const isEx = String(rs.ExFlag) === "1";
+    const descr = (rs.RuleSetDescr || []).map(d => d.DescRset).filter(Boolean).join("\n\n");
+    const groups = (rs.RuleGroups || []).map(renderRuleGroup).join("");
+    return `<div class="ruleset-card${isEx ? " is-ex" : ""}">
+      <div class="ruleset-header">
+        <h3>RuleSet ${index + 1} von ${total} — HS ${escapeHtml(rs.Hspos)} / Hsposindx ${escapeHtml(rs.Hsposindx)}</h3>
+        <span class="ruleset-validity">gültig ${escapeHtml(rs.StartRset || "—")} – ${escapeHtml(rs.EndRset || "—")}</span>
+      </div>
+      <div style="margin-bottom: 10px;">
+        ${isEx ? `<span class="pill pill-ex">EX-Kennzeichen gesetzt</span>` : `<span class="pill">kein EX-Kennzeichen</span>`}
+      </div>
+      ${descr ? `<div style="white-space: pre-line; font-size: 14px; margin-bottom: 10px;">${escapeHtml(descr)}</div>` : ""}
+      ${groups}
+    </div>`;
+  }
+
+  function renderTechDetails(agreement) {
+    const rows = [
+      ["ContentId", agreement.ContentId], ["StartCid", agreement.StartCid], ["EndCid", agreement.EndCid]
+    ].map(([k, v]) => `<tr><th>${k}</th><td>${v ? escapeHtml(v) : "—"}</td></tr>`).join("");
+
+    const tolerances = (agreement.Tolerances || []).map((t, i) => `
+      <table class="tech-table"><tbody>
+        <tr><th>Tolfrom</th><td>${escapeHtml(t.Tolfrom || "—")}</td></tr>
+        <tr><th>Tolto</th><td>${escapeHtml(t.Tolto || "—")}</td></tr>
+        <tr><th>Tolval</th><td>${escapeHtml(t.Tolval || "—")}</td></tr>
+        <tr><th>Tolieflag</th><td>${escapeHtml(t.Tolieflag || "—")}</td></tr>
+        <tr><th>Tolwflag</th><td>${escapeHtml(t.Tolwflag || "—")}</td></tr>
+        <tr><th>Orcrittol</th><td>${escapeHtml(t.Orcrittol || "—")}</td></tr>
+      </tbody></table>`).join("");
+
+    const ruleSets = (agreement.RuleSets || []).map((rs, i) => {
+      const rgRows = (rs.RuleGroups || []).map(rg => `
+        <table class="tech-table"><tbody>
+          <tr><th>RGroup</th><td>${escapeHtml(rg.RGroup)}</td></tr>
+          <tr><th>RGroupLog</th><td>${escapeHtml(rg.RGroupLog)}</td></tr>
+          <tr><th>SubGroupNo</th><td>${rg.SubGroupNo ? escapeHtml(rg.SubGroupNo) : "—"}</td></tr>
+          <tr><th>StartRgroup / EndRgroup</th><td>${escapeHtml(rg.StartRgroup || "—")} – ${escapeHtml(rg.EndRgroup || "—")}</td></tr>
+        </tbody></table>`).join("");
+      return `
+        <div class="tech-block-title">RuleSet ${i + 1}: Hspos ${escapeHtml(rs.Hspos)} / Hsposindx ${escapeHtml(rs.Hsposindx)}</div>
+        <table class="tech-table"><tbody>
+          <tr><th>ExFlag</th><td>${escapeHtml(rs.ExFlag)}</td></tr>
+          <tr><th>StartRset / EndRset</th><td>${escapeHtml(rs.StartRset || "—")} – ${escapeHtml(rs.EndRset || "—")}</td></tr>
+        </tbody></table>
+        ${rgRows}
+      `;
+    }).join("");
+
+    return `<details class="tech-details">
+      <summary>Technische Details</summary>
+      <div class="tech-block-title">Content / Agreement</div>
+      <table class="tech-table"><tbody>${rows}</tbody></table>
+      ${tolerances ? `<div class="tech-block-title">Tolerances</div>${tolerances}` : ""}
+      ${ruleSets}
+    </details>`;
+  }
+
+  function renderRawJson(payload, targetId) {
+    const json = JSON.stringify(payload, null, 2);
+    return `<details class="raw-json">
+      <summary>API-Rohdaten (JSON)</summary>
+      <div style="margin: 10px 0;">
+        <button type="button" class="btn btn-secondary btn-small" onclick="window.__copyRawJson('${targetId}')">JSON kopieren</button>
+      </div>
+      <pre class="raw-json-pre" id="${targetId}">${escapeHtml(json)}</pre>
+    </details>`;
+  }
+
+  window.__copyRawJson = function (id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const text = el.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
+  };
+
+  function renderResult(body, request, opts) {
+    opts = opts || {};
+    const agreement = body.Agreement || {};
+    const ruleSets = agreement.RuleSets || [];
+    const summary = body.DecisionSummary || {};
+    const trace = body.Trace || {};
+    const req = body.Request || request || {};
+
+    const agreementDescr = (agreement.ContentDescr || []).map(d => d.DescAg).filter(Boolean).join(" / ");
+    const firstDescr = ruleSets.length ? (ruleSets[0].RuleSetDescr || []).map(d => d.DescRset).filter(Boolean).join("\n\n") : "";
+
+    const fixtureBanner = opts.fixtureLabel
+      ? `<div class="fixture-banner">FIXTURE (keine Live-Abfrage) — ${escapeHtml(opts.fixtureLabel)}. Stammt aus einem echten, zuvor lokal gegen die Produktions-Datenbasis ausgeführten Rules-API-Aufruf (Stand ${escapeHtml(body.Meta && body.Meta.generated_at || "unbekannt")}).</div>`
+      : "";
+
+    const html = `
+      ${fixtureBanner}
+      <div class="summary-card">
+        <div class="summary-title">Präferenzregel</div>
+        <div class="summary-route">${escapeHtml(req.country_from)} → ${escapeHtml(req.country_to)}</div>
+        <div class="summary-meta">
+          <span class="pill">HS ${escapeHtml(req.hs_code)}</span>
+          <span class="pill">Stichtag ${escapeHtml(req.as_of_date)}</span>
+          <span class="pill">Sprache ${escapeHtml(req.language)}</span>
+          <span class="pill">Abkommen/Content: ${escapeHtml(agreement.ContentId || "—")}</span>
+          <span class="pill">HS-Treffer-Ebene: ${escapeHtml(trace.hs_resolution ? trace.hs_resolution.hs_match_level : "—")} Stellen${trace.hs_resolution && trace.hs_resolution.fallback_used ? " (Fallback)" : ""}</span>
+        </div>
+        ${agreementDescr ? `<div style="margin-top: 10px; color: var(--muted);">${escapeHtml(agreementDescr)}</div>` : ""}
+      </div>
+
+      ${firstDescr ? `<div class="warenbez-card">
+        <div class="summary-title">Warenbezeichnung</div>
+        <div class="warenbez-text">${escapeHtml(firstDescr)}</div>
+      </div>` : ""}
+
+      <div>
+        <h3>Ursprungsregeln</h3>
+        <div class="ruleset-count">Mögliche RuleSets: ${summary.rule_set_count ?? ruleSets.length}${ruleSets.length > 1 ? " — keines davon ist automatisch \"das richtige\", alle werden gleichrangig angezeigt." : ""}</div>
+        ${ruleSets.map((rs, i) => renderRuleSetCard(rs, i, ruleSets.length)).join("")}
+      </div>
+
+      ${renderTechDetails(agreement)}
+      ${renderRawJson(body, "raw-json-result")}
+    `;
+
+    document.getElementById("result-area").innerHTML = html;
+  }
+
+  function renderError(body, statusCode, opts) {
+    opts = opts || {};
+    const err = (body && body.error) || {};
+    const code = err.code || `HTTP-${statusCode}`;
+    const friendly = ERROR_MESSAGES[code] || "Die Anfrage konnte nicht verarbeitet werden.";
+
+    const fixtureBanner = opts.fixtureLabel
+      ? `<div class="fixture-banner">FIXTURE (keine Live-Abfrage) — ${escapeHtml(opts.fixtureLabel)}.</div>`
+      : "";
+
+    const html = `
+      ${fixtureBanner}
+      <div class="error-card">
+        <div class="status-title">Fehler bei der Regelabfrage</div>
+        <div>${escapeHtml(friendly)}</div>
+        <div class="error-detail">Fehlercode: <code>${escapeHtml(code)}</code> · HTTP ${escapeHtml(statusCode)}</div>
+        ${err.message ? `<div class="error-detail">${escapeHtml(err.message)}</div>` : ""}
+      </div>
+      ${renderRawJson(body, "raw-json-error")}
+    `;
+
+    document.getElementById("result-area").innerHTML = html;
+  }
+
+  function renderNetworkError(message) {
+    document.getElementById("result-area").innerHTML = `
+      <div class="error-card">
+        <div class="status-title">Verbindung fehlgeschlagen</div>
+        <div>Der Rules-Service konnte nicht erreicht werden (Netzwerk-, CORS- oder Access-Problem).</div>
+        <div class="error-detail">${escapeHtml(message || "")}</div>
+      </div>
+    `;
+  }
+
+  function validateForm(values) {
+    if (!/^[A-Z]{2}$/.test(values.country_from)) return "Abgangsland: bitte einen 2-stelligen ISO-Ländercode angeben.";
+    if (!/^[A-Z]{2}$/.test(values.country_to)) return "Zielland: bitte einen 2-stelligen ISO-Ländercode angeben.";
+    if (!/^[0-9]{2,8}$/.test(values.hs_code)) return "Warennummer: bitte 2 bis 8 Ziffern angeben.";
+    return null;
+  }
+
+  function readFormValues() {
+    return {
+      country_from: document.getElementById("country_from").value.trim().toUpperCase(),
+      country_to: document.getElementById("country_to").value.trim().toUpperCase(),
+      hs_code: document.getElementById("hs_code").value.trim(),
+      as_of_date: document.getElementById("as_of_date").value.trim(),
+      language: document.getElementById("language").value
+    };
+  }
+
+  document.getElementById("country_from").addEventListener("input", e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, ""); });
+  document.getElementById("country_to").addEventListener("input", e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, ""); });
+  document.getElementById("hs_code").addEventListener("input", e => { e.target.value = e.target.value.replace(/[^0-9]/g, ""); });
+
+  (function prefillToday() {
+    const el = document.getElementById("as_of_date");
+    const d = new Date();
+    el.value = d.toISOString().slice(0, 10);
+  })();
+
+  document.getElementById("rules-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const errorEl = document.getElementById("form-error");
+    const submitBtn = document.getElementById("submit-btn");
+    errorEl.textContent = "";
+
+    const values = readFormValues();
+    const validationError = validateForm(values);
+    if (validationError) {
+      errorEl.textContent = validationError;
+      return;
+    }
+
+    const requestBody = {
+      country_from: values.country_from,
+      country_to: values.country_to,
+      hs_code: values.hs_code,
+      language: values.language
+    };
+    if (values.as_of_date) requestBody.as_of_date = values.as_of_date;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Frage ab …";
+    document.getElementById("result-area").innerHTML = `<div class="status-card">Regel wird abgefragt …</div>`;
+
+    try {
+      const { statusCode, body } = await fetchWithRetry(API_URL, {
+        method: "POST",
+        body: JSON.stringify(requestBody)
+      });
+
+      setSessionStatus(statusCode !== 403, statusCode === 403 ? "Nicht authentifiziert (403)." : "Verbindung zu rules.opt-hub.ai erfolgreich.");
+
+      if (statusCode === 200) {
+        renderResult(body, requestBody);
+      } else {
+        renderError(body, statusCode);
+      }
+    } catch (err) {
+      setSessionStatus(false, "Verbindung zu rules.opt-hub.ai fehlgeschlagen.");
+      renderNetworkError(err && err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Regel abfragen";
+    }
+  });
+
+  document.querySelectorAll("[data-fixture]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const key = btn.getAttribute("data-fixture");
+      const fixture = FIXTURES[key];
+      if (!fixture) return;
+      if (fixture.kind === "result") {
+        renderResult(fixture.data, fixture.data.Request, { fixtureLabel: fixture.label });
+      } else {
+        renderError(fixture.data, fixture.statusCode, { fixtureLabel: fixture.label });
+      }
+    });
+  });
+</script>
+</body>
+</html>
