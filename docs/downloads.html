@@ -131,13 +131,14 @@
       border-left: 1px solid var(--border);
       height: 320px;
       overflow: hidden;
+      min-width: 0;
     }
 
     .hero-image {
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center center;
     }
 
@@ -428,6 +429,7 @@
           </div>
           <div class="hero-visual">
             <img class="hero-image" src="/assets/opt-container.png"
+                 width="1024" height="1024"
                  alt="OPT.AI Container – Origin. People. Trade." />
           </div>
         </div>

@@ -86,11 +86,11 @@
     }
 
     .hero-text h1 {
-      font-size: 40px;
+      font-size: 44px;
       line-height: 1.1;
       font-weight: 500;
       margin: 0 0 10px;
-      max-width: 780px;
+      max-width: 720px;
     }
 
     .hero-claim {
@@ -111,13 +111,14 @@
       border-left: 1px solid var(--border);
       height: 320px;
       overflow: hidden;
+      min-width: 0;
     }
 
     .hero-image {
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center center;
     }
 
@@ -338,7 +339,7 @@
     .footer-note { margin-top: 10px; color: var(--muted); font-size: 13px; }
 
     @media (max-width: 960px) {
-      .hero h1 { font-size: 32px; }
+      .hero h1 { font-size: 42px; }
       .hero-text { padding: 28px; }
       .hero-visual { height: 260px; }
       .form-grid { grid-template-columns: 1fr 1fr; }
@@ -381,6 +382,7 @@
           </div>
           <div class="hero-visual">
             <img class="hero-image" src="/assets/opt-container.png"
+                 width="1024" height="1024"
                  alt="OPT.AI Container – Origin. People. Trade." />
           </div>
         </div>
