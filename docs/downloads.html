@@ -16,6 +16,7 @@
       --button-dark-hover: #111111;
       --button-light: #f5f3ef;
       --button-light-border: #222222;
+      --ex-text: #7a4a05;
     }
 
     * {
@@ -77,32 +78,67 @@
       padding: 40px 0 70px;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.95fr;
-      gap: 48px;
-      align-items: center;
+    .hero-panel {
+      border: 1px solid var(--border);
+      background: white;
     }
 
-    .hero h1 {
-      font-size: 58px;
-      line-height: 1.08;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.85fr 1fr;
+      align-items: stretch;
+    }
+
+    .hero-text {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ex-text);
+      margin-bottom: 10px;
+    }
+
+    .hero-text h1 {
+      font-size: 44px;
+      line-height: 1.1;
       font-weight: 500;
-      margin: 0 0 24px;
+      margin: 0 0 10px;
       max-width: 720px;
     }
 
-    .hero p {
-      font-size: 18px;
+    .hero-claim {
+      font-size: 14px;
       color: var(--muted);
-      max-width: 650px;
-      margin: 0 0 28px;
+      letter-spacing: 0.01em;
+      margin: 0 0 16px;
     }
 
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+    .hero-text p {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 650px;
+      margin: 0;
+    }
+
+    .hero-visual {
+      border-left: 1px solid var(--border);
+      height: 320px;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
     }
 
     .btn {
@@ -134,37 +170,6 @@
 
     .btn-secondary:hover {
       background: #ebe7e1;
-    }
-
-    .hero-card {
-      background: linear-gradient(180deg, #d8b56c 0%, #b98f43 100%);
-      min-height: 360px;
-      border-radius: 0;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      padding: 32px;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.18), transparent 45%),
-        linear-gradient(180deg, rgba(0,0,0,0.06), transparent 50%);
-      pointer-events: none;
-    }
-
-    .hero-card-label {
-      position: relative;
-      font-size: 54px;
-      font-weight: 700;
-      color: #1d1d1d;
-      letter-spacing: 0.01em;
     }
 
     .section {
@@ -353,12 +358,16 @@
 
 
     @media (max-width: 960px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
       .hero h1 {
         font-size: 42px;
+      }
+
+      .hero-text {
+        padding: 28px;
+      }
+
+      .hero-visual {
+        height: 260px;
       }
 
       .cards {
@@ -372,6 +381,22 @@
 
       .agreement-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text {
+        padding: 22px;
+      }
+
+      .hero-visual {
+        height: 220px;
+        border-left: none;
+        border-top: 1px solid var(--border);
       }
     }
   </style>
@@ -390,24 +415,20 @@
 
   <main>
     <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <h1>OPT – Content-Downloads für Trade &amp; Compliance</h1>
-          <p>
-            Geschützter Downloadbereich. Hier finden Sie alle für Ihr Unternehmen 
-            freigegebenen Inhalte übersichtlich und jederzeit abrufbar.
-          </p>
-
-          <div class="hero-actions">
-            <a href="#downloads" class="btn btn-primary">Downloads ansehen</a>
-            <a href="https://opt-hub.ai" class="btn btn-secondary">Zur Hauptseite</a>
+      <div class="container">
+        <div class="hero-panel hero-grid">
+          <div class="hero-text">
+            <div class="hero-eyebrow">Downloads</div>
+            <h1>OPT.AI Downloads</h1>
+            <div class="hero-claim">Origin. People. Trade.</div>
+            <p>
+              Hier finden Sie alle aktuellen Regelwerks-Daten, Schemadateien, Beschreibungen
+              und weiteren Ressourcen rund um OPT.AI.
+            </p>
           </div>
-        </div>
-
-        <div class="hero-card">
-          <div class="hero-card-label">
-            downloads<br>
-            <span style="font-size: 20px; font-weight: 400;">Customer Content</span>
+          <div class="hero-visual">
+            <img class="hero-image" src="/assets/opt-container.png"
+                 alt="OPT.AI Container – Origin. People. Trade." />
           </div>
         </div>
       </div>

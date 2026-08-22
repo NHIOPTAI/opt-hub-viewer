@@ -28,9 +28,8 @@ document just names and collects them.
 
 Professional, calm, modern, international-trade/B2B, technically
 clear. No playful consumer-UI patterns, no heavy marketing layout, no
-glassmorphism, no drop shadows beyond the one subtle inset already used
-on `.hero-card`, no animation beyond the existing `0.2s ease` hover
-transitions on buttons/tiles.
+glassmorphism, no drop shadows, no animation beyond the existing
+`0.2s ease` hover transitions on buttons/tiles.
 
 ## 4. Color tokens
 
@@ -72,10 +71,11 @@ inconsistency, not something this guide asks you to go fix
 retroactively, but a new page should use the `--err`/`--ok` variable
 form.
 
-**Warm brown/copper/beige accents** come from the `.hero-card`
-gradient (`linear-gradient(180deg, #d8b56c 0%, #b98f43 100%)`) and from
-`--ex-*`. There is no single "brand copper" hex constant beyond these —
-reuse one of these existing values rather than picking a new one.
+**Warm brown/copper/beige accents** come from `--ex-*` (reused on both
+pages as the hero eyebrow color, `--ex-text: #7a4a05`) and from the
+`docs/assets/opt-container.png` photo itself, used in the Standard Hero
+component (§9). There is no separate "brand copper" hex constant beyond
+`--ex-*` — reuse it rather than picking a new value.
 
 ## 5. Typography
 
@@ -240,6 +240,37 @@ is the standard input-form shape (`rules-demo.html`'s country/HS/date/
 language form). Reuse it for any future input form rather than
 building bespoke form markup.
 
+### Standard Hero / Split Hero
+
+The shared hero pattern on both `downloads.html` and `rules-demo.html`:
+one bordered `.hero-panel` (`border: 1px solid var(--border); background: white;`)
+containing a `.hero-grid` (`grid-template-columns: 1.85fr 1fr;` — roughly
+65/35), text on the left, an optional visual on the right:
+
+```css
+.hero-panel { border: 1px solid var(--border); background: white; }
+.hero-grid { display: grid; grid-template-columns: 1.85fr 1fr; align-items: stretch; }
+.hero-text { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+.hero-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ex-text); margin-bottom: 10px; }
+.hero-text h1 { font-size: 40–44px; line-height: 1.1; font-weight: 500; margin: 0 0 10px; }
+.hero-claim { font-size: 14px; color: var(--muted); margin: 0 0 16px; }
+.hero-text p { font-size: 17px; color: var(--muted); margin: 0; }
+.hero-visual { border-left: 1px solid var(--border); height: 320px; overflow: hidden; }
+.hero-image { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+```
+
+Content order inside `.hero-text` is always **Eyebrow → H1 → Claim →
+Beschreibung** — reuse that order for any future page's hero rather
+than inventing a new one. `--ex-text` is reused here purely as a warm
+accent color for the eyebrow (see §4) — it carries no "warning/EX"
+meaning outside `rules-demo.html`'s own RuleSet context.
+
+Responsive: keep the two-column split down to the 960px breakpoint
+(shrink `.hero-text` padding and `.hero-visual` height instead of
+stacking), then collapse `.hero-grid` to one column at 620px, with
+`.hero-visual`'s separating border switching from `border-left` to
+`border-top` since it now sits below the text rather than beside it.
+
 ## 10. Image usage
 
 - **Images are real static assets**, referenced by `<img src="/assets/...">`
@@ -251,16 +282,17 @@ building bespoke form markup.
   consistent with every other file in `docs/` (`downloads.html`,
   `rules-demo.html`, `attachments.html`) — avoid spaces in filenames
   used in `src`/`href`, since they need URL-encoding otherwise.
-- **Give images a clear, dedicated frame** — a bordered panel with
-  `object-fit: cover` and a deliberately chosen `object-position`
-  (see `docs/rules-demo.html`'s `.hero-image`) rather than a
-  full-bleed background image with text floating over it.
+- **Give images a clear, dedicated frame** — a bordered `.hero-visual`
+  panel with `object-fit: cover` and a deliberately chosen
+  `object-position`, sized so the crop stays mild (a near-square source
+  image cropped to a near-square frame keeps the whole motif legible;
+  avoid stretching a compact visual into a wide full-bleed banner,
+  which forces a much harsher crop) — see the Standard Hero component
+  above.
 - **Never place text directly on top of a complex/photographic image.**
-  If a hero needs both an image and a headline, stack them: image band
-  on top (or as a clearly separated card, as `.hero-card` already does
-  on `downloads.html` with a flat gradient instead of a photo), plain
-  light-background text panel below/beside it — exactly the structure
-  `rules-demo.html`'s hero now uses.
+  Keep image and text in clearly separate regions of the same framed
+  panel — side by side (`.hero-grid`, the current standard) or stacked,
+  never overlaid.
 
 ## 11. Brand claim: "Origin. People. Trade."
 

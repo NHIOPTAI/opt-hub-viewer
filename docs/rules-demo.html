@@ -61,21 +61,19 @@
     .hero-panel {
       border: 1px solid var(--border);
       background: white;
-      overflow: hidden;
     }
 
-    .hero-image {
-      display: block;
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      object-position: 68% 35%;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.85fr 1fr;
+      align-items: stretch;
     }
 
-    .hero-body {
-      padding: 32px 36px 30px;
-      background: linear-gradient(180deg, #faf8f5 0%, #f5f3ef 100%);
-      border-top: 1px solid var(--border);
+    .hero-text {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .hero-eyebrow {
@@ -87,7 +85,7 @@
       margin-bottom: 10px;
     }
 
-    .hero-body h1 {
+    .hero-text h1 {
       font-size: 40px;
       line-height: 1.1;
       font-weight: 500;
@@ -102,11 +100,25 @@
       margin: 0 0 16px;
     }
 
-    .hero-body p {
+    .hero-text p {
       font-size: 17px;
       color: var(--muted);
       max-width: 720px;
       margin: 0;
+    }
+
+    .hero-visual {
+      border-left: 1px solid var(--border);
+      height: 320px;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
     }
 
     .scope-note {
@@ -327,15 +339,16 @@
 
     @media (max-width: 960px) {
       .hero h1 { font-size: 32px; }
-      .hero-image { height: 240px; }
-      .hero-body { padding: 26px 24px 24px; }
+      .hero-text { padding: 28px; }
+      .hero-visual { height: 260px; }
       .form-grid { grid-template-columns: 1fr 1fr; }
       .rule-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 620px) {
-      .hero-image { height: 180px; }
-      .hero-body { padding: 22px 18px 20px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-text { padding: 22px; }
+      .hero-visual { height: 220px; border-left: none; border-top: 1px solid var(--border); }
       .form-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -355,10 +368,8 @@
   <main>
     <section class="hero">
       <div class="container">
-        <div class="hero-panel">
-          <img class="hero-image" src="/assets/opt-container.png"
-               alt="OPT.AI Container – Origin. People. Trade." />
-          <div class="hero-body">
+        <div class="hero-panel hero-grid">
+          <div class="hero-text">
             <div class="hero-eyebrow">Rules API</div>
             <h1>Live Origin Rules</h1>
             <div class="hero-claim">Origin. People. Trade.</div>
@@ -367,6 +378,10 @@
               und Warennummer wählen – die Rules API ermittelt das passende Abkommen und
               liefert die verfügbaren RuleSets transparent zurück.
             </p>
+          </div>
+          <div class="hero-visual">
+            <img class="hero-image" src="/assets/opt-container.png"
+                 alt="OPT.AI Container – Origin. People. Trade." />
           </div>
         </div>
         <div class="scope-note">
