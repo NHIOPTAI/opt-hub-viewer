@@ -159,6 +159,14 @@
 
     .field-hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
+    .field select:disabled { color: var(--muted); cursor: not-allowed; }
+
+    .country-load-status { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+    .country-load-status.country-load-err { color: var(--err); font-weight: 600; }
+
+    .dev-examples { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .dev-examples summary { cursor: pointer; font-weight: 700; font-size: 14px; }
+
     .form-actions {
       margin-top: 20px;
       display: flex;
@@ -339,19 +347,23 @@
         </div>
 
         <div class="form-card">
+          <div id="country-load-status" class="country-load-status">Länderdaten werden geladen …</div>
+
           <form id="rules-form">
             <div class="form-grid">
               <div class="field">
                 <label for="country_from">Abgangsland</label>
-                <input type="text" id="country_from" name="country_from" maxlength="2"
-                       placeholder="z. B. DE" autocomplete="off" required />
-                <div class="field-hint">ISO-3166-1 alpha-2</div>
+                <select id="country_from" name="country_from" required disabled>
+                  <option value="" selected disabled>Länder werden geladen …</option>
+                </select>
+                <div class="field-hint">aus verfügbaren Abkommen ermittelt</div>
               </div>
               <div class="field">
                 <label for="country_to">Zielland</label>
-                <input type="text" id="country_to" name="country_to" maxlength="2"
-                       placeholder="z. B. CH" autocomplete="off" required />
-                <div class="field-hint">ISO-3166-1 alpha-2</div>
+                <select id="country_to" name="country_to" required disabled>
+                  <option value="" selected disabled>zuerst Abgangsland wählen</option>
+                </select>
+                <div class="field-hint">nur tatsächlich verfügbare Relationen</div>
               </div>
               <div class="field">
                 <label for="hs_code">Warennummer (HS)</label>
@@ -381,24 +393,28 @@
             </div>
           </form>
 
-          <div class="fixture-bar">
-            <div class="fixture-bar-label">
-              Beispiele mit echten, zuvor abgerufenen Produktionsdaten laden (offline, ohne Live-Aufruf):
+          <details class="dev-examples">
+            <summary>Test- und Entwicklerbeispiele</summary>
+            <div class="fixture-bar" style="border-top: none; padding-top: 12px;">
+              <div class="fixture-bar-label">
+                Beispiele mit echten, zuvor abgerufenen Produktionsdaten laden (offline, ohne Live-Aufruf):
+              </div>
+              <div class="fixture-buttons">
+                <button type="button" class="btn btn-secondary btn-small" data-fixture="single_8407">Einzelnes RuleSet (HS 8407)</button>
+                <button type="button" class="btn btn-secondary btn-small" data-fixture="multi_5602">Mehrere RuleSets (HS 5602)</button>
+                <button type="button" class="btn btn-secondary btn-small" data-fixture="multi_ex_1512">EX-Fall, mehrere RuleSets (HS 1512)</button>
+                <button type="button" class="btn btn-secondary btn-small" data-fixture="error_400">Fehlerfall: ungültige Eingabe (400)</button>
+                <button type="button" class="btn btn-secondary btn-small" data-fixture="error_404">Fehlerfall: kein Treffer (404)</button>
+              </div>
             </div>
-            <div class="fixture-buttons">
-              <button type="button" class="btn btn-secondary btn-small" data-fixture="single_8407">Einzelnes RuleSet (HS 8407)</button>
-              <button type="button" class="btn btn-secondary btn-small" data-fixture="multi_5602">Mehrere RuleSets (HS 5602)</button>
-              <button type="button" class="btn btn-secondary btn-small" data-fixture="multi_ex_1512">EX-Fall, mehrere RuleSets (HS 1512)</button>
-              <button type="button" class="btn btn-secondary btn-small" data-fixture="error_400">Fehlerfall: ungültige Eingabe (400)</button>
-              <button type="button" class="btn btn-secondary btn-small" data-fixture="error_404">Fehlerfall: kein Treffer (404)</button>
-            </div>
-          </div>
+          </details>
         </div>
 
         <div id="result-area"></div>
 
         <div class="footer-note">
-          Endpunkt: <code>POST https://rules.opt-hub.ai/v1/rules</code> ·
+          Endpunkte: <code>GET https://rules.opt-hub.ai/v1/agreements</code> ·
+          <code>POST https://rules.opt-hub.ai/v1/rules</code> ·
           API-Version <code>v1</code> · Response-Version <code>v1.2</code>
         </div>
       </div>
@@ -407,6 +423,7 @@
 
 <script>
   const API_URL = "https://rules.opt-hub.ai/v1/rules";
+  const AGREEMENTS_URL = "https://rules.opt-hub.ai/v1/agreements";
 
   // ---------------------------------------------------------------
   // Fixtures: real production responses captured locally via
@@ -686,8 +703,8 @@
   }
 
   function validateForm(values) {
-    if (!/^[A-Z]{2}$/.test(values.country_from)) return "Abgangsland: bitte einen 2-stelligen ISO-Ländercode angeben.";
-    if (!/^[A-Z]{2}$/.test(values.country_to)) return "Zielland: bitte einen 2-stelligen ISO-Ländercode angeben.";
+    if (!/^[A-Z]{2}$/.test(values.country_from)) return "Abgangsland: bitte auswählen.";
+    if (!/^[A-Z]{2}$/.test(values.country_to)) return "Zielland: bitte auswählen.";
     if (!/^[0-9]{2,8}$/.test(values.hs_code)) return "Warennummer: bitte 2 bis 8 Ziffern angeben.";
     return null;
   }
@@ -702,8 +719,6 @@
     };
   }
 
-  document.getElementById("country_from").addEventListener("input", e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, ""); });
-  document.getElementById("country_to").addEventListener("input", e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, ""); });
   document.getElementById("hs_code").addEventListener("input", e => { e.target.value = e.target.value.replace(/[^0-9]/g, ""); });
 
   (function prefillToday() {
@@ -711,6 +726,131 @@
     const d = new Date();
     el.value = d.toISOString().slice(0, 10);
   })();
+
+  // ---------------------------------------------------------------
+  // Country/Agreement Discovery (RULES_API_DEMO_V2_COUNTRY_DISCOVERY_
+  // IMPLEMENTATION): GET /v1/agreements is fetched exactly once on
+  // page load. Abgangsland/Zielland dropdowns are built entirely from
+  // that one response -- no static country list is maintained here,
+  // no per-selection network call, and the dependent Zielland filter
+  // (Moeglichkeit 1) runs purely client-side against the already-
+  // loaded relation map. If Discovery fails, the dropdowns are left
+  // empty/disabled with an explicit error -- never backfilled with a
+  // hardcoded country list.
+  // ---------------------------------------------------------------
+  let COUNTRY_RELATIONS = null; // { fromNames: Map<iso2,name>, relations: Map<iso2, Map<iso2,name>> }
+
+  function buildCountryRelations(agreements) {
+    const fromNames = new Map();
+    const relations = new Map();
+
+    for (const agreement of agreements || []) {
+      for (const from of agreement.country_from || []) {
+        if (!from.iso2) continue;
+        if (!fromNames.has(from.iso2) || (!fromNames.get(from.iso2) && from.name)) {
+          fromNames.set(from.iso2, from.name || "");
+        }
+        if (!relations.has(from.iso2)) relations.set(from.iso2, new Map());
+        const toMap = relations.get(from.iso2);
+        for (const to of agreement.country_to || []) {
+          if (!to.iso2) continue;
+          if (!toMap.has(to.iso2) || (!toMap.get(to.iso2) && to.name)) {
+            toMap.set(to.iso2, to.name || "");
+          }
+        }
+      }
+    }
+
+    return { fromNames, relations };
+  }
+
+  function sortCountryEntries(countryMap) {
+    return Array.from(countryMap.entries())
+      .map(([iso2, name]) => ({ iso2, name }))
+      .sort((a, b) => {
+        const an = (a.name || a.iso2).toLowerCase();
+        const bn = (b.name || b.iso2).toLowerCase();
+        if (an !== bn) return an < bn ? -1 : 1;
+        return a.iso2 < b.iso2 ? -1 : a.iso2 > b.iso2 ? 1 : 0;
+      });
+  }
+
+  function populateCountrySelect(selectEl, entries, placeholder) {
+    selectEl.innerHTML = "";
+    const placeholderOpt = document.createElement("option");
+    placeholderOpt.value = "";
+    placeholderOpt.textContent = placeholder;
+    placeholderOpt.disabled = true;
+    placeholderOpt.selected = true;
+    selectEl.appendChild(placeholderOpt);
+
+    for (const entry of entries) {
+      const opt = document.createElement("option");
+      opt.value = entry.iso2;
+      opt.textContent = entry.name ? `${entry.iso2} — ${entry.name}` : entry.iso2;
+      selectEl.appendChild(opt);
+    }
+  }
+
+  function onCountryFromChange() {
+    const toSelect = document.getElementById("country_to");
+    const fromIso2 = document.getElementById("country_from").value;
+
+    if (!COUNTRY_RELATIONS || !fromIso2 || !COUNTRY_RELATIONS.relations.has(fromIso2)) {
+      populateCountrySelect(toSelect, [], "zuerst Abgangsland wählen");
+      toSelect.disabled = true;
+      return;
+    }
+
+    const toEntries = sortCountryEntries(COUNTRY_RELATIONS.relations.get(fromIso2));
+    populateCountrySelect(toSelect, toEntries, toEntries.length ? "bitte wählen …" : "keine Relation verfügbar");
+    toSelect.disabled = toEntries.length === 0;
+  }
+
+  document.getElementById("country_from").addEventListener("change", onCountryFromChange);
+
+  async function loadCountryDiscovery() {
+    const statusEl = document.getElementById("country-load-status");
+    const fromSelect = document.getElementById("country_from");
+    const toSelect = document.getElementById("country_to");
+
+    statusEl.textContent = "Länderdaten werden geladen …";
+    statusEl.classList.remove("country-load-err");
+
+    try {
+      const { statusCode, body } = await fetchWithRetry(AGREEMENTS_URL, { method: "GET" });
+
+      if (statusCode !== 200) {
+        throw new Error(`Discovery-Antwort mit Status ${statusCode}`);
+      }
+
+      COUNTRY_RELATIONS = buildCountryRelations(body.agreements || []);
+      const fromEntries = sortCountryEntries(COUNTRY_RELATIONS.fromNames);
+
+      if (fromEntries.length === 0) {
+        throw new Error("Discovery-Antwort enthält keine verfügbaren Länder.");
+      }
+
+      populateCountrySelect(fromSelect, fromEntries, "bitte wählen …");
+      fromSelect.disabled = false;
+      onCountryFromChange();
+
+      statusEl.textContent = "";
+      setSessionStatus(true, "Verbindung zu rules.opt-hub.ai erfolgreich.");
+    } catch (err) {
+      COUNTRY_RELATIONS = null;
+      populateCountrySelect(fromSelect, [], "nicht verfügbar");
+      fromSelect.disabled = true;
+      populateCountrySelect(toSelect, [], "nicht verfügbar");
+      toSelect.disabled = true;
+
+      statusEl.textContent = "Verfügbare Länder konnten nicht geladen werden.";
+      statusEl.classList.add("country-load-err");
+      setSessionStatus(false, "Verbindung zu rules.opt-hub.ai fehlgeschlagen.");
+    }
+  }
+
+  window.addEventListener("load", loadCountryDiscovery);
 
   document.getElementById("rules-form").addEventListener("submit", async function (e) {
     e.preventDefault();
