@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OPT.AI – Rules API Demo</title>
+  <script>
+    // Cloudflare Access issues a separate application cookie for
+    // rules.opt-hub.ai. A top-level visit is required before cross-origin
+    // API requests from this viewer can use that cookie.
+    (function ensureRulesAccessSession() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("rules_session") !== "ready") {
+        window.location.replace("https://rules.opt-hub.ai/session-bootstrap");
+      }
+    })();
+  </script>
   <style>
     :root {
       --bg: #f5f3ef;
