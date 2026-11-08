@@ -14,6 +14,8 @@ here is invented ahead of need.
   patterns `downloads.html` doesn't need (active nav state, technical
   status/details components, pills/badges, forms). These are additive,
   not a competing style — `downloads.html` stays the senior reference.
+  Since the Developer Hub V1.0 (nav label "Developer Hub", same URL) its
+  styles live in `docs/assets/devhub/devhub.css` instead of inline.
 
 ## 2. Ground rule
 
@@ -144,7 +146,7 @@ Structure (identical markup on every page, in `<header class="topbar">`):
     <nav class="nav">
       <a href="https://opt-hub.ai">Home</a>
       <a href="/downloads.html">Downloads</a>
-      <a href="/rules-demo.html">Rules Demo</a>
+      <a href="/rules-demo.html">Developer Hub</a>
     </nav>
   </div>
 </header>

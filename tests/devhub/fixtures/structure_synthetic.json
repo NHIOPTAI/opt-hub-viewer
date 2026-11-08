@@ -1,0 +1,1403 @@
+{
+ "_meta": {
+  "source": "synthetic structures, expectations by the guide's structure_of"
+ },
+ "cases": [
+  {
+   "id": "S5_OR_SET_FIVE_GROUPS",
+   "input": {
+    "RuleGroups": [
+     {
+      "RGroup": "1",
+      "RGroupLog": "OR",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "2",
+      "RGroupLog": "OR",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "3",
+      "RGroupLog": "OR",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "AND",
+        "RDefinition": "DESCRIPTION",
+        "HsRange": "",
+        "Roperator": "",
+        "Rpercent": "",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-3-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "4",
+      "RGroupLog": "OR",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "AND",
+        "RDefinition": "HSRANGE",
+        "HsRange": "84XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-4-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "5",
+      "RGroupLog": "OR",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "AND",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "40",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-5-1"
+       }
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "key": "9999/1",
+    "ex": false,
+    "fingerprint": "zz-synthetic",
+    "groups": 5,
+    "rules": 5,
+    "expression_text": "G1.R1 ∨ G2.R1 ∨ G3.R1 ∨ G4.R1 ∨ G5.R1",
+    "expression": {
+     "op": "OR",
+     "label": "SET",
+     "children": [
+      {
+       "op": "AND",
+       "label": "G1",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G1.R1"
+        }
+       ]
+      },
+      {
+       "op": "AND",
+       "label": "G2",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G2.R1"
+        }
+       ]
+      },
+      {
+       "op": "AND",
+       "label": "G3",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G3.R1"
+        }
+       ]
+      },
+      {
+       "op": "AND",
+       "label": "G4",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G4.R1"
+        }
+       ]
+      },
+      {
+       "op": "AND",
+       "label": "G5",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G5.R1"
+        }
+       ]
+      }
+     ]
+    },
+    "alternatives": [
+     "G1.R1",
+     "G2.R1",
+     "G3.R1",
+     "G4.R1",
+     "G5.R1"
+    ],
+    "alternative_count": 5,
+    "truncated": false,
+    "notes": [],
+    "shapes": {
+     "G1.R1": "VALUE_LIMIT",
+     "G2.R1": "CHANGE_OF_HEADING",
+     "G3.R1": "DESCRIPTION",
+     "G4.R1": "HS_EXCLUSION",
+     "G5.R1": "VALUE_LIMIT"
+    }
+   }
+  },
+  {
+   "id": "S6_BRACKETS",
+   "input": {
+    "RuleGroups": [
+     {
+      "RGroup": "1",
+      "RGroupLog": "AND",
+      "SubGroupNo": "OR-1",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "2",
+      "RGroupLog": "AND",
+      "SubGroupNo": "OR-1",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "3",
+      "RGroupLog": "AND",
+      "SubGroupNo": "OR-1",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "AND",
+        "RDefinition": "DESCRIPTION",
+        "HsRange": "",
+        "Roperator": "",
+        "Rpercent": "",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-3-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "4",
+      "RGroupLog": "AND",
+      "SubGroupNo": "OR-2",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-4-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "5",
+      "RGroupLog": "AND",
+      "SubGroupNo": "OR-2",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-5-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "6",
+      "RGroupLog": "AND",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "AND",
+        "RDefinition": "DESCRIPTION",
+        "HsRange": "",
+        "Roperator": "",
+        "Rpercent": "",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-6-1"
+       }
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "key": "9999/1",
+    "ex": false,
+    "fingerprint": "zz-synthetic",
+    "groups": 6,
+    "rules": 6,
+    "expression_text": "(G1.R1 ∨ G2.R1 ∨ G3.R1) ∧ (G4.R1 ∨ G5.R1) ∧ G6.R1",
+    "expression": {
+     "op": "AND",
+     "label": "SET",
+     "children": [
+      {
+       "op": "OR",
+       "label": "OR-1",
+       "children": [
+        {
+         "op": "AND",
+         "label": "G1",
+         "children": [
+          {
+           "op": "COND",
+           "key": "G1.R1"
+          }
+         ]
+        },
+        {
+         "op": "AND",
+         "label": "G2",
+         "children": [
+          {
+           "op": "COND",
+           "key": "G2.R1"
+          }
+         ]
+        },
+        {
+         "op": "AND",
+         "label": "G3",
+         "children": [
+          {
+           "op": "COND",
+           "key": "G3.R1"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "op": "OR",
+       "label": "OR-2",
+       "children": [
+        {
+         "op": "AND",
+         "label": "G4",
+         "children": [
+          {
+           "op": "COND",
+           "key": "G4.R1"
+          }
+         ]
+        },
+        {
+         "op": "AND",
+         "label": "G5",
+         "children": [
+          {
+           "op": "COND",
+           "key": "G5.R1"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "op": "AND",
+       "label": "G6",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G6.R1"
+        }
+       ]
+      }
+     ]
+    },
+    "alternatives": [
+     "G1.R1+G4.R1+G6.R1",
+     "G1.R1+G5.R1+G6.R1",
+     "G2.R1+G4.R1+G6.R1",
+     "G2.R1+G5.R1+G6.R1",
+     "G3.R1+G4.R1+G6.R1",
+     "G3.R1+G5.R1+G6.R1"
+    ],
+    "alternative_count": 6,
+    "truncated": false,
+    "notes": [],
+    "shapes": {
+     "G1.R1": "VALUE_LIMIT",
+     "G2.R1": "CHANGE_OF_HEADING",
+     "G3.R1": "DESCRIPTION",
+     "G4.R1": "VALUE_LIMIT",
+     "G5.R1": "CHANGE_OF_HEADING",
+     "G6.R1": "DESCRIPTION"
+    }
+   }
+  },
+  {
+   "id": "S8_TWO_OR_GROUPS",
+   "input": {
+    "RuleGroups": [
+     {
+      "RGroup": "1",
+      "RGroupLog": "AND",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-1"
+       },
+       {
+        "RuleNo": "2",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-2"
+       },
+       {
+        "RuleNo": "3",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "40",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-3"
+       },
+       {
+        "RuleNo": "4",
+        "RLogic": "OR",
+        "RDefinition": "DESCRIPTION",
+        "HsRange": "",
+        "Roperator": "",
+        "Rpercent": "",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-4"
+       }
+      ]
+     },
+     {
+      "RGroup": "2",
+      "RGroupLog": "AND",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-1"
+       },
+       {
+        "RuleNo": "2",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-2"
+       }
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "key": "9999/1",
+    "ex": false,
+    "fingerprint": "zz-synthetic",
+    "groups": 2,
+    "rules": 6,
+    "expression_text": "(G1.R1 ∨ G1.R2 ∨ G1.R3 ∨ G1.R4) ∧ (G2.R1 ∨ G2.R2)",
+    "expression": {
+     "op": "AND",
+     "label": "SET",
+     "children": [
+      {
+       "op": "OR",
+       "label": "G1",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G1.R1"
+        },
+        {
+         "op": "COND",
+         "key": "G1.R2"
+        },
+        {
+         "op": "COND",
+         "key": "G1.R3"
+        },
+        {
+         "op": "COND",
+         "key": "G1.R4"
+        }
+       ]
+      },
+      {
+       "op": "OR",
+       "label": "G2",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G2.R1"
+        },
+        {
+         "op": "COND",
+         "key": "G2.R2"
+        }
+       ]
+      }
+     ]
+    },
+    "alternatives": [
+     "G1.R1+G2.R1",
+     "G1.R1+G2.R2",
+     "G1.R2+G2.R1",
+     "G1.R2+G2.R2",
+     "G1.R3+G2.R1",
+     "G1.R3+G2.R2",
+     "G1.R4+G2.R1",
+     "G1.R4+G2.R2"
+    ],
+    "alternative_count": 8,
+    "truncated": false,
+    "notes": [],
+    "shapes": {
+     "G1.R1": "VALUE_LIMIT",
+     "G1.R2": "CHANGE_OF_HEADING",
+     "G1.R3": "VALUE_LIMIT",
+     "G1.R4": "DESCRIPTION",
+     "G2.R1": "VALUE_LIMIT",
+     "G2.R2": "CHANGE_OF_HEADING"
+    }
+   }
+  },
+  {
+   "id": "S75_TRUNCATED",
+   "input": {
+    "RuleGroups": [
+     {
+      "RGroup": "1",
+      "RGroupLog": "AND",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-1"
+       },
+       {
+        "RuleNo": "2",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-2"
+       },
+       {
+        "RuleNo": "3",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-3"
+       },
+       {
+        "RuleNo": "4",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-4"
+       },
+       {
+        "RuleNo": "5",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-5"
+       }
+      ]
+     },
+     {
+      "RGroup": "2",
+      "RGroupLog": "AND",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-1"
+       },
+       {
+        "RuleNo": "2",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-2"
+       },
+       {
+        "RuleNo": "3",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-3"
+       },
+       {
+        "RuleNo": "4",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-4"
+       },
+       {
+        "RuleNo": "5",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-5"
+       }
+      ]
+     },
+     {
+      "RGroup": "3",
+      "RGroupLog": "AND",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-3-1"
+       },
+       {
+        "RuleNo": "2",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-3-2"
+       },
+       {
+        "RuleNo": "3",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-3-3"
+       }
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "key": "9999/1",
+    "ex": false,
+    "fingerprint": "zz-synthetic",
+    "groups": 3,
+    "rules": 13,
+    "expression_text": "(G1.R1 ∨ G1.R2 ∨ G1.R3 ∨ G1.R4 ∨ G1.R5) ∧ (G2.R1 ∨ G2.R2 ∨ G2.R3 ∨ G2.R4 ∨ G2.R5) ∧ (G3.R1 ∨ G3.R2 ∨ G3.R3)",
+    "expression": {
+     "op": "AND",
+     "label": "SET",
+     "children": [
+      {
+       "op": "OR",
+       "label": "G1",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G1.R1"
+        },
+        {
+         "op": "COND",
+         "key": "G1.R2"
+        },
+        {
+         "op": "COND",
+         "key": "G1.R3"
+        },
+        {
+         "op": "COND",
+         "key": "G1.R4"
+        },
+        {
+         "op": "COND",
+         "key": "G1.R5"
+        }
+       ]
+      },
+      {
+       "op": "OR",
+       "label": "G2",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G2.R1"
+        },
+        {
+         "op": "COND",
+         "key": "G2.R2"
+        },
+        {
+         "op": "COND",
+         "key": "G2.R3"
+        },
+        {
+         "op": "COND",
+         "key": "G2.R4"
+        },
+        {
+         "op": "COND",
+         "key": "G2.R5"
+        }
+       ]
+      },
+      {
+       "op": "OR",
+       "label": "G3",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G3.R1"
+        },
+        {
+         "op": "COND",
+         "key": "G3.R2"
+        },
+        {
+         "op": "COND",
+         "key": "G3.R3"
+        }
+       ]
+      }
+     ]
+    },
+    "alternatives": [
+     "G1.R1+G2.R1+G3.R1",
+     "G1.R1+G2.R1+G3.R2",
+     "G1.R1+G2.R1+G3.R3",
+     "G1.R1+G2.R2+G3.R1",
+     "G1.R1+G2.R2+G3.R2",
+     "G1.R1+G2.R2+G3.R3",
+     "G1.R1+G2.R3+G3.R1",
+     "G1.R1+G2.R3+G3.R2",
+     "G1.R1+G2.R3+G3.R3",
+     "G1.R1+G2.R4+G3.R1",
+     "G1.R1+G2.R4+G3.R2",
+     "G1.R1+G2.R4+G3.R3",
+     "G1.R1+G2.R5+G3.R1",
+     "G1.R1+G2.R5+G3.R2",
+     "G1.R1+G2.R5+G3.R3",
+     "G1.R2+G2.R1+G3.R1",
+     "G1.R2+G2.R1+G3.R2",
+     "G1.R2+G2.R1+G3.R3",
+     "G1.R2+G2.R2+G3.R1",
+     "G1.R2+G2.R2+G3.R2",
+     "G1.R2+G2.R2+G3.R3",
+     "G1.R2+G2.R3+G3.R1",
+     "G1.R2+G2.R3+G3.R2",
+     "G1.R2+G2.R3+G3.R3",
+     "G1.R2+G2.R4+G3.R1",
+     "G1.R2+G2.R4+G3.R2",
+     "G1.R2+G2.R4+G3.R3",
+     "G1.R2+G2.R5+G3.R1",
+     "G1.R2+G2.R5+G3.R2",
+     "G1.R2+G2.R5+G3.R3",
+     "G1.R3+G2.R1+G3.R1",
+     "G1.R3+G2.R1+G3.R2",
+     "G1.R3+G2.R1+G3.R3",
+     "G1.R3+G2.R2+G3.R1",
+     "G1.R3+G2.R2+G3.R2",
+     "G1.R3+G2.R2+G3.R3",
+     "G1.R3+G2.R3+G3.R1",
+     "G1.R3+G2.R3+G3.R2",
+     "G1.R3+G2.R3+G3.R3",
+     "G1.R3+G2.R4+G3.R1",
+     "G1.R3+G2.R4+G3.R2",
+     "G1.R3+G2.R4+G3.R3",
+     "G1.R3+G2.R5+G3.R1",
+     "G1.R3+G2.R5+G3.R2",
+     "G1.R3+G2.R5+G3.R3",
+     "G1.R4+G2.R1+G3.R1",
+     "G1.R4+G2.R1+G3.R2",
+     "G1.R4+G2.R1+G3.R3",
+     "G1.R4+G2.R2+G3.R1",
+     "G1.R4+G2.R2+G3.R2",
+     "G1.R4+G2.R2+G3.R3",
+     "G1.R4+G2.R3+G3.R1",
+     "G1.R4+G2.R3+G3.R2",
+     "G1.R4+G2.R3+G3.R3",
+     "G1.R4+G2.R4+G3.R1",
+     "G1.R4+G2.R4+G3.R2",
+     "G1.R4+G2.R4+G3.R3",
+     "G1.R4+G2.R5+G3.R1",
+     "G1.R4+G2.R5+G3.R2",
+     "G1.R4+G2.R5+G3.R3",
+     "G1.R5+G2.R1+G3.R1",
+     "G1.R5+G2.R1+G3.R2",
+     "G1.R5+G2.R1+G3.R3",
+     "G1.R5+G2.R2+G3.R1"
+    ],
+    "alternative_count": 64,
+    "truncated": true,
+    "notes": [],
+    "shapes": {
+     "G1.R1": "VALUE_LIMIT",
+     "G1.R2": "VALUE_LIMIT",
+     "G1.R3": "VALUE_LIMIT",
+     "G1.R4": "VALUE_LIMIT",
+     "G1.R5": "VALUE_LIMIT",
+     "G2.R1": "CHANGE_OF_HEADING",
+     "G2.R2": "CHANGE_OF_HEADING",
+     "G2.R3": "CHANGE_OF_HEADING",
+     "G2.R4": "CHANGE_OF_HEADING",
+     "G2.R5": "CHANGE_OF_HEADING",
+     "G3.R1": "VALUE_LIMIT",
+     "G3.R2": "VALUE_LIMIT",
+     "G3.R3": "VALUE_LIMIT"
+    }
+   }
+  },
+  {
+   "id": "S_INNER_AND_OR_SET",
+   "input": {
+    "RuleGroups": [
+     {
+      "RGroup": "1",
+      "RGroupLog": "OR",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "AND",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-1"
+       },
+       {
+        "RuleNo": "2",
+        "RLogic": "AND",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-2"
+       }
+      ]
+     },
+     {
+      "RGroup": "2",
+      "RGroupLog": "OR",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "AND",
+        "RDefinition": "DESCRIPTION",
+        "HsRange": "",
+        "Roperator": "",
+        "Rpercent": "",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-1"
+       }
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "key": "9999/1",
+    "ex": false,
+    "fingerprint": "zz-synthetic",
+    "groups": 2,
+    "rules": 3,
+    "expression_text": "(G1.R1 ∧ G1.R2) ∨ G2.R1",
+    "expression": {
+     "op": "OR",
+     "label": "SET",
+     "children": [
+      {
+       "op": "AND",
+       "label": "G1",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G1.R1"
+        },
+        {
+         "op": "COND",
+         "key": "G1.R2"
+        }
+       ]
+      },
+      {
+       "op": "AND",
+       "label": "G2",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G2.R1"
+        }
+       ]
+      }
+     ]
+    },
+    "alternatives": [
+     "G1.R1+G1.R2",
+     "G2.R1"
+    ],
+    "alternative_count": 2,
+    "truncated": false,
+    "notes": [],
+    "shapes": {
+     "G1.R1": "CHANGE_OF_HEADING",
+     "G1.R2": "VALUE_LIMIT",
+     "G2.R1": "DESCRIPTION"
+    }
+   }
+  },
+  {
+   "id": "S_MIXED_RLOGIC",
+   "input": {
+    "RuleGroups": [
+     {
+      "RGroup": "1",
+      "RGroupLog": "AND",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-1"
+       },
+       {
+        "RuleNo": "2",
+        "RLogic": "AND",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-2"
+       }
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "key": "9999/1",
+    "ex": false,
+    "fingerprint": "zz-synthetic",
+    "groups": 1,
+    "rules": 2,
+    "expression_text": "G1.R1 ∧ G1.R2",
+    "expression": {
+     "op": "AND",
+     "label": "SET",
+     "children": [
+      {
+       "op": "AND",
+       "label": "G1",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G1.R1"
+        },
+        {
+         "op": "COND",
+         "key": "G1.R2"
+        }
+       ]
+      }
+     ]
+    },
+    "alternatives": [
+     "G1.R1+G1.R2"
+    ],
+    "alternative_count": 1,
+    "truncated": false,
+    "notes": [],
+    "shapes": {
+     "G1.R1": "VALUE_LIMIT",
+     "G1.R2": "CHANGE_OF_HEADING"
+    }
+   }
+  },
+  {
+   "id": "S_OR_SET_WITH_BRACKETS",
+   "input": {
+    "RuleGroups": [
+     {
+      "RGroup": "1",
+      "RGroupLog": "OR",
+      "SubGroupNo": "OR-1",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "*",
+        "Roperator": "LE",
+        "Rpercent": "50",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "2",
+      "RGroupLog": "OR",
+      "SubGroupNo": "OR-1",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "OR",
+        "RDefinition": "HSRANGE",
+        "HsRange": "99XX",
+        "Roperator": "EQ",
+        "Rpercent": "0",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-2-1"
+       }
+      ]
+     },
+     {
+      "RGroup": "3",
+      "RGroupLog": "OR",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "AND",
+        "RDefinition": "DESCRIPTION",
+        "HsRange": "",
+        "Roperator": "",
+        "Rpercent": "",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-3-1"
+       }
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "key": "9999/1",
+    "ex": false,
+    "fingerprint": "zz-synthetic",
+    "groups": 3,
+    "rules": 3,
+    "expression_text": "G1.R1 ∨ G2.R1 ∨ G3.R1",
+    "expression": {
+     "op": "OR",
+     "label": "SET",
+     "children": [
+      {
+       "op": "AND",
+       "label": "G1",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G1.R1"
+        }
+       ]
+      },
+      {
+       "op": "AND",
+       "label": "G2",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G2.R1"
+        }
+       ]
+      },
+      {
+       "op": "AND",
+       "label": "G3",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G3.R1"
+        }
+       ]
+      }
+     ]
+    },
+    "alternatives": [
+     "G1.R1",
+     "G2.R1",
+     "G3.R1"
+    ],
+    "alternative_count": 3,
+    "truncated": false,
+    "notes": [
+     "SUBGROUPS_UNDER_OR_IGNORED"
+    ],
+    "shapes": {
+     "G1.R1": "VALUE_LIMIT",
+     "G2.R1": "CHANGE_OF_HEADING",
+     "G3.R1": "DESCRIPTION"
+    }
+   }
+  },
+  {
+   "id": "S_SINGLE",
+   "input": {
+    "RuleGroups": [
+     {
+      "RGroup": "1",
+      "RGroupLog": "AND",
+      "SubGroupNo": "",
+      "Rules": [
+       {
+        "RuleNo": "1",
+        "RLogic": "AND",
+        "RDefinition": "NO_RESTRICTION",
+        "HsRange": "",
+        "Roperator": "",
+        "Rpercent": "",
+        "Rtarget": "VOU",
+        "Rproof": "TOP",
+        "ProofAlt": "",
+        "WeightR": "0",
+        "Rorcrit": "",
+        "RuleFingerprint": "zz-1-1"
+       }
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "key": "9999/1",
+    "ex": false,
+    "fingerprint": "zz-synthetic",
+    "groups": 1,
+    "rules": 1,
+    "expression_text": "G1.R1",
+    "expression": {
+     "op": "AND",
+     "label": "SET",
+     "children": [
+      {
+       "op": "AND",
+       "label": "G1",
+       "children": [
+        {
+         "op": "COND",
+         "key": "G1.R1"
+        }
+       ]
+      }
+     ]
+    },
+    "alternatives": [
+     "G1.R1"
+    ],
+    "alternative_count": 1,
+    "truncated": false,
+    "notes": [],
+    "shapes": {
+     "G1.R1": "NO_RESTRICTION"
+    }
+   }
+  },
+  {
+   "id": "S_EMPTY",
+   "input": {
+    "RuleGroups": []
+   },
+   "expected": {
+    "key": "9999/1",
+    "ex": false,
+    "fingerprint": "zz-synthetic",
+    "groups": 0,
+    "rules": 0,
+    "expression_text": "",
+    "expression": {
+     "op": "AND",
+     "label": "EMPTY",
+     "children": []
+    },
+    "alternatives": [
+     "NONE"
+    ],
+    "alternative_count": 1,
+    "truncated": false,
+    "notes": [
+     "NO_GROUPS"
+    ],
+    "shapes": {}
+   }
+  }
+ ]
+}

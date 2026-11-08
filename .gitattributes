@@ -1,0 +1,2 @@
+# the pre-push hook runs in sh: LF line endings in every checkout
+.githooks/* text eol=lf

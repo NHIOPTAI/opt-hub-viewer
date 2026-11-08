@@ -1,0 +1,10 @@
+{
+  "name": "opt-hub-viewer",
+  "private": true,
+  "description": "OPT.AI Viewer (GitHub Pages, docs/) - Developer Hub unit tests and the public-safe guard",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/",
+    "guard": "node tools/public-safe-guard.mjs"
+  }
+}

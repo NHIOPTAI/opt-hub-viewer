@@ -1,0 +1,6 @@
+{
+ "_note": "Reviewed images and documents of this PUBLIC repository (tools/public-safe-guard.mjs rule G7): path -> SRI hash of the exact file. Add an entry only after looking at the file: no screenshot of real rule data, no personal data.",
+ "images": {
+  "docs/assets/opt-container.png": "sha256-sKgxFmcKPI6x8gM6iZK/lfDyyIuHGyYwMo6NHj8R69w="
+ }
+}
