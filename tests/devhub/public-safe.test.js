@@ -22,7 +22,7 @@ describe("public-safe guard", () => {
     assert.deepStrictEqual(rules(scanText("x.json", json({ [join("Desc", "Ag")]: "Echt wirkender Text" }))), ["G1"]);
     assert.deepStrictEqual(rules(scanText("x.json", json({ [join("Desc", "Rg")]: "ZZ-TEST synthetisch" }))), []);
     assert.deepStrictEqual(rules(scanText("x.json", json({ [join("Desc", "Rset")]: "[Regeltext in der Aufzeichnung entfernt]" }))), []);
-    const wording = ["Herstellen", "aus", "Vormaterialien", "jeder", "Position"].join(" ");
+    const wording = ["Herstellen", "aus", "Vormaterialien"].join(" "); // the three words the guard looks for, no more
     assert.deepStrictEqual(rules(scanText("x.md", wording)), ["G1"]);
     assert.deepStrictEqual(rules(scanText("x.md", `ZZ-TEST ${wording}`)), []);
   });
