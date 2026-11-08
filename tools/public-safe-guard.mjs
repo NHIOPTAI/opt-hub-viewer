@@ -20,7 +20,8 @@
 //
 // usage: node tools/public-safe-guard.mjs                every tracked and every new, not ignored file of the working tree
 //        node tools/public-safe-guard.mjs --push <sha>   every file version in the commits that <sha> adds to origin (pre-push)
-//        node tools/public-safe-guard.mjs --dir <path>   every file below a directory (e.g. a downloaded GitHub Pages artifact)
+//        node tools/public-safe-guard.mjs --dir <path> [--prefix docs/]   every file below a directory; a downloaded GitHub Pages
+//                                                        artifact is docs/ -- with --prefix docs/ its paths are the repository paths
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -159,14 +160,15 @@ export function collectPush(sha, root = ROOT) {
   return entries;
 }
 
-/** Every file below a directory (paths relative to it). */
-export function collectDir(dir) {
+/** Every file below a directory; paths relative to it, with an optional prefix (a GitHub Pages artifact is docs/: --prefix docs/,
+ *  so that the allowlist and the path rules see the repository paths). */
+export function collectDir(dir, prefix = "") {
   const out = [];
   const walk = (current) => {
     for (const name of readdirSync(current)) {
       const full = join(current, name);
       if (statSync(full).isDirectory()) walk(full);
-      else out.push({ path: relative(dir, full).replaceAll("\\", "/"), content: readFileSync(full) });
+      else out.push({ path: prefix + relative(dir, full).replaceAll("\\", "/"), content: readFileSync(full) });
     }
   };
   walk(dir);
@@ -180,13 +182,14 @@ function main(argv) {
     entries = collectPush(argv[1]);
     scope = `the commits that ${argv[1].slice(0, 12)} adds to origin`;
   } else if (argv[0] === "--dir" && argv[1]) {
-    entries = collectDir(argv[1]);
-    scope = argv[1];
+    const prefix = argv[2] === "--prefix" && argv[3] ? argv[3] : "";
+    entries = collectDir(argv[1], prefix);
+    scope = `${argv[1]}${prefix ? ` (as ${prefix})` : ""}`;
   } else if (argv.length === 0) {
     entries = collectWorkingTree();
     scope = "the working tree";
   } else {
-    console.error("usage: node tools/public-safe-guard.mjs [--push <sha> | --dir <path>]");
+    console.error("usage: node tools/public-safe-guard.mjs [--push <sha> | --dir <path> [--prefix docs/]]");
     return 2;
   }
   const findings = scanEntries(entries);

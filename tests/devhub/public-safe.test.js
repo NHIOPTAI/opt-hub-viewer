@@ -1,10 +1,13 @@
 // The public-safe guard (tools/public-safe-guard.mjs). This repository is PUBLIC: the working tree must pass, and every rule must
 // catch what it is there for. The violating samples are assembled at run time, so this file itself holds none of them.
 import assert from "node:assert/strict";
+import { copyFileSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join as joinPath } from "node:path";
 import { describe, test } from "node:test";
 
-import { collectPush, collectWorkingTree, scanEntries, scanText } from "../../tools/public-safe-guard.mjs";
-import { repoFile } from "./helpers.js";
+import { collectDir, collectPush, collectWorkingTree, scanEntries, scanText } from "../../tools/public-safe-guard.mjs";
+import { REPO_ROOT, repoFile } from "./helpers.js";
 
 const entry = (path, text) => ({ path, content: Buffer.from(text, "utf8") });
 const rules = (findings) => [...new Set(findings.map((f) => f.rule))].sort();
@@ -72,6 +75,20 @@ describe("public-safe guard", () => {
     assert.deepStrictEqual(rules(scanEntries([entry("docs/report.pdf", "%PDF")])), ["G7"]);
     assert.deepStrictEqual(rules(scanEntries([entry(".env", "X=1")])), ["G8"]);
     assert.deepStrictEqual(rules(scanEntries([entry("tools/.dev.vars", "X=1")])), ["G8"]);
+  });
+
+  test("a GitHub Pages artifact (docs/ as its root) with --prefix docs/: the repository paths, so the allowlist and the path rules apply", () => {
+    const site = mkdtempSync(joinPath(tmpdir(), "devhub-pages-"));
+    try {
+      mkdirSync(joinPath(site, "assets", "devhub", "data"), { recursive: true });
+      copyFileSync(joinPath(REPO_ROOT, "docs", "assets", "opt-container.png"), joinPath(site, "assets", "opt-container.png"));
+      writeFileSync(joinPath(site, "assets", "devhub", "data", "extra.js"), "export default {};\n");
+      assert.deepStrictEqual(rules(scanEntries(collectDir(site))), ["G7"]); // without the prefix the reviewed image is unknown
+      const mapped = scanEntries(collectDir(site, "docs/"));
+      assert.deepStrictEqual(mapped.map((f) => `${f.rule} ${f.path}`), ["G3 docs/assets/devhub/data/extra.js"]); // the data rule applies
+    } finally {
+      rmSync(site, { recursive: true, force: true });
+    }
   });
 
   test("before every push: the hook runs the guard over the pushed commits; npm can run it", () => {

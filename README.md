@@ -95,8 +95,8 @@ git config core.hooksPath .githooks
 ```
 
 Danach prüft `.githooks/pre-push` jede Dateiversion in den Commits, die ein Push hinzufügen würde. Bei FAIL wird nicht gepusht.
-Manuell geht dasselbe mit `node tools/public-safe-guard.mjs --push <sha>`; einen Ordner, z. B. das Artefakt von GitHub Pages,
-prüft man mit `--dir <pfad>`.
+Manuell geht dasselbe mit `node tools/public-safe-guard.mjs --push <sha>`. Einen Ordner prüft man mit `--dir <pfad>`; für ein
+heruntergeladenes Artefakt von GitHub Pages zusätzlich `--prefix docs/`, damit Allowlist und Pfadregeln die Repository-Pfade sehen.
 
 ### Synthetische Daten erneuern
 
