@@ -1,3 +1,4 @@
+import { getLocale, translateUi } from '../i18n/ui.js';
 // OPT.AI Developer Hub -- the views as escaped markup (pure, no DOM access: every function returns SafeHtml).
 // Every value from the API (rule texts, error messages, JSON) is interpolated through `html` and thereby escaped.
 
@@ -56,7 +57,7 @@ const list = (value) => (Array.isArray(value) ? value : []);
 const str = (value) => (value === null || value === undefined ? "" : String(value));
 
 export function formatInt(n) {
-  return Number.isFinite(n) ? Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "–";
+  return Number.isFinite(n) ? new Intl.NumberFormat(getLocale()).format(Math.round(n) || 0) : "–";
 }
 
 export function formatDuration(ms) {
@@ -68,18 +69,25 @@ export function formatBytes(bytes) {
 }
 
 /** "01.01.2024 – 31.12.9999 (unbefristet)" -- validities as the Rules data state them (never interpreted). */
+function validityDate(value) {
+  const legacy = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(value);
+  return germanDate(legacy ? legacy[3] + '-' + legacy[2] + '-' + legacy[1] : value);
+}
+
 export function validityText(from, to) {
   const start = str(from).trim();
   const end = str(to).trim();
-  if (!start && !end) return "keine Angabe";
+  if (!start && !end) return translateUi("keine Angabe");
   const open = !end || end === "31.12.9999" || end === "9999-12-31";
-  return `${start || "…"} – ${end || "offen"}${open ? " (unbefristet)" : ""}`;
+  return `${validityDate(start) || "…"} – ${validityDate(end) || translateUi("offen")}${open ? " " + translateUi("(unbefristet)") : ""}`;
 }
 
 /** "26.11.2026" from "2026-11-26" (other values verbatim). */
 export function germanDate(iso) {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(str(iso));
-  return match ? `${match[3]}.${match[2]}.${match[1]}` : str(iso);
+  if (!match) return str(iso);
+  const date = new Date(`${iso}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === iso ? new Intl.DateTimeFormat(getLocale(), { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC" }).format(date) : str(iso);
 }
 
 const empty = (value) => value === null || value === undefined || value === "";
@@ -237,7 +245,7 @@ function agreementBlock(agreement) {
     ${kvTable([
       ["ContentId", codeOf(agreement.ContentId)],
       ["StartCid – EndCid", validityText(agreement.StartCid, agreement.EndCid)],
-      ["ContentDescr", descriptions.length ? html`${descriptions.map((d) => html`<div><span class="lang-tag">${d.language}</span> ${str(d.DescAg)}</div>`)}` : html`<span class="muted">—</span>`],
+      ["ContentDescr", descriptions.length ? html`${descriptions.map((d) => html`<div data-i18n-original><span class="lang-tag">${d.language}</span> ${str(d.DescAg)}</div>`)}` : html`<span class="muted">—</span>`],
       ["CountryFrom / CountryTo", `${list(agreement.CountryFrom).length} / ${list(agreement.CountryTo).length} Länder`],
     ])}
     <div class="block-title">Tolerances (${tolerances.length})</div>
@@ -385,7 +393,7 @@ export function renderTexts(items, textKey, languages) {
     const requested = languages.includes(language);
     return texts.length
       ? html`<div class="text-col" lang="${language.toLowerCase()}"><div class="text-lang">${language}${requested ? null : html` <span class="muted">(nicht angefragt)</span>`}</div>
-          <div class="text-body">${texts.join("\n\n")}</div></div>`
+          <div class="text-body" data-i18n-original>${texts.join("\n\n")}</div></div>`
       : html`<div class="text-col is-missing"><div class="text-lang">${language}</div>
           <div class="text-missing">Kein Text in ${language} – fehlt in den Regeldaten (nicht übersetzt, nicht ergänzt).</div></div>`;
   })}</div>`;
@@ -509,7 +517,7 @@ export function renderRuleSetCard(rawSet, index, total, { languages, exConfirmed
     ${failure ? html`<div class="notice notice-err" role="note"><strong>Struktur nicht bestimmbar:</strong> ${failure}</div>` : html`
       <div class="expr-block">
         <div class="block-title">Logischer Ausdruck</div>
-        <div class="expr"><code>${structure.expression.text() || "(leer)"}</code></div>
+        <div class="expr"><code>${structure.expression.text() || translateUi("(leer)")}</code></div>
         <p class="muted small">Logik zwischen den Gruppen: <code>${structure.groupLogic}</code> (RGroupLog der ersten Gruppe) ·
           ∧ = UND, ∨ = ODER · Bedingung G&lt;Gruppe&gt;.R&lt;Regel&gt;</p>
         ${structure.notes.length ? html`<ul class="note-list">${structure.notes.map((note) => html`<li><code>${note}</code> – ${NOTE_TEXTS[note] || ""}</li>`)}</ul>` : null}

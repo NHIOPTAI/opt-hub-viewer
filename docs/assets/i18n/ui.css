@@ -1,0 +1,8 @@
+.ui-language-bar { display: flex; justify-content: flex-end; padding: .6rem 1rem; gap: .5rem; }
+.ui-language-bar label { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; }
+.ui-language-bar select { font: inherit; max-width: 100%; padding: .35rem .5rem; }
+.ui-translation-notice { margin: .25rem 1rem 1rem; font-size: .875rem; overflow-wrap: anywhere; }
+button, .btn, .tab, th, td, label, summary, .status-title { overflow-wrap: anywhere; }
+@media (max-width: 600px) { .ui-language-bar { justify-content: flex-start; } }
+pre { max-width: 100%; overflow-x: auto; }
+@media (max-width: 600px) { .wrap .grid { grid-template-columns: minmax(0, 1fr); } }

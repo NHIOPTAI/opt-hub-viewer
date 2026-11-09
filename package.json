@@ -6,5 +6,8 @@
   "scripts": {
     "test": "node --test tests/",
     "guard": "node tools/public-safe-guard.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^29.0.0"
   }
 }

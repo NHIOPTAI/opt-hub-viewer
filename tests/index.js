@@ -12,7 +12,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const root = dirname(fileURLToPath(import.meta.url));
 const files = readdirSync(root, { recursive: true })
   .map((file) => String(file))
-  .filter((file) => file.endsWith(".test.js"))
+  .filter((file) => /\.test\.m?js$/.test(file))
   .sort();
 
 for (const file of files) await import(pathToFileURL(join(root, file)).href);

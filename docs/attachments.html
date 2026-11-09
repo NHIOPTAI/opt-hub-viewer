@@ -32,6 +32,7 @@
     .sp{flex:1}
     @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr; } .grid > *:nth-child(3),.grid > *:nth-child(4),.grid > *:nth-child(5),.grid > *:nth-child(6){grid-column:1/-1} }
   </style>
+  <link rel="stylesheet" href="assets/i18n/ui.css" />
 </head>
 <body>
   <header>
@@ -58,7 +59,9 @@
     <div id="list"></div>
   </div>
 
-<script>
+<script type="module">
+import { formatAttachmentDate, formatFileSize, attachmentTitle } from './assets/i18n/ui.js';
+
 (function(){
   const $ = s => document.querySelector(s);
   const list = $('#list'), state = $('#state');
@@ -82,15 +85,8 @@
   function setState(t, cls=''){ state.textContent = `— ${t}`; state.className = `state ${cls}`; }
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
-  function fmtDate(d){ try{ return new Date(d).toLocaleString(); }catch(e){ return d } }
-  function fmtSize(n){
-    n = Number(n)||0;
-    if (n < 1024) return n + ' B';
-    const u = ['KB','MB','GB','TB'];
-    let i = -1;
-    do { n = n/1024; i++; } while (n >= 1024 && i < u.length-1);
-    return n.toFixed(n < 10 ? 2 : n < 100 ? 1 : 0) + ' ' + u[i];
-  }
+  function fmtDate(d){ return formatAttachmentDate(d); }
+  function fmtSize(n){ return formatFileSize(n); }
   function iconFor(file, type=''){
     const f = file.toLowerCase();
     if (type.includes('pdf') || f.endsWith('.pdf')) return '📄';
@@ -135,11 +131,11 @@
         const row=document.createElement('div'); row.className='row';
         const n=(it.attachments||[]).length;
         row.innerHTML = `
-          <h3>${escapeHtml(it.subject||'(ohne Betreff)')} • ${n} Anhang${n===1?'':'e'}</h3>
+          <h3 data-i18n-original data-ui-subject="${escapeHtml(it.subject||'')}" data-ui-count="${n}">${escapeHtml(attachmentTitle(it.subject, n))}</h3>
           <div class="meta">
-            <span><strong>Von:</strong> ${escapeHtml(it.from||'-')}</span>
-            <span><strong>An:</strong> ${escapeHtml(it.to||'-')}</span>
-            <span><strong>Datum:</strong> ${escapeHtml(fmtDate(it.date||'-'))}</span>
+            <span><strong>Von:</strong> <span data-i18n-original>${escapeHtml(it.from||'-')}</span></span>
+            <span><strong>An:</strong> <span data-i18n-original>${escapeHtml(it.to||'-')}</span></span>
+            <span><strong>Datum:</strong> <span data-i18n-original data-ui-date="${escapeHtml(JSON.stringify(it.date||'-'))}">${escapeHtml(fmtDate(it.date||'-'))}</span></span>
             <span><strong>Meta:</strong> <code>${escapeHtml(it.meta_key||'-')}</code></span>
           </div>
         `;
@@ -152,8 +148,8 @@
           const typ = a.type||'';
           const chip=document.createElement('div'); chip.className='chip';
           chip.innerHTML = `
-            <span>${ico} ${escapeHtml(file)}</span>
-            <small>${escapeHtml(typ||'unknown')} • ${escapeHtml(sz)}</small>
+            <span data-i18n-original>${ico} ${escapeHtml(file)}</span>
+            <small><span ${typ ? 'data-i18n-original' : ''}>${escapeHtml(typ||'unbekannt')}</span> • <span data-i18n-original data-ui-size="${escapeHtml(String(a.size||0))}">${escapeHtml(sz)}</span></small>
             <a href="${a.url}" target="_blank" rel="noopener">Download</a>
           `;
           atts.appendChild(chip);
@@ -177,8 +173,18 @@
   $('#reset').addEventListener('click', ()=>{ inpQ.value=''; load(); });
   inpQ.addEventListener('keydown', e=>{ if(e.key==='Enter') load(); });
 
+  // Update presentation only: retain filters, original subjects/names and the fetched data. No refetch on language changes.
+  window.addEventListener('optai:languagechange', () => {
+    list.querySelectorAll('[data-ui-subject]').forEach(node => { node.textContent = attachmentTitle(node.getAttribute('data-ui-subject'), Number(node.getAttribute('data-ui-count'))); });
+    list.querySelectorAll('[data-ui-date]').forEach(node => { node.textContent = fmtDate(JSON.parse(node.getAttribute('data-ui-date'))); });
+    list.querySelectorAll('[data-ui-size]').forEach(node => { node.textContent = fmtSize(node.getAttribute('data-ui-size')); });
+  });
   if (inpApi.value) load();
 })();
 </script>
+  <script type="module">
+    import { startUiLocalization } from './assets/i18n/ui.js';
+    startUiLocalization();
+  </script>
 </body>
 </html>

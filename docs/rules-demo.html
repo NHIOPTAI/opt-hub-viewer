@@ -17,6 +17,7 @@
   </script>
   <link rel="stylesheet" href="assets/devhub/devhub.css" />
   <script type="module" src="assets/devhub/app.js"></script>
+  <link rel="stylesheet" href="assets/i18n/ui.css" />
 </head>
 <body>
   <header class="topbar">
@@ -211,5 +212,9 @@
       </div>
     </section>
   </main>
+  <script type="module">
+    import { startUiLocalization } from './assets/i18n/ui.js';
+    startUiLocalization();
+  </script>
 </body>
 </html>

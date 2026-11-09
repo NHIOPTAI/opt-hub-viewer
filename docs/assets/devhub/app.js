@@ -1,3 +1,4 @@
+import { getLocale, translateUi, optionLabel, originalSourceNote } from '../i18n/ui.js';
 // OPT.AI Developer Hub -- the page: state, DOM wiring and the two live calls (GET /v1/agreements, POST /v1/rules).
 //
 // Live is the default. `?rules_session=ready&mode=offline` renders the whole page from the recordings (no network
@@ -79,7 +80,7 @@ function loadRecordings() {
 
 const $ = (id) => document.getElementById(id);
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const timeNow = () => new Date().toLocaleTimeString("de-DE");
+const timeNow = () => new Date().toLocaleTimeString(getLocale());
 
 /** The ONLY place a live request is made (never in the offline mode). */
 async function liveCall(endpointId, body) {
@@ -109,11 +110,12 @@ function sessionFromResult(result) {
 // ---- form -----------------------------------------------------------------------------------------------------------
 
 function optionsHtml(options) {
-  return options.map((o) => html`<option value="${o.value}"${o.disabled ? html` disabled` : null}${o.selected ? html` selected` : null}>${o.label}</option>`);
+  return options.map((o) => html`<option value="${o.value}"${o.disabled ? html` disabled` : null}${o.selected ? html` selected` : null}${o.original ? html` data-i18n-original` : null}>${optionLabel(o.value, o.label)}</option>`);
 }
 
 function setOptions(select, options) {
   select.innerHTML = html`${optionsHtml(options)}`.toString();
+  originalSourceNote(select, options.some(o => o.original));
 }
 
 function readForm() {
@@ -168,8 +170,8 @@ function populateAgreements() {
   setOptions(select, [
     { value: AUTO_CONTENT, label: "automatisch (die API wählt das Abkommen)", selected: !keep },
     ...pair.map((a) => ({
-      value: a.content_id,
-      label: `${a.content_id}${a.description ? ` – ${a.description}` : ""} (${a.valid_from || "…"} – ${a.valid_to || "offen"})${validAt(a, date) === false ? " · am Stichtag nicht gültig" : ""}`,
+      value: a.content_id, original: true,
+      label: `${a.content_id}${a.description ? ` – ${a.description}` : ""} (${a.valid_from || "…"} – ${a.valid_to || translateUi("offen")})${validAt(a, date) === false ? translateUi(" · am Stichtag nicht gültig") : ""}`,
       selected: keep && a.content_id === previous,
     })),
   ]);
@@ -697,3 +699,8 @@ async function start() {
 // the inline bootstrap in <head> redirects to https://rules.opt-hub.ai/session-bootstrap unless rules_session=ready:
 // nothing starts (and no request is made) while that redirect is underway
 if (params.get("rules_session") === "ready") start();
+
+window.addEventListener("optai:languagechange", () => {
+  populateFrom(); populateTo(); populateAgreements();
+  renderSelectors(); renderRequest(); renderResponse(); renderStructureView(); renderTests();
+});
