@@ -1,9 +1,10 @@
 // Public UI copy only. No API data, credentials, model weights or private test packs.
+import { UI_RELEASE_LANGUAGES } from './releasePolicy.js';
 import { createUiCatalogStore } from './catalogLoader.js';
 import { BOOT } from './bootstrap.js';
 import { DRAFT_NOTICES } from './notices.js';
 
-export const UI_LANGUAGES = ['de', 'en', 'ro', 'fr', 'es', 'it', 'pl', 'nl'];
+export const UI_LANGUAGES = UI_RELEASE_LANGUAGES;
 export const UI_NAMES = { de: 'Deutsch', en: 'English', ro: 'Română', fr: 'Français', es: 'Español', it: 'Italiano', pl: 'Polski', nl: 'Nederlands' };
 const LABELS = { de: 'Oberflächensprache', en: 'Interface language', ro: 'Limba interfeței', fr: 'Langue de l’interface', es: 'Idioma de la interfaz', it: 'Lingua dell’interfaccia', pl: 'Język interfejsu', nl: 'Interfacetaal' };
 const ORIGINAL = { de: 'Abkommensnamen: Originaldaten der Discovery (Standardsprache DE).', en: 'Agreement names: original discovery data (default language DE).', ro: 'Denumirile acordurilor: date originale din Discovery (limba implicită DE).', fr: 'Noms des accords : données originales de Discovery (langue par défaut DE).', es: 'Nombres de los acuerdos: datos originales de Discovery (idioma predeterminado DE).', it: 'Nomi degli accordi: dati originali di Discovery (lingua predefinita DE).', pl: 'Nazwy umów: oryginalne dane Discovery (język domyślny DE).', nl: 'Namen van overeenkomsten: oorspronkelijke Discovery-gegevens (standaardtaal DE).' };

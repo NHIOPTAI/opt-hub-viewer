@@ -13,7 +13,7 @@ if(!CATALOGS[scopeTail])errors.push('Missing UI scope-note continuation');
 const exampleLabels={de:'BEISPIEL',en:'EXAMPLE',ro:'EXEMPLU',fr:'EXEMPLE',es:'EJEMPLO',it:'ESEMPIO',pl:'PRZYKŁAD',nl:'VOORBEELD'};
 if(!CATALOGS.BEISPIEL)errors.push('Missing example UI badge');
 for(const label of ['SYNTHETISCHE ANTWORT','SYNTHETISCH'])if(!CATALOGS[label])errors.push('Missing synthetic UI badge: '+label);
-const sizes={runtimeJsGzip:['ui.js','catalogLoader.js','manifest.js','bootstrap.js','notices.js'].reduce((n,file)=>n+gzip(path.join(base,file)),0),languages:{},oldEagerCatalogGzip:gzip(path.join(base,'catalogs.js'))};
+const sizes={runtimeJsGzip:['ui.js','catalogLoader.js','manifest.js','bootstrap.js','notices.js','releasePolicy.js'].reduce((n,file)=>n+gzip(path.join(base,file)),0),languages:{},oldEagerCatalogGzip:gzip(path.join(base,'catalogs.js'))};
 for(const language of languages){
   const file=path.join(base,CATALOG_MANIFEST.assets[language]),text=fs.readFileSync(file,'utf8'),bundle=JSON.parse(text);
   sizes.languages[language]={raw:Buffer.byteLength(text),gzip:gzip(file)};
@@ -34,7 +34,7 @@ for(const language of languages){
 }
 sizes.initialGzip=sizes.runtimeJsGzip+Math.max(...Object.values(sizes.languages).map(v=>v.gzip));
 if(sizes.runtimeJsGzip>30000||sizes.initialGzip>60000)errors.push('Initial i18n size budget');
-for(const file of ['ui.js','catalogLoader.js','manifest.js','bootstrap.js','notices.js'])if(/from\s*['"][^'"]*catalogs\.js['"]/.test(fs.readFileSync(path.join(base,file),'utf8')))errors.push('Eager all-language runtime import: '+file);
+for(const file of ['ui.js','catalogLoader.js','manifest.js','bootstrap.js','notices.js','releasePolicy.js'])if(/from\s*['"][^'"]*catalogs\.js['"]/.test(fs.readFileSync(path.join(base,file),'utf8')))errors.push('Eager all-language runtime import: '+file);
 const result={technical:errors.length?'FAIL':'PASS',linguistic:'PENDING',release:'BLOCKED',languages,keys:Object.keys(CATALOGS).length,sizes,errors};
 console.log(JSON.stringify(result,null,2));
 if(errors.length||process.argv.includes('--release'))process.exitCode=1;

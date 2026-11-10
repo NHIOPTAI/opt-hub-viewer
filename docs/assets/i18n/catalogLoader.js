@@ -1,13 +1,14 @@
+import { UI_RELEASE_LANGUAGES } from './releasePolicy.js';
 import { CATALOG_MANIFEST } from './manifest.js';
 
 const names = text => [...text.matchAll(/\{(\w+)\}/g)].map(match => match[1]).sort().join('|');
 /** JSON fetches avoid permanently retaining eight ESM dictionaries after a full language cycle. */
-export function createUiCatalogStore(fetcher = (...args) => fetch(...args)) {
+export function createUiCatalogStore(fetcher = (...args) => fetch(...args), languages = UI_RELEASE_LANGUAGES) {
   const cache = new Map(), pending = new Map(), samples = [], validated = new WeakSet();
   let active;
   const keys = CATALOG_MANIFEST.sourceKeys;
   async function load(language) {
-    if (!Object.hasOwn(CATALOG_MANIFEST.assets, language)) throw new Error('Unsupported UI language');
+    if (!languages.includes(language) || !Object.hasOwn(CATALOG_MANIFEST.assets, language)) throw new Error('Unsupported UI language');
     if (cache.has(language)) return cache.get(language);
     if (pending.has(language)) return pending.get(language);
     const request = (async () => {

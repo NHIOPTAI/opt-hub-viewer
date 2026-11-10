@@ -13,3 +13,9 @@ API examples, identifiers, substitutions, customer inputs and the original DE/EN
 Run `npm run verify` before release review. It includes asset freshness, exact key/placeholder coverage, encoding and size budgets, the complete tests and the unchanged public-safe guard. `node tools/i18n/check.mjs --release` deliberately fails while linguistic approval is pending. Unit tests read generated local JSON through a test-only fixture loader; the browser runtime has no filesystem dependency.
 
 Publish HTML, JavaScript, the manifest and all referenced language assets together. Retain already published hashed assets while old tabs may request another language. Do not remove such assets merely because they are absent from the latest manifest. A version mismatch fails with recovery controls. A controlled rollback restores the previous complete public artifact. No API, data migration or service configuration is needed for this UI change.
+
+## Staged release candidate
+
+Normal remote hosting offers DE/EN. Existing localhost, loopback and file-based Owner previews retain all eight authored languages. The preview policy follows the module origin, independent of query parameters. It is a local review facility. Remote Owner-only access would need its own approved access control.
+
+Prepare a separate stable candidate with `node tools/i18n/prepare-stable.mjs --out <new-directory-outside-this-repository>`. The candidate freezes the picker and loader to DE/EN even on localhost, removes draft JSON payloads and the full offline authoring catalog, and passes the existing public-safe guard before and after preparation. Source files and already published assets stay preserved in this checkout. Publish only a separately approved complete candidate. A saved draft-language preference resolves to German in this profile. New EN copy still requires specialist and Owner acceptance.
