@@ -35,6 +35,6 @@ for(const language of languages){
 sizes.initialGzip=sizes.runtimeJsGzip+Math.max(...Object.values(sizes.languages).map(v=>v.gzip));
 if(sizes.runtimeJsGzip>30000||sizes.initialGzip>60000)errors.push('Initial i18n size budget');
 for(const file of ['ui.js','catalogLoader.js','manifest.js','bootstrap.js','notices.js','releasePolicy.js'])if(/from\s*['"][^'"]*catalogs\.js['"]/.test(fs.readFileSync(path.join(base,file),'utf8')))errors.push('Eager all-language runtime import: '+file);
-const result={technical:errors.length?'FAIL':'PASS',linguistic:'PENDING',release:'BLOCKED',languages,keys:Object.keys(CATALOGS).length,sizes,errors};
+const result={technical:errors.length?'FAIL':'PASS',linguistic:'POST_RELEASE_REVIEW_OPEN',release:errors.length?'BLOCKED':'AUTHORIZED_PROVISIONAL',languages,keys:Object.keys(CATALOGS).length,sizes,errors};
 console.log(JSON.stringify(result,null,2));
-if(errors.length||process.argv.includes('--release'))process.exitCode=1;
+if(errors.length)process.exitCode=1;

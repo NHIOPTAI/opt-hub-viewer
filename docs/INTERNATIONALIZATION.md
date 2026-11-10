@@ -19,3 +19,9 @@ Publish HTML, JavaScript, the manifest and all referenced language assets togeth
 Normal remote hosting offers DE/EN. Existing localhost, loopback and file-based Owner previews retain all eight authored languages. The preview policy follows the module origin, independent of query parameters. It is a local review facility. Remote Owner-only access would need its own approved access control.
 
 Prepare a separate stable candidate with `node tools/i18n/prepare-stable.mjs --out <new-directory-outside-this-repository>`. The candidate freezes the picker and loader to DE/EN even on localhost, removes draft JSON payloads and the full offline authoring catalog, and passes the existing public-safe guard before and after preparation. Source files and already published assets stay preserved in this checkout. Publish only a separately approved complete candidate. A saved draft-language preference resolves to German in this profile. New EN copy still requires specialist and Owner acceptance.
+
+## V1.5 provisional publication
+
+The Owner authorized ordinary publication of DE/EN/RO/FR/ES/IT/PL/NL on 2026-11-10. The production picker and loader now offer all eight languages on every existing hosting origin. The six additional translations remain provisional. Original legal texts retain their own language and status. Language preferences, input values and API contracts continue unchanged.
+
+The previous staged DE/EN-only remote policy is superseded for the normal publication. `prepare-stable.mjs` remains the explicit DE/EN rollback-artifact utility. `check.mjs --release` now checks the authorized provisional publication. Specialist terminology review continues after release.

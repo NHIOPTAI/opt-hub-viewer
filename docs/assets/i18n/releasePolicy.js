@@ -1,12 +1,10 @@
 const ALL = Object.freeze(['de', 'en', 'ro', 'fr', 'es', 'it', 'pl', 'nl']);
-const STABLE = Object.freeze(['de', 'en']);
 
 export function languagesForModuleUrl(address) {
-  const url = new URL(address);
-  const localPreview = url.protocol === 'file:' || ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname);
-  return localPreview ? ALL : STABLE;
+  new URL(address); // Preserve invalid-module-URL rejection.
+  return ALL;
 }
 
-// Remote publication offers stable languages. The existing loopback preview
-// and file-based unit harness retain every authored draft language.
+// Owner decision V1.5 permits all eight UI languages as provisional versions.
+// Original documents and the existing Access bootstrap retain their own contracts.
 export const UI_RELEASE_LANGUAGES = languagesForModuleUrl(import.meta.url);
