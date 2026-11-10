@@ -1,4 +1,4 @@
-// Generated public UI copy. Machine drafts require linguistic review; no official rule texts.
+// Public UI text only. Original API data and legal text are not translated.
 export const CATALOGS = {
   "Nicht erlaubter Aufruf: {slot0} {slot1}": {
     "de": "Nicht erlaubter Aufruf: {slot0} {slot1}",
@@ -53,7 +53,7 @@ export const CATALOGS = {
   "Nicht authentifiziert (403) – bitte über Cloudflare Access anmelden und die Seite neu laden.": {
     "de": "Nicht authentifiziert (403) – bitte über Cloudflare Access anmelden und die Seite neu laden.",
     "en": "Not authenticated (403) – sign in through Cloudflare Access and reload the page.",
-    "ro": "Neautentificat (403) – Semnează prin Cloudflare Access Şi reîncarcă pagina.",
+    "ro": "Neautentificat (403) – Semnează prin Cloudflare Access Și reîncarcă pagina.",
     "fr": "Non authentifiée (403) – entrer par Cloudflare Access et recharge la page.",
     "es": "No autenticado (403) – señalización en Cloudflare Access y recargar la página.",
     "it": "Non autenticato (403) – segno attraverso Cloudflare Access e ricaricare la pagina.",
@@ -163,7 +163,7 @@ export const CATALOGS = {
   "Die aktuelle Antwort enthält keine Regelsätze.": {
     "de": "Die aktuelle Antwort enthält keine Regelsätze.",
     "en": "The current response contains no rule sets.",
-    "ro": "Răspunsul actual nu conţine seturi de reguli.",
+    "ro": "Răspunsul actual nu conține seturi de reguli.",
     "fr": "La réponse actuelle ne contient aucun ensemble de règles.",
     "es": "La respuesta actual no contiene conjuntos de reglas.",
     "it": "La risposta corrente non contiene regole.",
@@ -173,7 +173,7 @@ export const CATALOGS = {
   "Noch keine Antwort mit Regelsätzen.": {
     "de": "Noch keine Antwort mit Regelsätzen.",
     "en": "No response containing rule sets yet.",
-    "ro": "Niciun răspuns care să conţină seturi de reguli.",
+    "ro": "Niciun răspuns care să conțină seturi de reguli.",
     "fr": "Aucune réponse ne contient encore de règles.",
     "es": "No hay respuesta que contenga conjuntos de reglas todavía.",
     "it": "Nessuna risposta contenente le regole.",
@@ -433,7 +433,7 @@ export const CATALOGS = {
   "Mehrere gleichrangige Regelsätze": {
     "de": "Mehrere gleichrangige Regelsätze",
     "en": "Several rule sets with equal standing",
-    "ro": "Mai multe seturi de reguli cu poziţie egală",
+    "ro": "Mai multe seturi de reguli cu poziție egală",
     "fr": "Plusieurs ensembles de règles avec une position égale",
     "es": "Varias reglas se establecen con igual pie",
     "it": "Diverse regola imposta con uguale standing",
@@ -443,7 +443,7 @@ export const CATALOGS = {
   "EX-Regelsätze, mehrere Kandidaten": {
     "de": "EX-Regelsätze, mehrere Kandidaten",
     "en": "EX rule sets, several candidates",
-    "ro": "EX seturi de reguli, mai mulţi candidaţi",
+    "ro": "EX seturi de reguli, mai mulți candidați",
     "fr": "EX des règles, plusieurs candidats",
     "es": "EX conjuntos de reglas, varios candidatos",
     "it": "EX set di regole, diversi candidati",
@@ -833,7 +833,7 @@ export const CATALOGS = {
   "ZZ-Beispiel: zwei gleichrangige Regelsätze – HS 9904": {
     "de": "ZZ-Beispiel: zwei gleichrangige Regelsätze – HS 9904",
     "en": "ZZ example: two rule sets with equal standing – HS 9904",
-    "ro": "ZZ exemplu: două seturi de reguli cu poziţie egală – HS 9904",
+    "ro": "ZZ exemplu: două seturi de reguli cu poziție egală – HS 9904",
     "fr": "ZZ exemple : deux ensembles de règles avec une position égale – HS 9904",
     "es": "ZZ ejemplo: dos conjuntos de reglas con pie igual – HS 9904",
     "it": "ZZ esempio: due set di regole con uguale standing – HS 9904",
@@ -883,7 +883,7 @@ export const CATALOGS = {
   "ZZ-Beispiel: XD → XB – keine Regel für dieses Länderpaar": {
     "de": "ZZ-Beispiel: XD → XB – keine Regel für dieses Länderpaar",
     "en": "ZZ example: XD → XB – no rule for this country pair",
-    "ro": "ZZ exemplu: XD → XB – Nu există reguli pentru această pereche de ţară.",
+    "ro": "ZZ exemplu: XD → XB – Nu există reguli pentru această pereche de țară.",
     "fr": "ZZ exemple: XD → XB – aucune règle pour cette paire de pays",
     "es": "ZZ ejemplo: XD → XB – ninguna regla para este par de país",
     "it": "ZZ esempio: XD → XB – nessuna regola per questa coppia country",
@@ -1103,7 +1103,7 @@ export const CATALOGS = {
   "Keine gültige Anmeldung erkannt. Bitte über Cloudflare Access anmelden und erneut versuchen.": {
     "de": "Keine gültige Anmeldung erkannt. Bitte über Cloudflare Access anmelden und erneut versuchen.",
     "en": "No valid sign-in found. Sign in through Cloudflare Access and try again.",
-    "ro": "Nu s-a găsit niciun semn valid. Cloudflare Access şi să încercăm din nou.",
+    "ro": "Nu s-a găsit niciun semn valid. Cloudflare Access și să încercăm din nou.",
     "fr": "Pas de connexion valide trouvée. Cloudflare Access et réessayer.",
     "es": "No se ha encontrado ningún registro válido. Cloudflare Access e inténtalo de nuevo.",
     "it": "Nessun segno valido trovato. Cloudflare Access e riprovare.",
@@ -1113,7 +1113,7 @@ export const CATALOGS = {
   "Für diese Kombination aus Ländern, Warennummer und Stichtag wurde keine passende Regel gefunden.": {
     "de": "Für diese Kombination aus Ländern, Warennummer und Stichtag wurde keine passende Regel gefunden.",
     "en": "No matching rule was found for these countries, HS code and key date.",
-    "ro": "Nu s-a găsit nicio regulă de potrivire pentru aceste ţări, HS codul şi data cheii.",
+    "ro": "Nu s-a găsit nicio regulă de potrivire pentru aceste țări, HS codul și data cheii.",
     "fr": "Aucune règle d'appariement n'a été trouvée pour ces pays, HS code et date de la clé.",
     "es": "No se encontró ninguna regla para estos países, HS código y fecha clave.",
     "it": "Nessuna regola corrispondente è stata trovata per questi paesi, HS codice e data chiave.",
@@ -1163,7 +1163,7 @@ export const CATALOGS = {
   "keine Einschränkung": {
     "de": "keine Einschränkung",
     "en": "no restriction",
-    "ro": "fără restricţii",
+    "ro": "fără restricții",
     "fr": "aucune restriction",
     "es": "no restricción",
     "it": "nessuna restrizione",
@@ -1283,7 +1283,7 @@ export const CATALOGS = {
   "Der Regelsatz enthält keine Regelgruppen.": {
     "de": "Der Regelsatz enthält keine Regelgruppen.",
     "en": "The rule set contains no rule groups.",
-    "ro": "Regula nu conţine grupuri de reguli.",
+    "ro": "Regula nu conține grupuri de reguli.",
     "fr": "L'ensemble de règles ne contient aucun groupe de règles.",
     "es": "El conjunto de reglas no contiene grupos de reglas.",
     "it": "Il set di regola non contiene gruppi di regole.",
@@ -1493,7 +1493,7 @@ export const CATALOGS = {
   "Live": {
     "de": "Live",
     "en": "Live",
-    "ro": "Trăieşte",
+    "ro": "Trăiește",
     "fr": "Vivre",
     "es": "Vivir",
     "it": "Vivi",
@@ -1643,7 +1643,7 @@ export const CATALOGS = {
   "Tolerances ({slot1})": {
     "de": "Tolerances ({slot1})",
     "en": "Tolerances ({slot1})",
-    "ro": "Toleranţe ({slot1})",
+    "ro": "Toleranțe ({slot1})",
     "fr": "Tolérances ({slot1})",
     "es": "Tolerancias ({slot1})",
     "it": "Tolleranze ({slot1})",
@@ -1683,7 +1683,7 @@ export const CATALOGS = {
   "Keine Toleranzzeilen.": {
     "de": "Keine Toleranzzeilen.",
     "en": "No tolerance rows.",
-    "ro": "Fără rânduri de toleranţă.",
+    "ro": "Fără rânduri de toleranță.",
     "fr": "Pas de lignes de tolérance.",
     "es": "Sin filas de tolerancia.",
     "it": "Niente righe di tolleranza.",
@@ -1773,7 +1773,7 @@ export const CATALOGS = {
   "Die spezifische Regel ist zum Stichtag nicht verfügbar; die angezeigten Regelsätze gehören zur übergeordneten Position {slot0} und sind nur mögliche Kandidaten.{slot1} Eine EX-Bestätigung ersetzt die fehlende zeitliche Gültigkeit nicht.": {
     "de": "Die spezifische Regel ist zum Stichtag nicht verfügbar; die angezeigten Regelsätze gehören zur übergeordneten Position {slot0} und sind nur mögliche Kandidaten.{slot1} Eine EX-Bestätigung ersetzt die fehlende zeitliche Gültigkeit nicht.",
     "en": "The specific rule is unavailable at the key date; the displayed rule sets belong to the broader heading {slot0} and are only possible candidates.{slot1} Confirming EX does not replace the missing temporal validity.",
-    "ro": "Regula specifică nu este disponibilă la data-cheie; seturile de reguli afișate aparțin rubricii mai largi {slot0} şi sunt doar candidaţi posibili.{slot1} Confirm EX nu înlocuiește valabilitatea temporală lipsă.",
+    "ro": "Regula specifică nu este disponibilă la data-cheie; seturile de reguli afișate aparțin rubricii mai largi {slot0} și sunt doar candidați posibili.{slot1} Confirm EX nu înlocuiește valabilitatea temporală lipsă.",
     "fr": "La règle spécifique n'est pas disponible à la date clé; les ensembles de règles affichés appartiennent au titre plus large {slot0} et ne sont que des candidats possibles.{slot1} Confirmation EX ne remplace pas la validité temporelle manquante.",
     "es": "La norma específica no está disponible en la fecha clave; los conjuntos de reglas mostrados pertenecen a la partida más amplia {slot0} y son sólo posibles candidatos.{slot1} Confirmación EX no reemplaza la validez temporal perdida.",
     "it": "La regola specifica non è disponibile alla data chiave; i set delle regole visualizzate appartengono alla voce più ampia {slot0} e sono solo candidati possibili.{slot1} Conferma EX non sostituisce la validità temporale mancante.",
@@ -2023,7 +2023,7 @@ export const CATALOGS = {
   "Diese Regelgruppe enthält keine Regeln.": {
     "de": "Diese Regelgruppe enthält keine Regeln.",
     "en": "This rule group contains no rules.",
-    "ro": "Acest grup de reguli nu conţine reguli.",
+    "ro": "Acest grup de reguli nu conține reguli.",
     "fr": "Ce groupe de règles ne contient aucune règle.",
     "es": "Este grupo de reglas no contiene reglas.",
     "it": "Questo gruppo di regole non contiene regole.",
@@ -2113,7 +2113,7 @@ export const CATALOGS = {
   "{slot0} Bedingungen": {
     "de": "{slot0} Bedingungen",
     "en": "{slot0} conditions",
-    "ro": "{slot0} afecţiuni",
+    "ro": "{slot0} afecțiuni",
     "fr": "{slot0} conditions",
     "es": "{slot0} condiciones",
     "it": "{slot0} condizioni",
@@ -2123,7 +2123,7 @@ export const CATALOGS = {
   "Keine Bedingung (NONE).": {
     "de": "Keine Bedingung (NONE).",
     "en": "No condition (NONE).",
-    "ro": "Nicio condiţie (NONE).",
+    "ro": "Nicio condiție (NONE).",
     "fr": "Pas de condition (NONE).",
     "es": "Sin condición (NONE).",
     "it": "Nessuna condizione (NONE).",
@@ -2383,7 +2383,7 @@ export const CATALOGS = {
   "Keine Regelsätze in der aktuellen Antwort.": {
     "de": "Keine Regelsätze in der aktuellen Antwort.",
     "en": "No rule sets in the current response.",
-    "ro": "Nicio regulă nu stabileşte răspunsul actual.",
+    "ro": "Nicio regulă nu stabilește răspunsul actual.",
     "fr": "Aucune règle n'est définie dans la réponse actuelle.",
     "es": "Ninguna regla establece en la respuesta actual.",
     "it": "Nessuna regola imposta nella risposta corrente.",
@@ -2473,7 +2473,7 @@ export const CATALOGS = {
   "Vorbereitete Eingaben mit kurzer fachlicher Erläuterung. Ein Klick füllt nur das Formular – gesendet wird erst mit „Request senden“, und es gibt keine vorab festgelegte Bewertung.": {
     "de": "Vorbereitete Eingaben mit kurzer fachlicher Erläuterung. Ein Klick füllt nur das Formular – gesendet wird erst mit „Request senden“, und es gibt keine vorab festgelegte Bewertung.",
     "en": "Prepared inputs with a brief explanation. Clicking only fills the form – a request is sent only with ‘Send request’, and no result is predetermined.",
-    "ro": "Intrările preparate cu o scurtă explicație. Faceți clic doar completează formularul – o cerere este trimisă numai cu ‘Trimitere cerere’Şi nici un rezultat nu este predeterminat.",
+    "ro": "Intrările preparate cu o scurtă explicație. Faceți clic doar completează formularul – o cerere este trimisă numai cu ‘Trimitere cerere’Și nici un rezultat nu este predeterminat.",
     "fr": "Entrées préparées avec une brève explication. – une demande n'est envoyée qu'avec ‘Envoyer la demande’, et aucun résultat n'est prédéterminé.",
     "es": "Entradas preparadas con una breve explicación. Hacer clic sólo llena el formulario – una solicitud se envía solamente con ‘Enviar solicitud’, y ningún resultado es predeterminado.",
     "it": "Ingressi preparati con una breve spiegazione. Fare clic riempie solo il modulo – una richiesta viene inviata solo con ‘Invia richiesta’, e nessun risultato è predeterminato.",
@@ -2503,7 +2503,7 @@ export const CATALOGS = {
   "(Länder XA–XD, Abkommen ZZ_TEST…, HS-Kapitel 99); ihre Antworten zeigt der {slot0}. Live hat die Rules API für sie keine Regel – für echte Abfragen Länder, Abkommen und HS-Position selbst wählen.": {
     "de": "(Länder XA–XD, Abkommen ZZ_TEST…, HS-Kapitel 99); ihre Antworten zeigt der {slot0}. Live hat die Rules API für sie keine Regel – für echte Abfragen Länder, Abkommen und HS-Position selbst wählen.",
     "en": "(countries XA–XD, agreements ZZ_TEST…, HS chapter 99); their responses appear in the {slot0}. The live Rules API has no rules for them – choose real countries, agreements and an HS heading for live queries.",
-    "ro": "(Țări XA–XD, acorduri ZZ_TEST…, HS capitol 99); răspunsurile lor apar în {slot0}. Regulile live API nu are reguli pentru ei – să aleagă ţări reale, acorduri şi HS se îndreaptă spre întrebări în direct.",
+    "ro": "(Țări XA–XD, acorduri ZZ_TEST…, HS capitol 99); răspunsurile lor apar în {slot0}. Regulile live API nu are reguli pentru ei – să aleagă țări reale, acorduri și HS se îndreaptă spre întrebări în direct.",
     "fr": "(pays XA–XD, accords ZZ_TEST…, HS Chapitre 99); leurs réponses figurent dans le rapport {slot0}. Les règles en direct API n'a pas de règles pour eux – choisir les pays, accords et HS se diriger vers des requêtes en direct.",
     "es": "(contables) XA–XD, acuerdos ZZ_TEST…, HS Capítulo 99); sus respuestas aparecen en {slot0}. Las reglas en vivo API no tiene reglas para ellos – elegir países reales, acuerdos y HS rumbo a consultas en vivo.",
     "it": "(paesi XA–XD, accordi ZZ_TEST…, HS capitolo 99); le loro risposte appaiono nel {slot0}. Le regole dal vivo API non ha regole per loro – scegliere paesi reali, accordi e un HS per domande dal vivo.",
@@ -2593,7 +2593,7 @@ export const CATALOGS = {
   "erwartet": {
     "de": "erwartet",
     "en": "expected",
-    "ro": "aşteptat",
+    "ro": "așteptat",
     "fr": "prévu",
     "es": "previstos",
     "it": "previsto",
@@ -2703,7 +2703,7 @@ export const CATALOGS = {
   "aus OPT-AI, das Sie hier als Datei laden – echte Erwartungen liegen nicht in diesem öffentlichen Repository, ohne Testpaket gibt es kein Live-Urteil. Beide ersetzen nicht die Unit-Test-Suite dieses Repositorys (": {
     "de": "aus OPT-AI, das Sie hier als Datei laden – echte Erwartungen liegen nicht in diesem öffentlichen Repository, ohne Testpaket gibt es kein Live-Urteil. Beide ersetzen nicht die Unit-Test-Suite dieses Repositorys (",
     "en": "from OPT-AI, loaded here as a file – real expected results are not stored in this public repository; no live verdict is available without a test pack. Neither level replaces this repository’s unit test suite (",
-    "ro": "de la OPT-AI, încărcat aici ca un fișier – rezultatele reale aşteptate nu sunt stocate în acest depozit public; nici un verdict viu nu este disponibil fără un pachet de testare.’Apartamentul de încercare al unităţii (",
+    "ro": "de la OPT-AI, încărcat aici ca un fișier – rezultatele reale așteptate nu sunt stocate în acest depozit public; nici un verdict viu nu este disponibil fără un pachet de testare.’Apartamentul de încercare al unității (",
     "fr": "de OPT-AI, chargé ici comme un fichier – les résultats réels attendus ne sont pas stockés dans ce dépôt public; aucun verdict en direct n'est disponible sans pack test.’s suite d'essai unitaire (",
     "es": "desde OPT-AI, cargado aquí como un archivo – los resultados esperados reales no se almacenan en este repositorio público; ningún veredicto en vivo está disponible sin un paquete de pruebas.’s unidad de prueba suite (",
     "it": "da OPT-AI, caricato qui come file – i risultati reali attesi non sono memorizzati in questo repository pubblico; nessun verdetto live è disponibile senza un pacchetto di test.’suite di prova unità s (",
@@ -2983,7 +2983,7 @@ export const CATALOGS = {
   "Kein Testfall für diesen Filter.": {
     "de": "Kein Testfall für diesen Filter.",
     "en": "No test case matches this filter.",
-    "ro": "Niciun caz de testare nu se potriveşte cu acest filtru.",
+    "ro": "Niciun caz de testare nu se potrivește cu acest filtru.",
     "fr": "Aucun test ne correspond à ce filtre.",
     "es": "Ningún caso de prueba coincide con este filtro.",
     "it": "Nessun caso di prova corrisponde a questo filtro.",
@@ -2993,7 +2993,7 @@ export const CATALOGS = {
   "Abgangsland: bitte auswählen.": {
     "de": "Abgangsland: bitte auswählen.",
     "en": "Dispatch country: please choose.",
-    "ro": "Ţara Dispeceratului: alegeţi.",
+    "ro": "Țara Dispeceratului: alegeți.",
     "fr": "Pays d'expédition: veuillez choisir.",
     "es": "País de despacha: por favor elija.",
     "it": "Paese di spedizione: si prega di scegliere.",
@@ -3043,7 +3043,7 @@ export const CATALOGS = {
   "Sprachen: bitte mindestens eine Sprache wählen.": {
     "de": "Sprachen: bitte mindestens eine Sprache wählen.",
     "en": "Languages: choose at least one language.",
-    "ro": "Limbi: alegeţi cel puţin o limbă.",
+    "ro": "Limbi: alegeți cel puțin o limbă.",
     "fr": "Langues : choisissez au moins une langue.",
     "es": "Idiomas: elige al menos un idioma.",
     "it": "Lingue: scegliere almeno una lingua.",
@@ -3223,7 +3223,7 @@ export const CATALOGS = {
   "bestimmbar": {
     "de": "bestimmbar",
     "en": "resolvable",
-    "ro": "soluţionată",
+    "ro": "soluționată",
     "fr": "résolvable",
     "es": "resoluble",
     "it": "risolvibile",
@@ -3323,7 +3323,7 @@ export const CATALOGS = {
   "Ein Testpaket hat 1 bis {slot0} Fälle.": {
     "de": "Ein Testpaket hat 1 bis {slot0} Fälle.",
     "en": "A test pack contains 1 to {slot0} cases.",
-    "ro": "Un pachet de testare conţine 1 la {slot0} cazuri.",
+    "ro": "Un pachet de testare conține 1 la {slot0} cazuri.",
     "fr": "Une boîte d'essai contient 1 à {slot0} les cas.",
     "es": "Un paquete de prueba contiene 1 a {slot0} casos.",
     "it": "Un pacchetto di test contiene 1 a {slot0} casi.",
@@ -3333,7 +3333,7 @@ export const CATALOGS = {
   "Ein Fall hat keine gültige, eindeutige id.": {
     "de": "Ein Fall hat keine gültige, eindeutige id.",
     "en": "A case has no valid, unique id.",
-    "ro": "Un caz nu are un act de identitate valabil şi unic.",
+    "ro": "Un caz nu are un act de identitate valabil și unic.",
     "fr": "Un cas n'a pas d'identité valide et unique.",
     "es": "Un caso no tiene id válido, único.",
     "it": "Un caso non ha un id valido, unico.",
@@ -3613,7 +3613,7 @@ export const CATALOGS = {
   "Prüfe API-URL, CORS und (falls aktiviert) API-Key.": {
     "de": "Prüfe API-URL, CORS und (falls aktiviert) API-Key.",
     "en": "Check the API URL, CORS and the API key, if enabled.",
-    "ro": "Verificați API URL, CORS şi API Cheia, dacă este activată.",
+    "ro": "Verificați API URL, CORS și API Cheia, dacă este activată.",
     "fr": "Vérifiez API URL, CORS et les API clé, si activé.",
     "es": "Revisar el API URL, CORS y el API llave, si está activada.",
     "it": "Controllare il API URL, CORS e il API chiave, se abilitata.",
@@ -3683,7 +3683,7 @@ export const CATALOGS = {
   "Hier finden Sie alle aktuellen Regelwerks-Daten, Schemadateien, Beschreibungen und weiteren Ressourcen rund um OPT.AI.": {
     "de": "Hier finden Sie alle aktuellen Regelwerks-Daten, Schemadateien, Beschreibungen und weiteren Ressourcen rund um OPT.AI.",
     "en": "Find the latest OPT.AI rule data, schema files, descriptions and other resources here.",
-    "ro": "Găsiţi cele mai recente OPT.AI reguli de date, fişiere schema, descrieri şi alte resurse aici.",
+    "ro": "Găsiți cele mai recente OPT.AI reguli de date, fișiere schema, descrieri și alte resurse aici.",
     "fr": "Trouvez le dernier OPT.AI règles données, fichiers de schéma, descriptions et autres ressources ici.",
     "es": "Encuentra lo último OPT.AI reglas de datos, archivos de esquemas, descripciones y otros recursos aquí.",
     "it": "Trova l'ultima OPT.AI regola i dati, i file di schema, le descrizioni e altre risorse qui.",
@@ -3693,7 +3693,7 @@ export const CATALOGS = {
   "Ihr Bereich für Rule Contents / Regelwerke": {
     "de": "Ihr Bereich für Rule Contents / Regelwerke",
     "en": "Your area for rule contents and rule sets",
-    "ro": "Zona ta pentru conţinutul regulilor şi seturi de reguli",
+    "ro": "Zona ta pentru conținutul regulilor și seturi de reguli",
     "fr": "Votre zone pour le contenu et les ensembles de règles",
     "es": "Su área para contenido de reglas y conjuntos de reglas",
     "it": "La tua area per i contenuti e le regole",
@@ -3873,7 +3873,7 @@ export const CATALOGS = {
   "Sie sind aktuell angemeldet als:": {
     "de": "Sie sind aktuell angemeldet als:",
     "en": "You are currently signed in as:",
-    "ro": "În prezent sunteţi înscris ca:",
+    "ro": "În prezent sunteți înscris ca:",
     "fr": "Vous êtes actuellement connecté en tant que:",
     "es": "Actualmente está firmado como:",
     "it": "Attualmente siete firmati come:",
@@ -3943,7 +3943,7 @@ export const CATALOGS = {
   "⚠️ Collections konnten nicht geladen werden.": {
     "de": "⚠️ Collections konnten nicht geladen werden.",
     "en": "⚠️ Collections could not be loaded.",
-    "ro": "⚠️ Colecţiile nu au putut fi încărcate.",
+    "ro": "⚠️ Colecțiile nu au putut fi încărcate.",
     "fr": "⚠️ Les collections ne pouvaient pas être chargées.",
     "es": "⚠️ Las colecciones no se pueden cargar.",
     "it": "⚠️ Le collezioni non potevano essere caricate.",
@@ -3973,7 +3973,7 @@ export const CATALOGS = {
   "✅ Ihre Inhalte wurden erfolgreich geladen.": {
     "de": "✅ Ihre Inhalte wurden erfolgreich geladen.",
     "en": "✅ Your content was loaded successfully.",
-    "ro": "✅ Conţinutul tău a fost încărcat cu succes.",
+    "ro": "✅ Conținutul tău a fost încărcat cu succes.",
     "fr": "✅ Votre contenu a été chargé avec succès.",
     "es": "✅ Su contenido se carga con éxito.",
     "it": "✅ Il contenuto è stato caricato correttamente.",
@@ -4113,7 +4113,7 @@ export const CATALOGS = {
   "Willkommen bei OPT AI": {
     "de": "Willkommen bei OPT AI",
     "en": "Welcome to OPT AI",
-    "ro": "Bine aţi venit la OPT AI",
+    "ro": "Bine ați venit la OPT AI",
     "fr": "Bienvenue à OPT AI",
     "es": "Bienvenido a OPT AI",
     "it": "Benvenuto OPT AI",
@@ -4162,13 +4162,13 @@ export const CATALOGS = {
   },
   "keine Präferenzkalkulation": {
     "de": "keine Präferenzkalkulation",
-    "en": "no preference calculation",
-    "ro": "nu se calculează preferințe",
-    "fr": "pas de calcul de préférence",
-    "es": "no cálculo de preferencias",
-    "it": "nessun calcolo delle preferenze",
-    "pl": "brak obliczeń preferencji",
-    "nl": "geen voorkeursberekening"
+    "en": "no preferential origin calculation",
+    "ro": "fără calcul al originii preferențiale",
+    "fr": "pas de calcul de l’origine préférentielle",
+    "es": "no cálculo del origen preferencial",
+    "it": "nessun calcolo dell’origine preferenziale",
+    "pl": "brak obliczeń pochodzenia preferencyjnego",
+    "nl": "geen berekening van preferentiële oorsprong"
   },
   "Diese Seite nutzt Ihre bestehende Anmeldung (Cloudflare Access) für": {
     "de": "Diese Seite nutzt Ihre bestehende Anmeldung (Cloudflare Access) für",
@@ -4373,7 +4373,7 @@ export const CATALOGS = {
   "ohne Parameter auf. Die Antwort ist dieselbe Discovery, aus der die Länder- und Abkommensauswahl gebaut wird.": {
     "de": "ohne Parameter auf. Die Antwort ist dieselbe Discovery, aus der die Länder- und Abkommensauswahl gebaut wird.",
     "en": "without parameters. This is the same discovery response used to build the country and agreement selectors.",
-    "ro": "Acesta este acelaşi răspuns de descoperire folosit pentru a construi ţara şi selectatorii acordului.",
+    "ro": "Acesta este același răspuns de descoperire folosit pentru a construi țara și selectatorii acordului.",
     "fr": "Il s'agit de la même réaction de découverte utilisée pour construire le pays et les sélecteurs d'accord.",
     "es": "Esta es la misma respuesta de descubrimiento utilizada para construir el país y los selectores de acuerdos.",
     "it": "Questa è la stessa risposta di scoperta utilizzata per costruire il paese e i selettori di accordi.",

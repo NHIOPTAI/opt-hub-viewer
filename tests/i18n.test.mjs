@@ -32,7 +32,7 @@ test('switches all languages without losing inputs or changing original texts, J
     const stop = ui.startUiLocalization()
     const input = document.getElementById('entry'), original = document.querySelector('.text-body').textContent
     for (const language of [...languages, 'de', 'fr', 'ro', 'en']) {
-      assert.equal(ui.setLanguage(language), true)
+      assert.equal(await ui.setLanguage(language), true)
       await new Promise(resolve => setTimeout(resolve, 0))
       assert.equal(document.documentElement.lang, language)
       assert.equal(document.querySelector('h1').textContent, CATALOGS.Stichtag[language])
@@ -49,7 +49,7 @@ test('switches all languages without losing inputs or changing original texts, J
     document.getElementById('target').textContent = 'Keine Einträge.'
     await new Promise(resolve => setTimeout(resolve, 0))
     assert.equal(document.getElementById('target').textContent, CATALOGS['Keine Einträge.'].en)
-    assert.equal(ui.setLanguage('xx'), false)
+    assert.equal(await ui.setLanguage('xx'), false)
     stop()
   } finally {
     dom.window.close()
@@ -89,7 +89,7 @@ test('the real response renderer formats amounts and dates in all eight locales'
   const render = await import('../docs/assets/devhub/render.js')
   try {
     for (const language of languages) {
-      ui.setLanguage(language)
+      await ui.setLanguage(language)
       const locale = ui.getLocale()
       assert.equal(render.formatInt(12345.6), new Intl.NumberFormat(locale).format(12346))
       assert.equal(render.germanDate('2026-11-09'), new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' }).format(new Date('2026-11-09T00:00:00Z')))
@@ -97,7 +97,7 @@ test('the real response renderer formats amounts and dates in all eight locales'
       assert.ok(render.validityText('01.01.2024', '9999-12-31').includes(render.germanDate('2024-01-01')))
       assert.ok(render.validityText('01.01.2024', '9999-12-31').includes(CATALOGS['(unbefristet)'][language]))
     }
-  } finally { ui.setLanguage('de') }
+  } finally { await ui.setLanguage('de') }
 })
 
 test('the attachment page switches metadata formats without refetching or translating original names', async () => {
@@ -126,7 +126,7 @@ test('the attachment page switches metadata formats without refetching or transl
     input.value = 'ZZ-UNSAVED'
     const locales = ['de-DE', 'en-GB', 'ro-RO', 'fr-FR', 'es-ES', 'it-IT', 'pl-PL', 'nl-NL']
     for (const [index, language] of languages.entries()) {
-      ui.setLanguage(language)
+      await ui.setLanguage(language)
       await new Promise(resolve => setTimeout(resolve, 0))
       const title = document.querySelector('[data-ui-subject]')
       assert.equal(title.textContent, ui.attachmentTitle('Stichtag', 1, language))

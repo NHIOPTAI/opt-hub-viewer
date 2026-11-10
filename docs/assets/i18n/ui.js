@@ -1,5 +1,6 @@
 // Public UI copy only. No API data, credentials, model weights or private test packs.
-import { CATALOGS } from './catalogs.js';
+import { createUiCatalogStore } from './catalogLoader.js';
+import { BOOT } from './bootstrap.js';
 import { DRAFT_NOTICES } from './notices.js';
 
 export const UI_LANGUAGES = ['de', 'en', 'ro', 'fr', 'es', 'it', 'pl', 'nl'];
@@ -72,7 +73,8 @@ export function originalSourceNote(select, enabled) {
 }
 
 const literal = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
-const patterns = Object.entries(CATALOGS).flatMap(([source, texts]) => {
+let patterns = [];
+function compilePatterns(bundle) { return Object.entries(bundle.texts).flatMap(([source, text]) => {
   const matches = [...source.matchAll(/\{(slot\d+)\}/g)];
   if (!matches.length) return [];
   let pos = 0;
@@ -81,8 +83,8 @@ const patterns = Object.entries(CATALOGS).flatMap(([source, texts]) => {
     pos = match.index + match[0].length;
     return part;
   });
-  return [{ pattern: new RegExp('^' + parts.join('') + literal(source.slice(pos)) + '$'), names: matches.map(m => m[1]), texts, specificity: source.replace(/\{slot\d+\}/g, '').length }];
-}).sort((a, b) => b.specificity - a.specificity);
+  return [{ pattern: new RegExp('^' + parts.join('') + literal(source.slice(pos)) + '$'), names: matches.map(m => m[1]), text, specificity: source.replace(/\{slot\d+\}/g, '').length }];
+}).sort((a, b) => b.specificity - a.specificity); }
 
 /** Match registered UI literals/templates; substitution values remain unchanged. */
 export function translateUi(value, target = language) {
@@ -90,14 +92,15 @@ export function translateUi(value, target = language) {
   const source = normalize(String(value));
   const attachment = /^(.*) • (\d+) Anhang(?:e|änge)?$/.exec(String(value).trim());
   if (attachment) return attachmentCount(attachment[1], Number(attachment[2]), target);
-  const exact = Object.hasOwn(CATALOGS, source) ? CATALOGS[source] : undefined;
-  let text = exact?.[target];
+  const bundle = catalogs.get(target);
+  if (!bundle && catalogs.keys.includes(source)) throw new Error('Load the requested UI language before rendering it');
+  let text = bundle && Object.hasOwn(bundle.texts, source) ? bundle.texts[source] : undefined;
   if (text === undefined) {
-    for (const entry of patterns) {
+    for (const entry of target === language ? patterns : bundle ? compilePatterns(bundle) : []) {
       const match = entry.pattern.exec(String(value).trim());
       if (!match) continue;
       const params = Object.fromEntries(entry.names.map((name, index) => [name, match[index + 1]]));
-      text = entry.texts[target].replace(/\{(slot\d+)\}/g, (original, name) => params[name] ?? original);
+      text = entry.text.replace(/\{(slot\d+)\}/g, (original, name) => params[name] ?? original);
       break;
     }
   }
@@ -105,6 +108,38 @@ export function translateUi(value, target = language) {
   const leading = String(value).match(/^\s*/)[0], trailing = String(value).match(/\s*$/)[0];
   return leading + text + trailing;
 }
+
+const catalogs = createUiCatalogStore();
+export const uiCatalogDiagnostics = () => catalogs.diagnostics();
+function showLoadError(failed) {
+  document.querySelector('[data-ui-load-error]')?.remove();
+  const box = document.createElement('div'), message = document.createElement('p'), retry = document.createElement('button');
+  box.dataset.uiLoadError = ''; box.dataset.i18nOriginal = ''; box.setAttribute('role', 'alert'); box.lang = language;
+  message.textContent = BOOT[language].error + ' ' + UI_NAMES[failed];
+  retry.textContent = BOOT[language].retry; retry.addEventListener('click', () => void setLanguage(failed));
+  box.append(message,retry); document.body.prepend(box);
+  const picker=document.querySelector('[data-ui-language]'); if(picker)picker.value=language;
+}
+async function initialize() {
+  let choice=language;
+  const states=typeof document==='undefined'?[]:[...document.body.children].map(node=>({node,hidden:node.hidden}));
+  states.forEach(({node})=>{node.hidden=true;});
+  while(true) {
+    try {const bundle=await catalogs.load(choice);catalogs.activate(choice,bundle);language=choice;patterns=compilePatterns(bundle);states.forEach(({node,hidden})=>{node.hidden=hidden;});return;}
+    catch(error) {
+      if(typeof document==='undefined')throw error;
+      choice=await new Promise(resolve=>{
+        const box=document.createElement('div'),message=document.createElement('p'),retry=document.createElement('button');
+        box.dataset.i18nOriginal='';box.setAttribute('role','alert');box.lang=choice;
+        message.textContent=BOOT[choice].error;retry.textContent=BOOT[choice].retry;
+        retry.onclick=()=>{box.remove();resolve(choice);};box.append(message,retry);
+        if(choice!=='de'){const fallback=document.createElement('button');fallback.textContent=BOOT[choice].fallback;fallback.onclick=()=>{box.remove();resolve('de');};box.append(fallback);}
+        document.body.prepend(box);
+      });
+    }
+  }
+}
+await initialize();
 
 const originals = new WeakMap();
 const attributes = new WeakMap();
@@ -141,9 +176,21 @@ export function translateTree(root) {
   }
 }
 
-export function setLanguage(next) {
+let requestId = 0;
+export async function setLanguage(next) {
   if (!valid(next)) return false;
-  language = next;
+  const id = ++requestId;
+  try {
+    const bundle = await catalogs.load(next);
+    if (id !== requestId) return false;
+    catalogs.activate(next, bundle);
+    language = next;
+    patterns = compilePatterns(bundle);
+    if(typeof document !== 'undefined') document.querySelector('[data-ui-load-error]')?.remove();
+  } catch {
+    if (id === requestId && typeof document !== 'undefined') showLoadError(next);
+    return false;
+  }
   if (typeof window === 'undefined') return true;
   try { window.localStorage.setItem(STORAGE_KEY, language); } catch { /* session choice still works */ }
   const url = new URL(window.location.href);
@@ -167,6 +214,7 @@ export function startUiLocalization() {
   if (document.querySelector('[data-ui-language]')) return;
   const bar = document.createElement('div');
   bar.className = 'ui-language-bar';
+  bar.dataset.i18nOriginal = '';
   const label = document.createElement('label'), caption = document.createElement('span'), select = document.createElement('select');
   caption.textContent = LABELS[language];
   select.dataset.uiLanguage = '';

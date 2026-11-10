@@ -4,8 +4,11 @@
   "description": "OPT.AI Viewer (GitHub Pages, docs/) - Developer Hub unit tests and the public-safe guard",
   "type": "module",
   "scripts": {
-    "test": "node --test tests/",
-    "guard": "node tools/public-safe-guard.mjs"
+    "test": "node tools/i18n/generate.mjs --check && node tools/i18n/check.mjs && node --import ./tests/i18n-fixture-loader.mjs --test tests/",
+    "guard": "node tools/public-safe-guard.mjs",
+    "generate:i18n": "node tools/i18n/generate.mjs",
+    "check:i18n": "node tools/i18n/generate.mjs --check && node tools/i18n/check.mjs",
+    "verify": "npm test && npm run guard"
   },
   "devDependencies": {
     "jsdom": "^29.0.0"
