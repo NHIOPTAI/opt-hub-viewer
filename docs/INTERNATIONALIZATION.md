@@ -6,6 +6,8 @@ The interface supports DE, EN, RO, FR, ES, IT, PL and NL. The six additional lan
 
 The URL parameter `ui_lang` takes precedence over the stored browser choice (`optai.platform.language`), with German as the default. Same-origin HTML navigation carries the choice. On a failed switch the previous interface and form values remain; retry is explicit. Initial failure shows native recovery controls, including an explicit German fallback. There is no automatic partial-dictionary fallback.
 
+Migration for callers of the UI helper: `setLanguage(code)` now returns `Promise<boolean>`. Await it before reading the new language or translating registered UI strings into that language. The built-in picker and tests use the asynchronous transition. `getLanguage()` and translation of the active, loaded catalog remain synchronous; original unknown strings remain unchanged. This does not change any Rules API request or response contract.
+
 API examples, identifiers, substitutions, customer inputs and the original DE/EN/FR rule texts are not translated. UI localization does not choose a rule set or calculate preferential origin. Public recordings must remain synthetic ZZ data.
 
 Run `npm run verify` before release review. It includes asset freshness, exact key/placeholder coverage, encoding and size budgets, the complete tests and the unchanged public-safe guard. `node tools/i18n/check.mjs --release` deliberately fails while linguistic approval is pending. Unit tests read generated local JSON through a test-only fixture loader; the browser runtime has no filesystem dependency.
