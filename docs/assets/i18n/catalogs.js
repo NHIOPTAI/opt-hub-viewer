@@ -43,12 +43,12 @@ export const CATALOGS = {
   "Verbindung zu rules.opt-hub.ai fehlgeschlagen.": {
     "de": "Verbindung zu rules.opt-hub.ai fehlgeschlagen.",
     "en": "Connection to rules.opt-hub.ai failed.",
-    "ro": "Conexiunea la reguli.opt-hub.ai a eșuat.",
+    "ro": "Conexiunea la rules.opt-hub.ai a eșuat.",
     "fr": "La connexion à rules.opt-hub.ai a échoué.",
-    "es": "La conexión a reglas.opt-hub.ai falló.",
-    "it": "La connessione a Rules.opt-hub.ai è fallita.",
-    "pl": "Połączenie z rules.opt.hub.ai nie powiodło się.",
-    "nl": "Verbinding met regels.opt-hub.ai mislukt."
+    "es": "No se ha podido conectar con rules.opt-hub.ai.",
+    "it": "Connessione a rules.opt-hub.ai non riuscita.",
+    "pl": "Połączenie z rules.opt-hub.ai nie powiodło się.",
+    "nl": "Verbinding met rules.opt-hub.ai mislukt."
   },
   "Nicht authentifiziert (403) – bitte über Cloudflare Access anmelden und die Seite neu laden.": {
     "de": "Nicht authentifiziert (403) – bitte über Cloudflare Access anmelden und die Seite neu laden.",
@@ -63,12 +63,12 @@ export const CATALOGS = {
   "Verbindung zu rules.opt-hub.ai erfolgreich.": {
     "de": "Verbindung zu rules.opt-hub.ai erfolgreich.",
     "en": "Connected to rules.opt-hub.ai.",
-    "ro": "Conectat la reguli.opt-hub.ai.",
+    "ro": "Conectat la rules.opt-hub.ai.",
     "fr": "Connecté à rules.opt-hub.ai.",
-    "es": "Conectado a las reglas.opt-hub.ai.",
-    "it": "Collegato a Rules.opt-hub.ai.",
-    "pl": "Połączony z regułami.",
-    "nl": "Verbonden met regels.opt-hub.ai."
+    "es": "Conexión establecida con rules.opt-hub.ai.",
+    "it": "Connessione a rules.opt-hub.ai riuscita.",
+    "pl": "Połączono z rules.opt-hub.ai.",
+    "nl": "Verbonden met rules.opt-hub.ai."
   },
   "nicht verfügbar": {
     "de": "nicht verfügbar",
@@ -223,12 +223,12 @@ export const CATALOGS = {
   "Offline-Modus: keine Verbindung zu rules.opt-hub.ai – alle Antworten stammen aus der Aufzeichnung.": {
     "de": "Offline-Modus: keine Verbindung zu rules.opt-hub.ai – alle Antworten stammen aus der Aufzeichnung.",
     "en": "Offline mode: no connection to rules.opt-hub.ai – all responses are recorded.",
-    "ro": "Modul offline: nici o conexiune la reguli.opt-hub.ai – toate răspunsurile sunt înregistrate.",
+    "ro": "Mod offline. Nu există conexiune la rules.opt-hub.ai. Toate răspunsurile provin din înregistrări.",
     "fr": "Mode hors ligne : aucune connexion avec rules.opt-hub.ai – toutes les réponses sont enregistrées.",
-    "es": "Modo sin conexión: no hay conexión con las reglas.opt-hub.ai – se registran todas las respuestas.",
-    "it": "Modalità offline: nessuna connessione a regole.opt-hub.ai – tutte le risposte sono registrate.",
-    "pl": "Tryb offline: brak połączenia z rules.opt.-hub.ai – wszystkie odpowiedzi są rejestrowane.",
-    "nl": "Offline modus: geen verbinding met regels.opt-hub.ai – alle reacties worden geregistreerd."
+    "es": "Modo sin conexión. Sin conexión con rules.opt-hub.ai. Todas las respuestas proceden de grabaciones.",
+    "it": "Modalità offline. Nessuna connessione a rules.opt-hub.ai. Tutte le risposte provengono da registrazioni.",
+    "pl": "Tryb offline. Brak połączenia z rules.opt-hub.ai. Wszystkie odpowiedzi pochodzą z zapisanych danych.",
+    "nl": "Offlinemodus. Geen verbinding met rules.opt-hub.ai. Alle antwoorden komen uit opnamen."
   },
   "Discovery beim Laden der Seite": {
     "de": "Discovery beim Laden der Seite",
@@ -363,12 +363,12 @@ export const CATALOGS = {
   "– alle Antworten sind synthetische ZZ-Testdaten im Format der Rules API v1; es wird keine Anfrage an rules.opt-hub.ai gesendet. Für Live-Anfragen die Seite ohne": {
     "de": "– alle Antworten sind synthetische ZZ-Testdaten im Format der Rules API v1; es wird keine Anfrage an rules.opt-hub.ai gesendet. Für Live-Anfragen die Seite ohne",
     "en": "– all responses are synthetic ZZ test data in the Rules API v1 format; no request is sent to rules.opt-hub.ai. For live requests, open the page without",
-    "ro": "– toate răspunsurile sunt sintetice ZZ datele de încercare din regulament API v1 format; nici o cerere nu este trimisă la reguli.opt-hub.ai. Pentru cereri live, deschide pagina fără",
-    "fr": "– toutes les réponses sont synthétiques ZZ données d'essai dans les Règles API v1 format; aucune demande n'est envoyée à rules.opt-hub.ai. Pour les demandes live, ouvrez la page sans",
-    "es": "– todas las respuestas son sintéticas ZZ datos de prueba en las Normas API v1 formato; no se envía ninguna solicitud a rules.opt-hub.ai. Para solicitudes en vivo, abra la página sin",
-    "it": "– tutte le risposte sono sintetiche ZZ i dati di prova nel Regolamento API V1 formato; nessuna richiesta viene inviata a Rules.opt-hub.ai. Per richieste dal vivo, apri la pagina senza",
-    "pl": "– wszystkie odpowiedzi są syntetyczne ZZ test danych w zasadach API v1 Format; nie jest wysyłana prośba do rules.opt.-hub.ai. Dla żywej prośby, otwórz stronę bez",
-    "nl": "– alle reacties zijn synthetisch ZZ testgegevens in de regels API v1 formaat; geen verzoek wordt verzonden naar rules.opt-hub.ai. Voor rechtstreekse verzoeken, de pagina openen zonder"
+    "ro": "– toate răspunsurile sunt date de test sintetice ZZ în formatul Rules API v1. Nu se trimite nicio cerere către rules.opt-hub.ai. Pentru cereri live, deschideți pagina fără",
+    "fr": "– toutes les réponses sont des données de test synthétiques ZZ au format Rules API v1. Aucune requête n’est envoyée à rules.opt-hub.ai. Pour les requêtes en direct, ouvrez la page sans",
+    "es": "– todas las respuestas son datos de prueba sintéticos ZZ en el formato Rules API v1. No se envía ninguna solicitud a rules.opt-hub.ai. Para solicitudes en directo, abra la página sin",
+    "it": "– tutte le risposte sono dati di prova sintetici ZZ nel formato Rules API v1. Nessuna richiesta viene inviata a rules.opt-hub.ai. Per le richieste live, apri la pagina senza",
+    "pl": "– wszystkie odpowiedzi to syntetyczne dane testowe ZZ w formacie Rules API v1. Żadne żądanie nie jest wysyłane do rules.opt-hub.ai. Aby wysyłać żądania na żywo, otwórz stronę bez",
+    "nl": "– alle antwoorden zijn synthetische ZZ-testgegevens in het Rules API v1-formaat. Er wordt geen verzoek naar rules.opt-hub.ai verzonden. Open de pagina voor live verzoeken zonder"
   },
   "öffnen.": {
     "de": "öffnen.",
@@ -533,22 +533,22 @@ export const CATALOGS = {
   "Ohne gewähltes Abkommen bestimmt die Rules API das passende Abkommen selbst. Im Trace zeigt content_selection, welches Abkommen gewählt wurde und warum.": {
     "de": "Ohne gewähltes Abkommen bestimmt die Rules API das passende Abkommen selbst. Im Trace zeigt content_selection, welches Abkommen gewählt wurde und warum.",
     "en": "Without an explicit agreement, the Rules API determines the applicable agreement. The trace field content_selection shows which agreement was chosen and why.",
-    "ro": "Fără un acord explicit, normele API determină acordul aplicabil. Câmpul de urmărire content_selection arată ce acord a fost ales și de ce.",
-    "fr": "Sans accord explicite, le Règlement API détermine l'accord applicable. content_selection indique quel accord a été choisi et pourquoi.",
-    "es": "Sin un acuerdo explícito, las Reglas API determina el acuerdo aplicable. content_selection muestra qué acuerdo fue elegido y por qué.",
-    "it": "Senza un accordo esplicito, il Regolamento API determina l'accordo applicabile. content_selection mostra quale accordo è stato scelto e perché.",
-    "pl": "Bez wyraźnej zgody, zasady API określa stosowną umowę. Pole śledzenia content_selection wskazuje, która umowa została wybrana i dlaczego.",
-    "nl": "Zonder uitdrukkelijke instemming, het Reglement API bepaalt de toepasselijke overeenkomst. content_selection toont aan welke overeenkomst werd gekozen en waarom."
+    "ro": "Dacă nu este selectat un acord, Rules API identifică acordul aplicabil. Câmpul content_selection din traseul de execuție arată acordul ales și motivul alegerii.",
+    "fr": "Sans accord sélectionné, Rules API détermine l’accord applicable. Le champ content_selection de la trace indique l’accord choisi et la raison de ce choix.",
+    "es": "Si no se selecciona un acuerdo, Rules API determina el acuerdo aplicable. El campo content_selection de la traza indica qué acuerdo se eligió y por qué.",
+    "it": "Se non viene selezionato un accordo, Rules API determina l’accordo applicabile. Il campo content_selection della traccia indica quale accordo è stato scelto e perché.",
+    "pl": "Jeśli nie wybrano umowy, Rules API określa właściwą umowę. Pole content_selection w śladzie wykonania wskazuje wybraną umowę i powód jej wyboru.",
+    "nl": "Als er geen overeenkomst is geselecteerd, bepaalt Rules API de toepasselijke overeenkomst. Het veld content_selection in de trace toont welke overeenkomst is gekozen en waarom."
   },
   "Ohne gewähltes Abkommen bestimmt die Rules API das passende Abkommen selbst. Im Trace zeigt": {
     "de": "Ohne gewähltes Abkommen bestimmt die Rules API das passende Abkommen selbst. Im Trace zeigt",
     "en": "Without an explicit agreement, the Rules API determines the applicable agreement. The trace field",
-    "ro": "Fără un acord explicit, normele API determină acordul aplicabil. Câmpul de urmărire",
-    "fr": "Sans accord explicite, le Règlement API détermine l'accord applicable.",
-    "es": "Sin un acuerdo explícito, las Reglas API determina el acuerdo aplicable.",
-    "it": "Senza un accordo esplicito, il Regolamento API determina l'accordo applicabile.",
-    "pl": "Bez wyraźnej zgody, zasady API określa stosowną umowę. Pole śledzenia",
-    "nl": "Zonder uitdrukkelijke instemming, het Reglement API bepaalt de toepasselijke overeenkomst."
+    "ro": "Dacă nu este selectat un acord, Rules API identifică acordul aplicabil. Câmpul din traseul de execuție",
+    "fr": "Sans accord sélectionné, Rules API détermine l’accord applicable. Le champ de trace",
+    "es": "Si no se selecciona un acuerdo, Rules API determina el acuerdo aplicable. El campo de la traza",
+    "it": "Se non viene selezionato un accordo, Rules API determina l’accordo applicabile. Il campo della traccia",
+    "pl": "Jeśli nie wybrano umowy, Rules API określa właściwą umowę. Pole w śladzie wykonania",
+    "nl": "Als er geen overeenkomst is geselecteerd, bepaalt Rules API de toepasselijke overeenkomst. Het traceveld"
   },
   "content_selection, welches Abkommen gewählt wurde und warum.": {
     "de": "content_selection, welches Abkommen gewählt wurde und warum.",
@@ -1463,12 +1463,12 @@ export const CATALOGS = {
   "– keine Live-Anfrage · ZZ-Testdaten im Format der Rules API v1, erzeugt am {slot0}{slot1}": {
     "de": "– keine Live-Anfrage · ZZ-Testdaten im Format der Rules API v1, erzeugt am {slot0}{slot1}",
     "en": "– no live request · synthetic ZZ test data in the Rules API v1 format, generated on {slot0}{slot1}",
-    "ro": "– cerere vie · sintetică ZZ datele de încercare din regulament API v1 format, generat pe {slot0}{slot1}",
-    "fr": "– pas de demande en direct · synthétique ZZ données d'essai dans les Règles API v1 format généré sur {slot0}{slot1}",
-    "es": "– no petición en vivo · sintético ZZ datos de prueba en las Normas API v1 formato, generado en {slot0}{slot1}",
-    "it": "– nessuna richiesta live · sintetico ZZ i dati di prova nel Regolamento API V1 formato, generato su {slot0}{slot1}",
-    "pl": "– brak prośby na żywo · syntetyczne ZZ test danych w zasadach API v1 format, generowany na {slot0}{slot1}",
-    "nl": "– geen live verzoek · synthetisch ZZ testgegevens in de regels API v1 formaat, gegenereerd op {slot0}{slot1}"
+    "ro": "– fără cerere live · date de test sintetice ZZ în formatul Rules API v1, generate la {slot0}{slot1}",
+    "fr": "– aucune requête en direct · données de test synthétiques ZZ au format Rules API v1, générées le {slot0}{slot1}",
+    "es": "– sin solicitud en directo · datos de prueba sintéticos ZZ en el formato Rules API v1, generados el {slot0}{slot1}",
+    "it": "– nessuna richiesta live · dati di prova sintetici ZZ nel formato Rules API v1, generati il {slot0}{slot1}",
+    "pl": "– bez żądania na żywo · syntetyczne dane testowe ZZ w formacie Rules API v1, wygenerowane {slot0}{slot1}",
+    "nl": "– geen live verzoek · synthetische ZZ-testgegevens in het Rules API v1-formaat, gegenereerd op {slot0}{slot1}"
   },
   "unbekannt": {
     "de": "unbekannt",
@@ -1483,22 +1483,22 @@ export const CATALOGS = {
   "(keine Live-Anfrage) – {slot0}. Synthetische Antwort (ZZ-Testdaten) im Format der Rules API v1.": {
     "de": "(keine Live-Anfrage) – {slot0}. Synthetische Antwort (ZZ-Testdaten) im Format der Rules API v1.",
     "en": "(no live request) – {slot0}. Synthetic response (ZZ test data) in the Rules API v1 format.",
-    "ro": "(nicio cerere în direct) – {slot0}. Răspuns sintetic (ZZ date privind încercările) din regulament API v1 format.",
-    "fr": "(aucune demande en direct) – {slot0}. Réponse synthétique (ZZ données d'essai) dans les Règles API v1 modèle.",
-    "es": "(sin petición en vivo) – {slot0}. Respuesta sintéticaZZ datos de prueba) en las Normas API v1 formato.",
-    "it": "(senza richiesta live) – {slot0}. Risposta sintetica (ZZ dati di prova) nel Regolamento API V1 formato.",
-    "pl": "(brak żywej prośby) – {slot0}Odpowiedź syntetyczna (ZZ dane testowe) w zasadach API v1 format.",
-    "nl": "(geen live verzoek) – {slot0}. Synthetische respons (ZZ testgegevens) in het reglement API v1 formaat."
+    "ro": "(fără cerere live) – {slot0}. Răspuns sintetic (date de test ZZ) în formatul Rules API v1.",
+    "fr": "(aucune requête en direct) – {slot0}. Réponse synthétique (données de test ZZ) au format Rules API v1.",
+    "es": "(sin solicitud en directo) – {slot0}. Respuesta sintética (datos de prueba ZZ) en el formato Rules API v1.",
+    "it": "(nessuna richiesta live) – {slot0}. Risposta sintetica (dati di prova ZZ) nel formato Rules API v1.",
+    "pl": "(bez żądania na żywo) – {slot0}. Odpowiedź syntetyczna (dane testowe ZZ) w formacie Rules API v1.",
+    "nl": "(geen live verzoek) – {slot0}. Synthetisch antwoord (ZZ-testgegevens) in het Rules API v1-formaat."
   },
   "Live": {
     "de": "Live",
     "en": "Live",
     "ro": "Trăiește",
-    "fr": "Vivre",
-    "es": "Vivir",
-    "it": "Vivi",
-    "pl": "Żywe",
-    "nl": "Levend"
+    "fr": "En direct",
+    "es": "En directo",
+    "it": "Live",
+    "pl": "Na żywo",
+    "nl": "Live"
   },
   "Beispiel (synthetisch)": {
     "de": "Beispiel (synthetisch)",
@@ -1603,12 +1603,12 @@ export const CATALOGS = {
   "Fehlerantwort der Rules API": {
     "de": "Fehlerantwort der Rules API",
     "en": "Rules API error response",
-    "ro": "Reguli API răspuns de eroare",
-    "fr": "Règles API réponse d'erreur",
-    "es": "Reglas API respuesta de error",
-    "it": "Regole API risposta errore",
-    "pl": "Zasady API odpowiedź błędu",
-    "nl": "Regels API foutrespons"
+    "ro": "Răspuns de eroare de la Rules API",
+    "fr": "Réponse d’erreur de Rules API",
+    "es": "Respuesta de error de Rules API",
+    "it": "Risposta di errore di Rules API",
+    "pl": "Odpowiedź błędu Rules API",
+    "nl": "Foutantwoord van Rules API"
   },
   "Meta": {
     "de": "Meta",
@@ -2503,12 +2503,12 @@ export const CATALOGS = {
   "(Länder XA–XD, Abkommen ZZ_TEST…, HS-Kapitel 99); ihre Antworten zeigt der {slot0}. Live hat die Rules API für sie keine Regel – für echte Abfragen Länder, Abkommen und HS-Position selbst wählen.": {
     "de": "(Länder XA–XD, Abkommen ZZ_TEST…, HS-Kapitel 99); ihre Antworten zeigt der {slot0}. Live hat die Rules API für sie keine Regel – für echte Abfragen Länder, Abkommen und HS-Position selbst wählen.",
     "en": "(countries XA–XD, agreements ZZ_TEST…, HS chapter 99); their responses appear in the {slot0}. The live Rules API has no rules for them – choose real countries, agreements and an HS heading for live queries.",
-    "ro": "(Țări XA–XD, acorduri ZZ_TEST…, HS capitol 99); răspunsurile lor apar în {slot0}. Regulile live API nu are reguli pentru ei – să aleagă țări reale, acorduri și HS se îndreaptă spre întrebări în direct.",
-    "fr": "(pays XA–XD, accords ZZ_TEST…, HS Chapitre 99); leurs réponses figurent dans le rapport {slot0}. Les règles en direct API n'a pas de règles pour eux – choisir les pays, accords et HS se diriger vers des requêtes en direct.",
-    "es": "(contables) XA–XD, acuerdos ZZ_TEST…, HS Capítulo 99); sus respuestas aparecen en {slot0}. Las reglas en vivo API no tiene reglas para ellos – elegir países reales, acuerdos y HS rumbo a consultas en vivo.",
-    "it": "(paesi XA–XD, accordi ZZ_TEST…, HS capitolo 99); le loro risposte appaiono nel {slot0}. Le regole dal vivo API non ha regole per loro – scegliere paesi reali, accordi e un HS per domande dal vivo.",
-    "pl": "(kraje XA–XD, umowy ZZ_TEST…, HS dział 99); ich odpowiedzi pojawiają się w {slot0}Zasady na żywo. API nie ma dla nich żadnych zasad – wyboru rzeczywistych krajów, umów i HS Kieruje się do żywych zapytań.",
-    "nl": "(landen XA–XD, overeenkomsten ZZ_TEST…, HS hoofdstuk 99); hun reacties komen voor in de {slot0}. De levende regels API Heeft geen regels voor hen – Kies echte landen, overeenkomsten en een HS richting live queries."
+    "ro": "(țări XA–XD, acorduri ZZ_TEST…, capitol SA 99). Răspunsurile lor sunt afișate în {slot0}. Rules API nu conține reguli live pentru aceste exemple. Pentru cereri reale, selectați țările, acordul și poziția SA.",
+    "fr": "(pays XA–XD, accords ZZ_TEST…, chapitre SH 99). Leurs réponses sont affichées dans {slot0}. Rules API ne contient aucune règle en direct pour ces exemples. Pour les requêtes réelles, choisissez les pays, l’accord et la position SH.",
+    "es": "(países XA–XD, acuerdos ZZ_TEST…, capítulo SA 99). Sus respuestas se muestran en {slot0}. Rules API no contiene reglas en directo para estos ejemplos. Para consultas reales, seleccione los países, el acuerdo y la partida SA.",
+    "it": "(paesi XA–XD, accordi ZZ_TEST…, capitolo SA 99). Le risposte sono visualizzate in {slot0}. Rules API non contiene regole live per questi esempi. Per le richieste reali, scegli i paesi, l’accordo e la voce SA.",
+    "pl": "(kraje XA–XD, umowy ZZ_TEST…, dział HS 99). Ich odpowiedzi są wyświetlane w {slot0}. Rules API nie zawiera reguł na żywo dla tych przykładów. Dla rzeczywistych zapytań wybierz kraje, umowę i pozycję HS.",
+    "nl": "(landen XA–XD, overeenkomsten ZZ_TEST…, HS-hoofdstuk 99). Hun antwoorden verschijnen in {slot0}. Rules API bevat geen live regels voor deze voorbeelden. Kies voor echte verzoeken de landen, de overeenkomst en de HS-post."
   },
   "In das Formular übernehmen": {
     "de": "In das Formular übernehmen",
@@ -2678,7 +2678,7 @@ export const CATALOGS = {
     "es": "B – vivir:",
     "it": "B – in tempo reale:",
     "pl": "B – żywe:",
-    "nl": "B – levend:"
+    "nl": "B – live:"
   },
   "echte Anfragen mit Ihrer Access-Sitzung gegen das": {
     "de": "echte Anfragen mit Ihrer Access-Sitzung gegen das",
@@ -2968,7 +2968,7 @@ export const CATALOGS = {
     "es": "vivir, {slot0}",
     "it": "vivere, {slot0}",
     "pl": "na żywo, {slot0}",
-    "nl": "levend, {slot0}"
+    "nl": "live, {slot0}"
   },
   "synthetisch": {
     "de": "synthetisch",
@@ -3318,7 +3318,7 @@ export const CATALOGS = {
     "es": "Esta es esta página’s sintética test pack – cargar el paquete de prueba privado desde OPT-AI para pruebas en vivo reales.",
     "it": "Questa è la pagina’s confezione di prova sintetica – caricare il pacchetto di prova privato da OPT-AI per veri test dal vivo.",
     "pl": "To jest ta strona’s syntetyczne opakowanie do badań – załadować prywatne opakowanie testowe z OPT-AI na prawdziwe testy.",
-    "nl": "Dit is deze pagina’s synthetische testverpakking – laad de private test pack van OPT-AI voor echte levende tests."
+    "nl": "Dit is deze pagina’s synthetische testverpakking – laad de private test pack van OPT-AI voor echte live tests."
   },
   "Ein Testpaket hat 1 bis {slot0} Fälle.": {
     "de": "Ein Testpaket hat 1 bis {slot0} Fälle.",
@@ -4133,32 +4133,32 @@ export const CATALOGS = {
   "OPT.AI – Developer Hub · Rules API": {
     "de": "OPT.AI – Developer Hub · Rules API",
     "en": "OPT.AI – Developer Hub · Rules API",
-    "ro": "OPT.AI – Hub dezvoltator · Reguli API",
-    "fr": "OPT.AI – Hub du développeur · Règles API",
-    "es": "OPT.AI – Desarrollador Hub · Reglas API",
-    "it": "OPT.AI – Sviluppatore Hub · Regole API",
-    "pl": "OPT.AI – Hub programisty · Zasady API",
-    "nl": "OPT.AI – Ontwikkelaarshub · Regels API"
+    "ro": "OPT.AI – Developer Hub · Rules API",
+    "fr": "OPT.AI – Developer Hub · Rules API",
+    "es": "OPT.AI – Developer Hub · Rules API",
+    "it": "OPT.AI – Developer Hub · Rules API",
+    "pl": "OPT.AI – Developer Hub · Rules API",
+    "nl": "OPT.AI – Developer Hub · Rules API"
   },
   "Die technische Sicht auf die OPT.AI Rules API: Endpunkt wählen, Request prüfen, die Antwort mit Trace, Struktur und allen vollständigen Alternativen nachvollziehen – und dokumentierte Regressionstests direkt im Browser ausführen.": {
     "de": "Die technische Sicht auf die OPT.AI Rules API: Endpunkt wählen, Request prüfen, die Antwort mit Trace, Struktur und allen vollständigen Alternativen nachvollziehen – und dokumentierte Regressionstests direkt im Browser ausführen.",
-    "en": "The technical view of the OPT.AI Rules API: choose an endpoint, inspect the request, follow the response through its trace, structure and complete alternatives – and run documented regression tests in the browser.",
-    "ro": "Punctul de vedere tehnic al OPT.AI Reguli API: alege un obiectiv, inspecta cererea, urmați răspunsul prin urmele sale, structura și alternative complete – și să ruleze teste de regresie documentate în browser.",
-    "fr": "Le point de vue technique du OPT.AI Règles API: choisir un paramètre, inspecter la demande, suivre la réponse à travers sa trace, sa structure et des alternatives complètes – et exécuter des tests de régression documentés dans le navigateur.",
-    "es": "La visión técnica de la OPT.AI Reglas API: elegir un punto final, inspeccionar la solicitud, seguir la respuesta a través de su traza, estructura y alternativas completas – y ejecutar pruebas de regresión documentadas en el navegador.",
-    "it": "La visione tecnica del OPT.AI Regole API: scegliere un endpoint, ispezionare la richiesta, seguire la risposta attraverso la sua traccia, struttura e alternative complete – ed eseguire test di regressione documentati nel browser.",
-    "pl": "Techniczny pogląd OPT.AI Zasady API: wybrać punkt końcowy, sprawdzić żądanie, śledzić odpowiedź poprzez jego ślad, strukturę i pełne alternatywy – i uruchomić udokumentowane testy regresji w przeglądarce.",
-    "nl": "De technische visie van de OPT.AI Regels API: kies een eindpunt, controleer het verzoek, volg de reactie door middel van zijn spoor, structuur en volledige alternatieven – en voer gedocumenteerde regressie testen in de browser."
+    "en": "Inspect the OPT.AI Rules API. Choose an endpoint, review the request, follow the response using its trace, structure and complete alternatives, and run documented regression tests in the browser.",
+    "ro": "Explorați interfața tehnică OPT.AI Rules API. Selectați un endpoint, verificați cererea, urmăriți răspunsul pe baza traseului de execuție, a structurii și a tuturor alternativelor complete și rulați testele de regresie documentate direct în browser.",
+    "fr": "Explorez l’interface technique OPT.AI Rules API. Choisissez un endpoint, examinez la requête et suivez la réponse à travers sa trace d’exécution, sa structure et toutes ses alternatives complètes. Exécutez les tests de régression documentés directement dans le navigateur.",
+    "es": "Explore la interfaz técnica OPT.AI Rules API. Elija un endpoint, revise la solicitud y siga la respuesta mediante su traza de ejecución, su estructura y todas las alternativas completas. Ejecute las pruebas de regresión documentadas directamente en el navegador.",
+    "it": "Esplora l’interfaccia tecnica OPT.AI Rules API. Scegli un endpoint, verifica la richiesta e segui la risposta attraverso la traccia di esecuzione, la struttura e tutte le alternative complete. Esegui i test di regressione documentati direttamente nel browser.",
+    "pl": "Poznaj interfejs techniczny OPT.AI Rules API. Wybierz punkt końcowy, sprawdź żądanie i prześledź odpowiedź na podstawie śladu wykonania, struktury i wszystkich kompletnych alternatyw. Uruchom udokumentowane testy regresji bezpośrednio w przeglądarce.",
+    "nl": "Verken de technische interface van OPT.AI Rules API. Kies een endpoint, controleer het verzoek en volg het antwoord via het uitvoeringsspoor, de structuur en alle volledige alternatieven. Voer de gedocumenteerde regressietests rechtstreeks in de browser uit."
   },
   "Technische Entwickleransicht,": {
     "de": "Technische Entwickleransicht,",
     "en": "Technical developer view,",
-    "ro": "vizualizare dezvoltator tehnic;",
-    "fr": "Vue du développeur technique,",
-    "es": "Vista técnica del desarrollador,",
-    "it": "Vista dello sviluppatore tecnico,",
-    "pl": "Widok programisty technicznego,",
-    "nl": "Technische ontwikkelaarsweergave,"
+    "ro": "Vizualizare tehnică pentru dezvoltatori,",
+    "fr": "Vue technique pour les développeurs,",
+    "es": "Vista técnica para desarrolladores,",
+    "it": "Vista tecnica per sviluppatori,",
+    "pl": "Widok techniczny dla programistów,",
+    "nl": "Technische weergave voor ontwikkelaars,"
   },
   "keine Präferenzkalkulation": {
     "de": "keine Präferenzkalkulation",
@@ -4553,12 +4553,12 @@ export const CATALOGS = {
   "Synthetische Antworten im Format der Rules API v1 (ZZ-Testdaten: Abkommen ZZ_TEST…, Länder XA–XD, HS-Kapitel 99). Sie werden über dieselben Panels angezeigt wie eine Live-Antwort und immer als BEISPIEL gekennzeichnet.": {
     "de": "Synthetische Antworten im Format der Rules API v1 (ZZ-Testdaten: Abkommen ZZ_TEST…, Länder XA–XD, HS-Kapitel 99). Sie werden über dieselben Panels angezeigt wie eine Live-Antwort und immer als BEISPIEL gekennzeichnet.",
     "en": "Synthetic responses in the Rules API v1 format (ZZ test data: agreements ZZ_TEST…, countries XA–XD, HS chapter 99). They use the same panels as live responses and are always marked EXAMPLE.",
-    "ro": "Răspunsurile sintetice în regulament API v1 format (ZZ date de încercare: acorduri ZZ_TEST…, țări XA–XD, HS capitol 99) Ei folosesc aceleași panouri ca și răspunsurile live și sunt întotdeauna marcate EXAMPLE.",
-    "fr": "Réponses synthétiques dans le Règlement API v1 modèle (ZZ données d'essai: accords ZZ_TEST…, pays XA–XD, HS Chapitre 99). Ils utilisent les mêmes panneaux que les réponses en direct et sont toujours marqués EXAMPLE.",
-    "es": "Respuestas sintéticas en las Normas API v1 formato (ZZ datos de prueba: acuerdos ZZ_TEST…, países XA–XD, HS Capítulo 99). Utilizan los mismos paneles que las respuestas en vivo y siempre están marcadas EXAMPLE.",
-    "it": "Risposte sintetiche nel Regolamento API V1 formato (ZZ dati di prova: accordi ZZ_TEST…, paesi XA–XD, HS capitolo 99). Essi utilizzano gli stessi pannelli come risposte dal vivo e sono sempre contrassegnati EXAMPLE.",
-    "pl": "Odpowiedzi syntetyczne zawarte w zasadach API v1 format (ZZ dane testowe: umowy ZZ_TEST…, kraje XA–XD, HS dział 99Używają tych samych paneli co odpowiedzi na żywo i są zawsze oznaczone EXAMPLE.",
-    "nl": "Synthetische reacties in het Reglement API v1 formaat (ZZ testgegevens: overeenkomsten ZZ_TEST…, landen XA–XD, HS hoofdstuk 99Ze gebruiken dezelfde panelen als live responsen en zijn altijd gemarkeerd EXAMPLE."
+    "ro": "Răspunsuri sintetice în formatul Rules API v1 (date de test ZZ, acorduri ZZ_TEST…, țări XA–XD, capitol SA 99). Sunt afișate în aceleași panouri ca răspunsurile live și sunt întotdeauna marcate EXEMPLU.",
+    "fr": "Réponses synthétiques au format Rules API v1 (données de test ZZ, accords ZZ_TEST…, pays XA–XD, chapitre SH 99). Elles sont affichées dans les mêmes panneaux que les réponses en direct et portent toujours la mention EXEMPLE.",
+    "es": "Respuestas sintéticas en el formato Rules API v1 (datos de prueba ZZ, acuerdos ZZ_TEST…, países XA–XD, capítulo SA 99). Se muestran en los mismos paneles que las respuestas en directo y siempre llevan la marca EJEMPLO.",
+    "it": "Risposte sintetiche nel formato Rules API v1 (dati di prova ZZ, accordi ZZ_TEST…, paesi XA–XD, capitolo SA 99). Sono visualizzate negli stessi pannelli delle risposte live e sono sempre contrassegnate ESEMPIO.",
+    "pl": "Odpowiedzi syntetyczne w formacie Rules API v1 (dane testowe ZZ, umowy ZZ_TEST…, kraje XA–XD, dział HS 99). Są wyświetlane w tych samych panelach co odpowiedzi na żywo i zawsze mają oznaczenie PRZYKŁAD.",
+    "nl": "Synthetische antwoorden in het Rules API v1-formaat (ZZ-testgegevens, overeenkomsten ZZ_TEST…, landen XA–XD, HS-hoofdstuk 99). Ze verschijnen in dezelfde panelen als live antwoorden en zijn altijd gemarkeerd als VOORBEELD."
   },
   "Endpunkte:": {
     "de": "Endpunkte:",
@@ -4619,5 +4619,45 @@ export const CATALOGS = {
     "it": "ad esempio. 850760",
     "pl": "np. 850760",
     "nl": "Bijvoorbeeld 850760"
+  },
+  "SYNTHETISCHE ANTWORT": {
+    "de": "SYNTHETISCHE ANTWORT",
+    "en": "SYNTHETIC RESPONSE",
+    "ro": "RĂSPUNS SINTETIC",
+    "fr": "RÉPONSE SYNTHÉTIQUE",
+    "es": "RESPUESTA SINTÉTICA",
+    "it": "RISPOSTA SINTETICA",
+    "pl": "ODPOWIEDŹ SYNTETYCZNA",
+    "nl": "SYNTHETISCH ANTWOORD"
+  },
+  "SYNTHETISCH": {
+    "de": "SYNTHETISCH",
+    "en": "SYNTHETIC",
+    "ro": "SINTETIC",
+    "fr": "SYNTHÉTIQUE",
+    "es": "SINTÉTICO",
+    "it": "SINTETICO",
+    "pl": "SYNTETYCZNE",
+    "nl": "SYNTHETISCH"
+  },
+  "BEISPIEL": {
+    "de": "BEISPIEL",
+    "en": "EXAMPLE",
+    "ro": "EXEMPLU",
+    "fr": "EXEMPLE",
+    "es": "EJEMPLO",
+    "it": "ESEMPIO",
+    "pl": "PRZYKŁAD",
+    "nl": "VOORBEELD"
+  },
+  ". Die Seite zeigt, was die API liefert – sie wählt keinen Regelsatz aus und bewertet keine Regel.": {
+    "de": ". Die Seite zeigt, was die API liefert – sie wählt keinen Regelsatz aus und bewertet keine Regel.",
+    "en": ". The page shows what the API returns. It neither selects a rule set nor evaluates a rule.",
+    "ro": ". Pagina afișează rezultatul furnizat de API. Nu selectează seturi de reguli și nu evaluează reguli.",
+    "fr": ". La page affiche les résultats renvoyés par l’API. Elle ne sélectionne aucun jeu de règles et n’évalue aucune règle.",
+    "es": ". La página muestra lo que devuelve la API. No selecciona conjuntos de reglas ni evalúa reglas.",
+    "it": ". La pagina mostra ciò che restituisce l’API. Non seleziona insiemi di regole e non valuta regole.",
+    "pl": ". Strona pokazuje odpowiedź API. Nie wybiera zestawu reguł ani nie ocenia reguł.",
+    "nl": ". De pagina toont wat de API teruggeeft. Zij selecteert geen regelset en beoordeelt geen regels."
   }
 };
